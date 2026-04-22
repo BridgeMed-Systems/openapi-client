@@ -11,7 +11,7 @@ const RAW_RUNTIME_STATE =
   ],\
   "dependencyTreeRoots": [\
     {\
-      "name": "@drawbridge-systems/openapi-client",\
+      "name": "@bridgemed-systems/openapi-client",\
       "reference": "workspace:."\
     }\
   ],\
@@ -19,7 +19,7 @@ const RAW_RUNTIME_STATE =
   "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
   "pnpZipBackend": "libzip",\
   "fallbackExclusionList": [\
-    ["@drawbridge-systems/openapi-client", ["workspace:."]]\
+    ["@bridgemed-systems/openapi-client", ["workspace:."]]\
   ],\
   "fallbackPool": [\
   ],\
@@ -28,16 +28,16 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["@drawbridge-systems/openapi-client", "workspace:."]\
+          ["@bridgemed-systems/openapi-client", "workspace:."]\
         ],\
         "linkType": "SOFT"\
       }]\
     ]],\
-    ["@drawbridge-systems/openapi-client", [\
+    ["@bridgemed-systems/openapi-client", [\
       ["workspace:.", {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["@drawbridge-systems/openapi-client", "workspace:."]\
+          ["@bridgemed-systems/openapi-client", "workspace:."]\
         ],\
         "linkType": "SOFT"\
       }]\

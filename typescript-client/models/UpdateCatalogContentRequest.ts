@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * DrawBridge API
- * DrawBridge backend API specification.  HIPAA-safe guardrail: this API does not store or process PHI. No patient identity data, no case tracking, and no procedure schedules. 
+ * Bridge Med API
+ * Bridge Med backend API specification.  HIPAA-safe guardrail: this API does not store or process PHI. No patient identity data, no case tracking, and no procedure schedules. 
  *
  * The version of the OpenAPI document: 0.1.0
  * 
@@ -46,7 +46,7 @@ export interface UpdateCatalogContentRequest {
      */
     content_type?: CatalogContentType;
     /**
-     * 
+     * Optional external resource URL.
      * @type {string}
      * @memberof UpdateCatalogContentRequest
      */

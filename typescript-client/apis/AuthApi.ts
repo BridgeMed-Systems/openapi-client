@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * DrawBridge API
- * DrawBridge backend API specification.  HIPAA-safe guardrail: this API does not store or process PHI. No patient identity data, no case tracking, and no procedure schedules. 
+ * Bridge Med API
+ * Bridge Med backend API specification.  HIPAA-safe guardrail: this API does not store or process PHI. No patient identity data, no case tracking, and no procedure schedules. 
  *
  * The version of the OpenAPI document: 0.1.0
  * 
@@ -19,6 +19,7 @@ import type {
   CreateSessionRequest,
   CreateSessionResponse,
   ErrorResponse,
+  SimpleOKResponse,
 } from '../models/index';
 import {
     CallerContextFromJSON,
@@ -29,6 +30,8 @@ import {
     CreateSessionResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    SimpleOKResponseFromJSON,
+    SimpleOKResponseToJSON,
 } from '../models/index';
 
 export interface CreateSessionOperationRequest {
@@ -85,6 +88,48 @@ export interface AuthApiInterface {
      * Current caller context
      */
     getMe(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CallerContext>;
+
+    /**
+     * Creates request options for logout without sending the request
+     * @throws {RequiredError}
+     * @memberof AuthApiInterface
+     */
+    logoutRequestOpts(): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary End session
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApiInterface
+     */
+    logoutRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SimpleOKResponse>>;
+
+    /**
+     * End session
+     */
+    logout(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SimpleOKResponse>;
+
+    /**
+     * Creates request options for refreshSession without sending the request
+     * @throws {RequiredError}
+     * @memberof AuthApiInterface
+     */
+    refreshSessionRequestOpts(): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Refresh session
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApiInterface
+     */
+    refreshSessionRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSessionResponse>>;
+
+    /**
+     * Refresh session
+     */
+    refreshSession(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSessionResponse>;
 
 }
 
@@ -182,6 +227,80 @@ export class AuthApi extends runtime.BaseAPI implements AuthApiInterface {
      */
     async getMe(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CallerContext> {
         const response = await this.getMeRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for logout without sending the request
+     */
+    async logoutRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/v1/auth/logout`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * End session
+     */
+    async logoutRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SimpleOKResponse>> {
+        const requestOptions = await this.logoutRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SimpleOKResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * End session
+     */
+    async logout(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SimpleOKResponse> {
+        const response = await this.logoutRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for refreshSession without sending the request
+     */
+    async refreshSessionRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/v1/auth/refresh`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Refresh session
+     */
+    async refreshSessionRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSessionResponse>> {
+        const requestOptions = await this.refreshSessionRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSessionResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Refresh session
+     */
+    async refreshSession(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSessionResponse> {
+        const response = await this.refreshSessionRaw(initOverrides);
         return await response.value();
     }
 

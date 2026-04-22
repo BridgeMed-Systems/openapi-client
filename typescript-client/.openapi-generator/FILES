@@ -71,6 +71,7 @@ docs/RepAvailabilityWindow.md
 docs/RepAvailabilityWindowType.md
 docs/RepDirectoryEntry.md
 docs/RepsApi.md
+docs/SimpleOKResponse.md
 docs/TrainingApi.md
 docs/TrainingRequest.md
 docs/TrainingRequestStatus.md
@@ -148,6 +149,7 @@ models/RepAvailabilityStatus.ts
 models/RepAvailabilityWindow.ts
 models/RepAvailabilityWindowType.ts
 models/RepDirectoryEntry.ts
+models/SimpleOKResponse.ts
 models/TrainingRequest.ts
 models/TrainingRequestStatus.ts
 models/UpdateAdminUserAuthorizationRequest.ts

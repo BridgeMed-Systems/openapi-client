@@ -53,6 +53,7 @@ export * from './RepAvailabilityStatus';
 export * from './RepAvailabilityWindow';
 export * from './RepAvailabilityWindowType';
 export * from './RepDirectoryEntry';
+export * from './SimpleOKResponse';
 export * from './TrainingRequest';
 export * from './TrainingRequestStatus';
 export * from './UpdateAdminUserAuthorizationRequest';

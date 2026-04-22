@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * DrawBridge API
- * DrawBridge backend API specification.  HIPAA-safe guardrail: this API does not store or process PHI. No patient identity data, no case tracking, and no procedure schedules. 
+ * Bridge Med API
+ * Bridge Med backend API specification.  HIPAA-safe guardrail: this API does not store or process PHI. No patient identity data, no case tracking, and no procedure schedules. 
  *
  * The version of the OpenAPI document: 0.1.0
  * 
@@ -58,11 +58,11 @@ export interface CreateCatalogContentRequest {
      */
     content_type: CatalogContentType;
     /**
-     * 
+     * Optional external resource URL.
      * @type {string}
      * @memberof CreateCatalogContentRequest
      */
-    external_url: string;
+    external_url?: string;
     /**
      * 
      * @type {Array<string>}
@@ -80,7 +80,6 @@ export function instanceOfCreateCatalogContentRequest(value: object): value is C
     if (!('organization_id' in value) || value['organization_id'] === undefined) return false;
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('content_type' in value) || value['content_type'] === undefined) return false;
-    if (!('external_url' in value) || value['external_url'] === undefined) return false;
     return true;
 }
 
@@ -99,7 +98,7 @@ export function CreateCatalogContentRequestFromJSONTyped(json: any, ignoreDiscri
         'title': json['title'],
         'description': json['description'] == null ? undefined : json['description'],
         'content_type': CatalogContentTypeFromJSON(json['content_type']),
-        'external_url': json['external_url'],
+        'external_url': json['external_url'] == null ? undefined : json['external_url'],
         'tags': json['tags'] == null ? undefined : json['tags'],
     };
 }

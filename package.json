@@ -1,5 +1,5 @@
 {
-  "name": "@drawbridge-systems/openapi-client",
+  "name": "@bridgemed-systems/openapi-client",
   "version": "0.1.0",
   "type": "module",
   "main": "./typescript-client/index.ts",

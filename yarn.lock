@@ -5,8 +5,8 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@drawbridge-systems/openapi-client@workspace:.":
+"@bridgemed-systems/openapi-client@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@drawbridge-systems/openapi-client@workspace:."
+  resolution: "@bridgemed-systems/openapi-client@workspace:."
   languageName: unknown
   linkType: soft
