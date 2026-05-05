@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { TrainingSessionDeliveryMode } from './TrainingSessionDeliveryMode';
+import {
+    TrainingSessionDeliveryModeFromJSON,
+    TrainingSessionDeliveryModeFromJSONTyped,
+    TrainingSessionDeliveryModeToJSON,
+    TrainingSessionDeliveryModeToJSONTyped,
+} from './TrainingSessionDeliveryMode';
 import type { TrainingRequestStatus } from './TrainingRequestStatus';
 import {
     TrainingRequestStatusFromJSON,
@@ -51,6 +58,30 @@ export interface UpdateTrainingRequestStatusRequest {
      * @memberof UpdateTrainingRequestStatusRequest
      */
     scheduled_end_at?: Date;
+    /**
+     * 
+     * @type {TrainingSessionDeliveryMode}
+     * @memberof UpdateTrainingRequestStatusRequest
+     */
+    delivery_mode?: TrainingSessionDeliveryMode;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateTrainingRequestStatusRequest
+     */
+    location_text?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateTrainingRequestStatusRequest
+     */
+    external_join_url?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateTrainingRequestStatusRequest
+     */
+    capacity?: number;
 }
 
 
@@ -77,6 +108,10 @@ export function UpdateTrainingRequestStatusRequestFromJSONTyped(json: any, ignor
         'assigned_user_id': json['assigned_user_id'] == null ? undefined : json['assigned_user_id'],
         'scheduled_start_at': json['scheduled_start_at'] == null ? undefined : (new Date(json['scheduled_start_at'])),
         'scheduled_end_at': json['scheduled_end_at'] == null ? undefined : (new Date(json['scheduled_end_at'])),
+        'delivery_mode': json['delivery_mode'] == null ? undefined : TrainingSessionDeliveryModeFromJSON(json['delivery_mode']),
+        'location_text': json['location_text'] == null ? undefined : json['location_text'],
+        'external_join_url': json['external_join_url'] == null ? undefined : json['external_join_url'],
+        'capacity': json['capacity'] == null ? undefined : json['capacity'],
     };
 }
 
@@ -95,6 +130,10 @@ export function UpdateTrainingRequestStatusRequestToJSONTyped(value?: UpdateTrai
         'assigned_user_id': value['assigned_user_id'],
         'scheduled_start_at': value['scheduled_start_at'] == null ? value['scheduled_start_at'] : value['scheduled_start_at'].toISOString(),
         'scheduled_end_at': value['scheduled_end_at'] == null ? value['scheduled_end_at'] : value['scheduled_end_at'].toISOString(),
+        'delivery_mode': TrainingSessionDeliveryModeToJSON(value['delivery_mode']),
+        'location_text': value['location_text'],
+        'external_join_url': value['external_join_url'],
+        'capacity': value['capacity'],
     };
 }
 

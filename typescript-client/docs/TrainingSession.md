@@ -1,44 +1,56 @@
 
-# CalendarItem
+# TrainingSession
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`source_type` | [CalendarSourceType](CalendarSourceType.md)
-`source_id` | string
+`id` | string
+`source_request_id` | string
 `organization_id` | string
+`product_id` | string
+`host_user_id` | string
 `title` | string
 `description` | string
-`start_at` | Date
-`end_at` | Date
-`can_manage` | boolean
-`manage_scope` | [CalendarManageScope](CalendarManageScope.md)
 `delivery_mode` | [TrainingSessionDeliveryMode](TrainingSessionDeliveryMode.md)
+`status` | [TrainingSessionStatus](TrainingSessionStatus.md)
+`starts_at` | Date
+`ends_at` | Date
 `location_text` | string
 `external_join_url` | string
+`capacity` | number
+`native_webinar_id` | string
+`completed_at` | Date
+`date_added` | Date
+`date_updated` | Date
 
 ## Example
 
 ```typescript
-import type { CalendarItem } from ''
+import type { TrainingSession } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "source_type": null,
-  "source_id": null,
+  "id": null,
+  "source_request_id": null,
   "organization_id": null,
+  "product_id": null,
+  "host_user_id": null,
   "title": null,
   "description": null,
-  "start_at": null,
-  "end_at": null,
-  "can_manage": null,
-  "manage_scope": null,
   "delivery_mode": null,
+  "status": null,
+  "starts_at": null,
+  "ends_at": null,
   "location_text": null,
   "external_join_url": null,
-} satisfies CalendarItem
+  "capacity": null,
+  "native_webinar_id": null,
+  "completed_at": null,
+  "date_added": null,
+  "date_updated": null,
+} satisfies TrainingSession
 
 console.log(example)
 
@@ -47,7 +59,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as CalendarItem
+const exampleParsed = JSON.parse(exampleJSON) as TrainingSession
 console.log(exampleParsed)
 ```
 

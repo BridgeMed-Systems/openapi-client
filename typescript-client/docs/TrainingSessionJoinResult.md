@@ -1,44 +1,30 @@
 
-# CalendarItem
+# TrainingSessionJoinResult
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`source_type` | [CalendarSourceType](CalendarSourceType.md)
-`source_id` | string
-`organization_id` | string
-`title` | string
-`description` | string
-`start_at` | Date
-`end_at` | Date
-`can_manage` | boolean
-`manage_scope` | [CalendarManageScope](CalendarManageScope.md)
+`session_id` | string
 `delivery_mode` | [TrainingSessionDeliveryMode](TrainingSessionDeliveryMode.md)
 `location_text` | string
 `external_join_url` | string
+`native_join_result` | [WebinarJoinResult](WebinarJoinResult.md)
 
 ## Example
 
 ```typescript
-import type { CalendarItem } from ''
+import type { TrainingSessionJoinResult } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "source_type": null,
-  "source_id": null,
-  "organization_id": null,
-  "title": null,
-  "description": null,
-  "start_at": null,
-  "end_at": null,
-  "can_manage": null,
-  "manage_scope": null,
+  "session_id": null,
   "delivery_mode": null,
   "location_text": null,
   "external_join_url": null,
-} satisfies CalendarItem
+  "native_join_result": null,
+} satisfies TrainingSessionJoinResult
 
 console.log(example)
 
@@ -47,7 +33,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as CalendarItem
+const exampleParsed = JSON.parse(exampleJSON) as TrainingSessionJoinResult
 console.log(exampleParsed)
 ```
 

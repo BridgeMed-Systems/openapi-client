@@ -16,23 +16,98 @@
 import * as runtime from '../runtime';
 import type {
   CreateTrainingRequest,
+  CreateTrainingSessionMaterialRequest,
+  CreateTrainingSessionRegistrationRequest,
+  CreateTrainingSessionRequest,
   ErrorResponse,
   TrainingRequest,
+  TrainingSession,
+  TrainingSessionJoinResult,
+  TrainingSessionMaterial,
+  TrainingSessionRegistration,
   UpdateTrainingRequestStatusRequest,
+  UpdateTrainingSessionMaterialRequest,
+  UpdateTrainingSessionRegistrationRequest,
+  UpdateTrainingSessionRequest,
 } from '../models/index';
 import {
     CreateTrainingRequestFromJSON,
     CreateTrainingRequestToJSON,
+    CreateTrainingSessionMaterialRequestFromJSON,
+    CreateTrainingSessionMaterialRequestToJSON,
+    CreateTrainingSessionRegistrationRequestFromJSON,
+    CreateTrainingSessionRegistrationRequestToJSON,
+    CreateTrainingSessionRequestFromJSON,
+    CreateTrainingSessionRequestToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     TrainingRequestFromJSON,
     TrainingRequestToJSON,
+    TrainingSessionFromJSON,
+    TrainingSessionToJSON,
+    TrainingSessionJoinResultFromJSON,
+    TrainingSessionJoinResultToJSON,
+    TrainingSessionMaterialFromJSON,
+    TrainingSessionMaterialToJSON,
+    TrainingSessionRegistrationFromJSON,
+    TrainingSessionRegistrationToJSON,
     UpdateTrainingRequestStatusRequestFromJSON,
     UpdateTrainingRequestStatusRequestToJSON,
+    UpdateTrainingSessionMaterialRequestFromJSON,
+    UpdateTrainingSessionMaterialRequestToJSON,
+    UpdateTrainingSessionRegistrationRequestFromJSON,
+    UpdateTrainingSessionRegistrationRequestToJSON,
+    UpdateTrainingSessionRequestFromJSON,
+    UpdateTrainingSessionRequestToJSON,
 } from '../models/index';
+
+export interface CancelTrainingSessionRequest {
+    id: string;
+}
+
+export interface CompleteTrainingSessionRequest {
+    id: string;
+}
+
+export interface CompleteTrainingSessionMaterialUploadRequest {
+    id: string;
+    materialID: string;
+}
 
 export interface CreateTrainingRequestRequest {
     createTrainingRequest: CreateTrainingRequest;
+}
+
+export interface CreateTrainingSessionOperationRequest {
+    createTrainingSessionRequest: CreateTrainingSessionRequest;
+}
+
+export interface CreateTrainingSessionMaterialOperationRequest {
+    id: string;
+    createTrainingSessionMaterialRequest: CreateTrainingSessionMaterialRequest;
+}
+
+export interface CreateTrainingSessionRegistrationOperationRequest {
+    id: string;
+    createTrainingSessionRegistrationRequest?: CreateTrainingSessionRegistrationRequest;
+}
+
+export interface DeleteTrainingSessionMaterialRequest {
+    id: string;
+    materialID: string;
+}
+
+export interface DownloadTrainingSessionMaterialRequest {
+    id: string;
+    materialID: string;
+}
+
+export interface GetTrainingSessionRequest {
+    id: string;
+}
+
+export interface JoinTrainingSessionRequest {
+    id: string;
 }
 
 export interface ListTrainingRequestsRequest {
@@ -43,9 +118,50 @@ export interface ListTrainingRequestsRequest {
     scope?: ListTrainingRequestsScopeEnum;
 }
 
+export interface ListTrainingSessionMaterialsRequest {
+    id: string;
+}
+
+export interface ListTrainingSessionRegistrationsRequest {
+    id: string;
+}
+
+export interface ListTrainingSessionsRequest {
+    statuses?: string;
+    sourceRequestId?: string;
+}
+
+export interface StartTrainingSessionRequest {
+    id: string;
+}
+
 export interface UpdateTrainingRequestStatusOperationRequest {
     id: string;
     updateTrainingRequestStatusRequest: UpdateTrainingRequestStatusRequest;
+}
+
+export interface UpdateTrainingSessionOperationRequest {
+    id: string;
+    updateTrainingSessionRequest: UpdateTrainingSessionRequest;
+}
+
+export interface UpdateTrainingSessionMaterialOperationRequest {
+    id: string;
+    materialID: string;
+    updateTrainingSessionMaterialRequest: UpdateTrainingSessionMaterialRequest;
+}
+
+export interface UpdateTrainingSessionRegistrationOperationRequest {
+    id: string;
+    userID: string;
+    updateTrainingSessionRegistrationRequest: UpdateTrainingSessionRegistrationRequest;
+}
+
+export interface UploadTrainingSessionMaterialContentRequest {
+    id: string;
+    materialID: string;
+    token: string;
+    body: Blob;
 }
 
 /**
@@ -55,6 +171,77 @@ export interface UpdateTrainingRequestStatusOperationRequest {
  * @interface TrainingApiInterface
  */
 export interface TrainingApiInterface {
+    /**
+     * Creates request options for cancelTrainingSession without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    cancelTrainingSessionRequestOpts(requestParameters: CancelTrainingSessionRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Cancel training session
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    cancelTrainingSessionRaw(requestParameters: CancelTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>>;
+
+    /**
+     * Cancel training session
+     */
+    cancelTrainingSession(requestParameters: CancelTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession>;
+
+    /**
+     * Creates request options for completeTrainingSession without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    completeTrainingSessionRequestOpts(requestParameters: CompleteTrainingSessionRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Complete training session
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    completeTrainingSessionRaw(requestParameters: CompleteTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>>;
+
+    /**
+     * Complete training session
+     */
+    completeTrainingSession(requestParameters: CompleteTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession>;
+
+    /**
+     * Creates request options for completeTrainingSessionMaterialUpload without sending the request
+     * @param {string} id 
+     * @param {string} materialID 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    completeTrainingSessionMaterialUploadRequestOpts(requestParameters: CompleteTrainingSessionMaterialUploadRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Finalize training session material upload
+     * @param {string} id 
+     * @param {string} materialID 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    completeTrainingSessionMaterialUploadRaw(requestParameters: CompleteTrainingSessionMaterialUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionMaterial>>;
+
+    /**
+     * Finalize training session material upload
+     */
+    completeTrainingSessionMaterialUpload(requestParameters: CompleteTrainingSessionMaterialUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionMaterial>;
+
     /**
      * Creates request options for createTrainingRequest without sending the request
      * @param {CreateTrainingRequest} createTrainingRequest 
@@ -77,6 +264,175 @@ export interface TrainingApiInterface {
      * Create training request
      */
     createTrainingRequest(requestParameters: CreateTrainingRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingRequest>;
+
+    /**
+     * Creates request options for createTrainingSession without sending the request
+     * @param {CreateTrainingSessionRequest} createTrainingSessionRequest 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    createTrainingSessionRequestOpts(requestParameters: CreateTrainingSessionOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Create training session from request
+     * @param {CreateTrainingSessionRequest} createTrainingSessionRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    createTrainingSessionRaw(requestParameters: CreateTrainingSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>>;
+
+    /**
+     * Create training session from request
+     */
+    createTrainingSession(requestParameters: CreateTrainingSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession>;
+
+    /**
+     * Creates request options for createTrainingSessionMaterial without sending the request
+     * @param {string} id 
+     * @param {CreateTrainingSessionMaterialRequest} createTrainingSessionMaterialRequest 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    createTrainingSessionMaterialRequestOpts(requestParameters: CreateTrainingSessionMaterialOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Create training session material
+     * @param {string} id 
+     * @param {CreateTrainingSessionMaterialRequest} createTrainingSessionMaterialRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    createTrainingSessionMaterialRaw(requestParameters: CreateTrainingSessionMaterialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionMaterial>>;
+
+    /**
+     * Create training session material
+     */
+    createTrainingSessionMaterial(requestParameters: CreateTrainingSessionMaterialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionMaterial>;
+
+    /**
+     * Creates request options for createTrainingSessionRegistration without sending the request
+     * @param {string} id 
+     * @param {CreateTrainingSessionRegistrationRequest} [createTrainingSessionRegistrationRequest] 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    createTrainingSessionRegistrationRequestOpts(requestParameters: CreateTrainingSessionRegistrationOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Register attendee for training session
+     * @param {string} id 
+     * @param {CreateTrainingSessionRegistrationRequest} [createTrainingSessionRegistrationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    createTrainingSessionRegistrationRaw(requestParameters: CreateTrainingSessionRegistrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionRegistration>>;
+
+    /**
+     * Register attendee for training session
+     */
+    createTrainingSessionRegistration(requestParameters: CreateTrainingSessionRegistrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionRegistration>;
+
+    /**
+     * Creates request options for deleteTrainingSessionMaterial without sending the request
+     * @param {string} id 
+     * @param {string} materialID 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    deleteTrainingSessionMaterialRequestOpts(requestParameters: DeleteTrainingSessionMaterialRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Delete training session material
+     * @param {string} id 
+     * @param {string} materialID 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    deleteTrainingSessionMaterialRaw(requestParameters: DeleteTrainingSessionMaterialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Delete training session material
+     */
+    deleteTrainingSessionMaterial(requestParameters: DeleteTrainingSessionMaterialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Creates request options for downloadTrainingSessionMaterial without sending the request
+     * @param {string} id 
+     * @param {string} materialID 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    downloadTrainingSessionMaterialRequestOpts(requestParameters: DownloadTrainingSessionMaterialRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Download training session material
+     * @param {string} id 
+     * @param {string} materialID 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    downloadTrainingSessionMaterialRaw(requestParameters: DownloadTrainingSessionMaterialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
+
+    /**
+     * Download training session material
+     */
+    downloadTrainingSessionMaterial(requestParameters: DownloadTrainingSessionMaterialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
+
+    /**
+     * Creates request options for getTrainingSession without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    getTrainingSessionRequestOpts(requestParameters: GetTrainingSessionRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Get training session
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    getTrainingSessionRaw(requestParameters: GetTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>>;
+
+    /**
+     * Get training session
+     */
+    getTrainingSession(requestParameters: GetTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession>;
+
+    /**
+     * Creates request options for joinTrainingSession without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    joinTrainingSessionRequestOpts(requestParameters: JoinTrainingSessionRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Join training session
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    joinTrainingSessionRaw(requestParameters: JoinTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionJoinResult>>;
+
+    /**
+     * Join training session
+     */
+    joinTrainingSession(requestParameters: JoinTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionJoinResult>;
 
     /**
      * Creates request options for listTrainingRequests without sending the request
@@ -110,6 +466,100 @@ export interface TrainingApiInterface {
     listTrainingRequests(requestParameters: ListTrainingRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingRequest>>;
 
     /**
+     * Creates request options for listTrainingSessionMaterials without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    listTrainingSessionMaterialsRequestOpts(requestParameters: ListTrainingSessionMaterialsRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary List training session materials
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    listTrainingSessionMaterialsRaw(requestParameters: ListTrainingSessionMaterialsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrainingSessionMaterial>>>;
+
+    /**
+     * List training session materials
+     */
+    listTrainingSessionMaterials(requestParameters: ListTrainingSessionMaterialsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSessionMaterial>>;
+
+    /**
+     * Creates request options for listTrainingSessionRegistrations without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    listTrainingSessionRegistrationsRequestOpts(requestParameters: ListTrainingSessionRegistrationsRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary List training session registrations
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    listTrainingSessionRegistrationsRaw(requestParameters: ListTrainingSessionRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrainingSessionRegistration>>>;
+
+    /**
+     * List training session registrations
+     */
+    listTrainingSessionRegistrations(requestParameters: ListTrainingSessionRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSessionRegistration>>;
+
+    /**
+     * Creates request options for listTrainingSessions without sending the request
+     * @param {string} [statuses] Comma-separated training session statuses
+     * @param {string} [sourceRequestId] 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    listTrainingSessionsRequestOpts(requestParameters: ListTrainingSessionsRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary List training sessions
+     * @param {string} [statuses] Comma-separated training session statuses
+     * @param {string} [sourceRequestId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    listTrainingSessionsRaw(requestParameters: ListTrainingSessionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrainingSession>>>;
+
+    /**
+     * List training sessions
+     */
+    listTrainingSessions(requestParameters: ListTrainingSessionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSession>>;
+
+    /**
+     * Creates request options for startTrainingSession without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    startTrainingSessionRequestOpts(requestParameters: StartTrainingSessionRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Start training session
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    startTrainingSessionRaw(requestParameters: StartTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>>;
+
+    /**
+     * Start training session
+     */
+    startTrainingSession(requestParameters: StartTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession>;
+
+    /**
      * Creates request options for updateTrainingRequestStatus without sending the request
      * @param {string} id 
      * @param {UpdateTrainingRequestStatusRequest} updateTrainingRequestStatusRequest 
@@ -134,12 +584,287 @@ export interface TrainingApiInterface {
      */
     updateTrainingRequestStatus(requestParameters: UpdateTrainingRequestStatusOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingRequest>;
 
+    /**
+     * Creates request options for updateTrainingSession without sending the request
+     * @param {string} id 
+     * @param {UpdateTrainingSessionRequest} updateTrainingSessionRequest 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    updateTrainingSessionRequestOpts(requestParameters: UpdateTrainingSessionOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Update training session
+     * @param {string} id 
+     * @param {UpdateTrainingSessionRequest} updateTrainingSessionRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    updateTrainingSessionRaw(requestParameters: UpdateTrainingSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>>;
+
+    /**
+     * Update training session
+     */
+    updateTrainingSession(requestParameters: UpdateTrainingSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession>;
+
+    /**
+     * Creates request options for updateTrainingSessionMaterial without sending the request
+     * @param {string} id 
+     * @param {string} materialID 
+     * @param {UpdateTrainingSessionMaterialRequest} updateTrainingSessionMaterialRequest 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    updateTrainingSessionMaterialRequestOpts(requestParameters: UpdateTrainingSessionMaterialOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Update training session material
+     * @param {string} id 
+     * @param {string} materialID 
+     * @param {UpdateTrainingSessionMaterialRequest} updateTrainingSessionMaterialRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    updateTrainingSessionMaterialRaw(requestParameters: UpdateTrainingSessionMaterialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionMaterial>>;
+
+    /**
+     * Update training session material
+     */
+    updateTrainingSessionMaterial(requestParameters: UpdateTrainingSessionMaterialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionMaterial>;
+
+    /**
+     * Creates request options for updateTrainingSessionRegistration without sending the request
+     * @param {string} id 
+     * @param {string} userID 
+     * @param {UpdateTrainingSessionRegistrationRequest} updateTrainingSessionRegistrationRequest 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    updateTrainingSessionRegistrationRequestOpts(requestParameters: UpdateTrainingSessionRegistrationOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Update training session registration
+     * @param {string} id 
+     * @param {string} userID 
+     * @param {UpdateTrainingSessionRegistrationRequest} updateTrainingSessionRegistrationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    updateTrainingSessionRegistrationRaw(requestParameters: UpdateTrainingSessionRegistrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionRegistration>>;
+
+    /**
+     * Update training session registration
+     */
+    updateTrainingSessionRegistration(requestParameters: UpdateTrainingSessionRegistrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionRegistration>;
+
+    /**
+     * Creates request options for uploadTrainingSessionMaterialContent without sending the request
+     * @param {string} id 
+     * @param {string} materialID 
+     * @param {string} token 
+     * @param {Blob} body 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    uploadTrainingSessionMaterialContentRequestOpts(requestParameters: UploadTrainingSessionMaterialContentRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Upload training session material content
+     * @param {string} id 
+     * @param {string} materialID 
+     * @param {string} token 
+     * @param {Blob} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    uploadTrainingSessionMaterialContentRaw(requestParameters: UploadTrainingSessionMaterialContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Upload training session material content
+     */
+    uploadTrainingSessionMaterialContent(requestParameters: UploadTrainingSessionMaterialContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
 }
 
 /**
  * 
  */
 export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface {
+
+    /**
+     * Creates request options for cancelTrainingSession without sending the request
+     */
+    async cancelTrainingSessionRequestOpts(requestParameters: CancelTrainingSessionRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling cancelTrainingSession().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/cancel`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Cancel training session
+     */
+    async cancelTrainingSessionRaw(requestParameters: CancelTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>> {
+        const requestOptions = await this.cancelTrainingSessionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionFromJSON(jsonValue));
+    }
+
+    /**
+     * Cancel training session
+     */
+    async cancelTrainingSession(requestParameters: CancelTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession> {
+        const response = await this.cancelTrainingSessionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for completeTrainingSession without sending the request
+     */
+    async completeTrainingSessionRequestOpts(requestParameters: CompleteTrainingSessionRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling completeTrainingSession().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/complete`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Complete training session
+     */
+    async completeTrainingSessionRaw(requestParameters: CompleteTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>> {
+        const requestOptions = await this.completeTrainingSessionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionFromJSON(jsonValue));
+    }
+
+    /**
+     * Complete training session
+     */
+    async completeTrainingSession(requestParameters: CompleteTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession> {
+        const response = await this.completeTrainingSessionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for completeTrainingSessionMaterialUpload without sending the request
+     */
+    async completeTrainingSessionMaterialUploadRequestOpts(requestParameters: CompleteTrainingSessionMaterialUploadRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling completeTrainingSessionMaterialUpload().'
+            );
+        }
+
+        if (requestParameters['materialID'] == null) {
+            throw new runtime.RequiredError(
+                'materialID',
+                'Required parameter "materialID" was null or undefined when calling completeTrainingSessionMaterialUpload().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/materials/{materialID}/upload-complete`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Finalize training session material upload
+     */
+    async completeTrainingSessionMaterialUploadRaw(requestParameters: CompleteTrainingSessionMaterialUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionMaterial>> {
+        const requestOptions = await this.completeTrainingSessionMaterialUploadRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionMaterialFromJSON(jsonValue));
+    }
+
+    /**
+     * Finalize training session material upload
+     */
+    async completeTrainingSessionMaterialUpload(requestParameters: CompleteTrainingSessionMaterialUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionMaterial> {
+        const response = await this.completeTrainingSessionMaterialUploadRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for createTrainingRequest without sending the request
@@ -193,6 +918,407 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
      */
     async createTrainingRequest(requestParameters: CreateTrainingRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingRequest> {
         const response = await this.createTrainingRequestRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for createTrainingSession without sending the request
+     */
+    async createTrainingSessionRequestOpts(requestParameters: CreateTrainingSessionOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['createTrainingSessionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createTrainingSessionRequest',
+                'Required parameter "createTrainingSessionRequest" was null or undefined when calling createTrainingSession().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateTrainingSessionRequestToJSON(requestParameters['createTrainingSessionRequest']),
+        };
+    }
+
+    /**
+     * Create training session from request
+     */
+    async createTrainingSessionRaw(requestParameters: CreateTrainingSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>> {
+        const requestOptions = await this.createTrainingSessionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionFromJSON(jsonValue));
+    }
+
+    /**
+     * Create training session from request
+     */
+    async createTrainingSession(requestParameters: CreateTrainingSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession> {
+        const response = await this.createTrainingSessionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for createTrainingSessionMaterial without sending the request
+     */
+    async createTrainingSessionMaterialRequestOpts(requestParameters: CreateTrainingSessionMaterialOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createTrainingSessionMaterial().'
+            );
+        }
+
+        if (requestParameters['createTrainingSessionMaterialRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createTrainingSessionMaterialRequest',
+                'Required parameter "createTrainingSessionMaterialRequest" was null or undefined when calling createTrainingSessionMaterial().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/materials`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateTrainingSessionMaterialRequestToJSON(requestParameters['createTrainingSessionMaterialRequest']),
+        };
+    }
+
+    /**
+     * Create training session material
+     */
+    async createTrainingSessionMaterialRaw(requestParameters: CreateTrainingSessionMaterialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionMaterial>> {
+        const requestOptions = await this.createTrainingSessionMaterialRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionMaterialFromJSON(jsonValue));
+    }
+
+    /**
+     * Create training session material
+     */
+    async createTrainingSessionMaterial(requestParameters: CreateTrainingSessionMaterialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionMaterial> {
+        const response = await this.createTrainingSessionMaterialRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for createTrainingSessionRegistration without sending the request
+     */
+    async createTrainingSessionRegistrationRequestOpts(requestParameters: CreateTrainingSessionRegistrationOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createTrainingSessionRegistration().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/registrations`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateTrainingSessionRegistrationRequestToJSON(requestParameters['createTrainingSessionRegistrationRequest']),
+        };
+    }
+
+    /**
+     * Register attendee for training session
+     */
+    async createTrainingSessionRegistrationRaw(requestParameters: CreateTrainingSessionRegistrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionRegistration>> {
+        const requestOptions = await this.createTrainingSessionRegistrationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionRegistrationFromJSON(jsonValue));
+    }
+
+    /**
+     * Register attendee for training session
+     */
+    async createTrainingSessionRegistration(requestParameters: CreateTrainingSessionRegistrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionRegistration> {
+        const response = await this.createTrainingSessionRegistrationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for deleteTrainingSessionMaterial without sending the request
+     */
+    async deleteTrainingSessionMaterialRequestOpts(requestParameters: DeleteTrainingSessionMaterialRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteTrainingSessionMaterial().'
+            );
+        }
+
+        if (requestParameters['materialID'] == null) {
+            throw new runtime.RequiredError(
+                'materialID',
+                'Required parameter "materialID" was null or undefined when calling deleteTrainingSessionMaterial().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/materials/{materialID}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Delete training session material
+     */
+    async deleteTrainingSessionMaterialRaw(requestParameters: DeleteTrainingSessionMaterialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteTrainingSessionMaterialRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete training session material
+     */
+    async deleteTrainingSessionMaterial(requestParameters: DeleteTrainingSessionMaterialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteTrainingSessionMaterialRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for downloadTrainingSessionMaterial without sending the request
+     */
+    async downloadTrainingSessionMaterialRequestOpts(requestParameters: DownloadTrainingSessionMaterialRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling downloadTrainingSessionMaterial().'
+            );
+        }
+
+        if (requestParameters['materialID'] == null) {
+            throw new runtime.RequiredError(
+                'materialID',
+                'Required parameter "materialID" was null or undefined when calling downloadTrainingSessionMaterial().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/materials/{materialID}/download`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Download training session material
+     */
+    async downloadTrainingSessionMaterialRaw(requestParameters: DownloadTrainingSessionMaterialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        const requestOptions = await this.downloadTrainingSessionMaterialRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Download training session material
+     */
+    async downloadTrainingSessionMaterial(requestParameters: DownloadTrainingSessionMaterialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.downloadTrainingSessionMaterialRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getTrainingSession without sending the request
+     */
+    async getTrainingSessionRequestOpts(requestParameters: GetTrainingSessionRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getTrainingSession().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get training session
+     */
+    async getTrainingSessionRaw(requestParameters: GetTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>> {
+        const requestOptions = await this.getTrainingSessionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionFromJSON(jsonValue));
+    }
+
+    /**
+     * Get training session
+     */
+    async getTrainingSession(requestParameters: GetTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession> {
+        const response = await this.getTrainingSessionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for joinTrainingSession without sending the request
+     */
+    async joinTrainingSessionRequestOpts(requestParameters: JoinTrainingSessionRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling joinTrainingSession().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/join`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Join training session
+     */
+    async joinTrainingSessionRaw(requestParameters: JoinTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionJoinResult>> {
+        const requestOptions = await this.joinTrainingSessionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionJoinResultFromJSON(jsonValue));
+    }
+
+    /**
+     * Join training session
+     */
+    async joinTrainingSession(requestParameters: JoinTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionJoinResult> {
+        const response = await this.joinTrainingSessionRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -262,6 +1388,218 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
     }
 
     /**
+     * Creates request options for listTrainingSessionMaterials without sending the request
+     */
+    async listTrainingSessionMaterialsRequestOpts(requestParameters: ListTrainingSessionMaterialsRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling listTrainingSessionMaterials().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/materials`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List training session materials
+     */
+    async listTrainingSessionMaterialsRaw(requestParameters: ListTrainingSessionMaterialsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrainingSessionMaterial>>> {
+        const requestOptions = await this.listTrainingSessionMaterialsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TrainingSessionMaterialFromJSON));
+    }
+
+    /**
+     * List training session materials
+     */
+    async listTrainingSessionMaterials(requestParameters: ListTrainingSessionMaterialsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSessionMaterial>> {
+        const response = await this.listTrainingSessionMaterialsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listTrainingSessionRegistrations without sending the request
+     */
+    async listTrainingSessionRegistrationsRequestOpts(requestParameters: ListTrainingSessionRegistrationsRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling listTrainingSessionRegistrations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/registrations`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List training session registrations
+     */
+    async listTrainingSessionRegistrationsRaw(requestParameters: ListTrainingSessionRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrainingSessionRegistration>>> {
+        const requestOptions = await this.listTrainingSessionRegistrationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TrainingSessionRegistrationFromJSON));
+    }
+
+    /**
+     * List training session registrations
+     */
+    async listTrainingSessionRegistrations(requestParameters: ListTrainingSessionRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSessionRegistration>> {
+        const response = await this.listTrainingSessionRegistrationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listTrainingSessions without sending the request
+     */
+    async listTrainingSessionsRequestOpts(requestParameters: ListTrainingSessionsRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['statuses'] != null) {
+            queryParameters['statuses'] = requestParameters['statuses'];
+        }
+
+        if (requestParameters['sourceRequestId'] != null) {
+            queryParameters['source_request_id'] = requestParameters['sourceRequestId'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List training sessions
+     */
+    async listTrainingSessionsRaw(requestParameters: ListTrainingSessionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrainingSession>>> {
+        const requestOptions = await this.listTrainingSessionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TrainingSessionFromJSON));
+    }
+
+    /**
+     * List training sessions
+     */
+    async listTrainingSessions(requestParameters: ListTrainingSessionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSession>> {
+        const response = await this.listTrainingSessionsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for startTrainingSession without sending the request
+     */
+    async startTrainingSessionRequestOpts(requestParameters: StartTrainingSessionRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling startTrainingSession().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/start`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Start training session
+     */
+    async startTrainingSessionRaw(requestParameters: StartTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>> {
+        const requestOptions = await this.startTrainingSessionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionFromJSON(jsonValue));
+    }
+
+    /**
+     * Start training session
+     */
+    async startTrainingSession(requestParameters: StartTrainingSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession> {
+        const response = await this.startTrainingSessionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for updateTrainingRequestStatus without sending the request
      */
     async updateTrainingRequestStatusRequestOpts(requestParameters: UpdateTrainingRequestStatusOperationRequest): Promise<runtime.RequestOpts> {
@@ -322,6 +1660,292 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
     async updateTrainingRequestStatus(requestParameters: UpdateTrainingRequestStatusOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingRequest> {
         const response = await this.updateTrainingRequestStatusRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for updateTrainingSession without sending the request
+     */
+    async updateTrainingSessionRequestOpts(requestParameters: UpdateTrainingSessionOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateTrainingSession().'
+            );
+        }
+
+        if (requestParameters['updateTrainingSessionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateTrainingSessionRequest',
+                'Required parameter "updateTrainingSessionRequest" was null or undefined when calling updateTrainingSession().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateTrainingSessionRequestToJSON(requestParameters['updateTrainingSessionRequest']),
+        };
+    }
+
+    /**
+     * Update training session
+     */
+    async updateTrainingSessionRaw(requestParameters: UpdateTrainingSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSession>> {
+        const requestOptions = await this.updateTrainingSessionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionFromJSON(jsonValue));
+    }
+
+    /**
+     * Update training session
+     */
+    async updateTrainingSession(requestParameters: UpdateTrainingSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSession> {
+        const response = await this.updateTrainingSessionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for updateTrainingSessionMaterial without sending the request
+     */
+    async updateTrainingSessionMaterialRequestOpts(requestParameters: UpdateTrainingSessionMaterialOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateTrainingSessionMaterial().'
+            );
+        }
+
+        if (requestParameters['materialID'] == null) {
+            throw new runtime.RequiredError(
+                'materialID',
+                'Required parameter "materialID" was null or undefined when calling updateTrainingSessionMaterial().'
+            );
+        }
+
+        if (requestParameters['updateTrainingSessionMaterialRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateTrainingSessionMaterialRequest',
+                'Required parameter "updateTrainingSessionMaterialRequest" was null or undefined when calling updateTrainingSessionMaterial().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/materials/{materialID}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+
+        return {
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateTrainingSessionMaterialRequestToJSON(requestParameters['updateTrainingSessionMaterialRequest']),
+        };
+    }
+
+    /**
+     * Update training session material
+     */
+    async updateTrainingSessionMaterialRaw(requestParameters: UpdateTrainingSessionMaterialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionMaterial>> {
+        const requestOptions = await this.updateTrainingSessionMaterialRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionMaterialFromJSON(jsonValue));
+    }
+
+    /**
+     * Update training session material
+     */
+    async updateTrainingSessionMaterial(requestParameters: UpdateTrainingSessionMaterialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionMaterial> {
+        const response = await this.updateTrainingSessionMaterialRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for updateTrainingSessionRegistration without sending the request
+     */
+    async updateTrainingSessionRegistrationRequestOpts(requestParameters: UpdateTrainingSessionRegistrationOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateTrainingSessionRegistration().'
+            );
+        }
+
+        if (requestParameters['userID'] == null) {
+            throw new runtime.RequiredError(
+                'userID',
+                'Required parameter "userID" was null or undefined when calling updateTrainingSessionRegistration().'
+            );
+        }
+
+        if (requestParameters['updateTrainingSessionRegistrationRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateTrainingSessionRegistrationRequest',
+                'Required parameter "updateTrainingSessionRegistrationRequest" was null or undefined when calling updateTrainingSessionRegistration().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/registrations/{userID}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"userID"}}`, encodeURIComponent(String(requestParameters['userID'])));
+
+        return {
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateTrainingSessionRegistrationRequestToJSON(requestParameters['updateTrainingSessionRegistrationRequest']),
+        };
+    }
+
+    /**
+     * Update training session registration
+     */
+    async updateTrainingSessionRegistrationRaw(requestParameters: UpdateTrainingSessionRegistrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionRegistration>> {
+        const requestOptions = await this.updateTrainingSessionRegistrationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionRegistrationFromJSON(jsonValue));
+    }
+
+    /**
+     * Update training session registration
+     */
+    async updateTrainingSessionRegistration(requestParameters: UpdateTrainingSessionRegistrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionRegistration> {
+        const response = await this.updateTrainingSessionRegistrationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for uploadTrainingSessionMaterialContent without sending the request
+     */
+    async uploadTrainingSessionMaterialContentRequestOpts(requestParameters: UploadTrainingSessionMaterialContentRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling uploadTrainingSessionMaterialContent().'
+            );
+        }
+
+        if (requestParameters['materialID'] == null) {
+            throw new runtime.RequiredError(
+                'materialID',
+                'Required parameter "materialID" was null or undefined when calling uploadTrainingSessionMaterialContent().'
+            );
+        }
+
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling uploadTrainingSessionMaterialContent().'
+            );
+        }
+
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling uploadTrainingSessionMaterialContent().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['token'] != null) {
+            queryParameters['token'] = requestParameters['token'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/octet-stream';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/materials/{materialID}/content`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        };
+    }
+
+    /**
+     * Upload training session material content
+     */
+    async uploadTrainingSessionMaterialContentRaw(requestParameters: UploadTrainingSessionMaterialContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.uploadTrainingSessionMaterialContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Upload training session material content
+     */
+    async uploadTrainingSessionMaterialContent(requestParameters: UploadTrainingSessionMaterialContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.uploadTrainingSessionMaterialContentRaw(requestParameters, initOverrides);
     }
 
 }

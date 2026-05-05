@@ -1,44 +1,36 @@
 
-# CalendarItem
+# UpdateTrainingSessionRequest
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`source_type` | [CalendarSourceType](CalendarSourceType.md)
-`source_id` | string
-`organization_id` | string
 `title` | string
 `description` | string
-`start_at` | Date
-`end_at` | Date
-`can_manage` | boolean
-`manage_scope` | [CalendarManageScope](CalendarManageScope.md)
 `delivery_mode` | [TrainingSessionDeliveryMode](TrainingSessionDeliveryMode.md)
+`starts_at` | Date
+`ends_at` | Date
 `location_text` | string
 `external_join_url` | string
+`capacity` | number
 
 ## Example
 
 ```typescript
-import type { CalendarItem } from ''
+import type { UpdateTrainingSessionRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "source_type": null,
-  "source_id": null,
-  "organization_id": null,
   "title": null,
   "description": null,
-  "start_at": null,
-  "end_at": null,
-  "can_manage": null,
-  "manage_scope": null,
   "delivery_mode": null,
+  "starts_at": null,
+  "ends_at": null,
   "location_text": null,
   "external_join_url": null,
-} satisfies CalendarItem
+  "capacity": null,
+} satisfies UpdateTrainingSessionRequest
 
 console.log(example)
 
@@ -47,7 +39,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as CalendarItem
+const exampleParsed = JSON.parse(exampleJSON) as UpdateTrainingSessionRequest
 console.log(exampleParsed)
 ```
 

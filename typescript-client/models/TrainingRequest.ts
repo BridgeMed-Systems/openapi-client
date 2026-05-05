@@ -77,6 +77,12 @@ export interface TrainingRequest {
     status: TrainingRequestStatus;
     /**
      * 
+     * @type {string}
+     * @memberof TrainingRequest
+     */
+    session_id?: string | null;
+    /**
+     * 
      * @type {Date}
      * @memberof TrainingRequest
      */
@@ -135,6 +141,7 @@ export function TrainingRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
         'title': json['title'],
         'message': json['message'],
         'status': TrainingRequestStatusFromJSON(json['status']),
+        'session_id': json['session_id'] == null ? undefined : json['session_id'],
         'scheduled_start_at': json['scheduled_start_at'] == null ? undefined : (new Date(json['scheduled_start_at'])),
         'scheduled_end_at': json['scheduled_end_at'] == null ? undefined : (new Date(json['scheduled_end_at'])),
         'date_added': (new Date(json['date_added'])),
@@ -161,6 +168,7 @@ export function TrainingRequestToJSONTyped(value?: TrainingRequest | null, ignor
         'title': value['title'],
         'message': value['message'],
         'status': TrainingRequestStatusToJSON(value['status']),
+        'session_id': value['session_id'],
         'scheduled_start_at': value['scheduled_start_at'] == null ? value['scheduled_start_at'] : value['scheduled_start_at'].toISOString(),
         'scheduled_end_at': value['scheduled_end_at'] == null ? value['scheduled_end_at'] : value['scheduled_end_at'].toISOString(),
         'date_added': value['date_added'].toISOString(),

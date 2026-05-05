@@ -15,17 +15,26 @@
 
 import * as runtime from '../runtime';
 import type {
+  CalendarFeed,
+  CalendarFeedScope,
   CalendarItem,
   CalendarScope,
   ErrorResponse,
+  RotateCalendarFeedRequest,
 } from '../models/index';
 import {
+    CalendarFeedFromJSON,
+    CalendarFeedToJSON,
+    CalendarFeedScopeFromJSON,
+    CalendarFeedScopeToJSON,
     CalendarItemFromJSON,
     CalendarItemToJSON,
     CalendarScopeFromJSON,
     CalendarScopeToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    RotateCalendarFeedRequestFromJSON,
+    RotateCalendarFeedRequestToJSON,
 } from '../models/index';
 
 export interface ListCalendarEventsRequest {
@@ -33,6 +42,15 @@ export interface ListCalendarEventsRequest {
     end?: Date;
     scope?: CalendarScope;
     types?: string;
+}
+
+export interface PublicCalendarFeedRequest {
+    scope: CalendarFeedScope;
+    token: string;
+}
+
+export interface RotateCalendarFeedOperationRequest {
+    rotateCalendarFeedRequest: RotateCalendarFeedRequest;
 }
 
 /**
@@ -70,6 +88,75 @@ export interface EventsApiInterface {
      * Unified calendar events
      */
     listCalendarEvents(requestParameters: ListCalendarEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CalendarItem>>;
+
+    /**
+     * Creates request options for listCalendarFeeds without sending the request
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    listCalendarFeedsRequestOpts(): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary List calendar feeds
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    listCalendarFeedsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CalendarFeed>>>;
+
+    /**
+     * List calendar feeds
+     */
+    listCalendarFeeds(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CalendarFeed>>;
+
+    /**
+     * Creates request options for publicCalendarFeed without sending the request
+     * @param {CalendarFeedScope} scope 
+     * @param {string} token 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    publicCalendarFeedRequestOpts(requestParameters: PublicCalendarFeedRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Public signed calendar feed
+     * @param {CalendarFeedScope} scope 
+     * @param {string} token 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    publicCalendarFeedRaw(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>>;
+
+    /**
+     * Public signed calendar feed
+     */
+    publicCalendarFeed(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string>;
+
+    /**
+     * Creates request options for rotateCalendarFeed without sending the request
+     * @param {RotateCalendarFeedRequest} rotateCalendarFeedRequest 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    rotateCalendarFeedRequestOpts(requestParameters: RotateCalendarFeedOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Rotate calendar feed token
+     * @param {RotateCalendarFeedRequest} rotateCalendarFeedRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    rotateCalendarFeedRaw(requestParameters: RotateCalendarFeedOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CalendarFeed>>;
+
+    /**
+     * Rotate calendar feed token
+     */
+    rotateCalendarFeed(requestParameters: RotateCalendarFeedOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CalendarFeed>;
 
 }
 
@@ -136,6 +223,163 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
      */
     async listCalendarEvents(requestParameters: ListCalendarEventsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CalendarItem>> {
         const response = await this.listCalendarEventsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listCalendarFeeds without sending the request
+     */
+    async listCalendarFeedsRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/calendar/feeds`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List calendar feeds
+     */
+    async listCalendarFeedsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CalendarFeed>>> {
+        const requestOptions = await this.listCalendarFeedsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CalendarFeedFromJSON));
+    }
+
+    /**
+     * List calendar feeds
+     */
+    async listCalendarFeeds(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CalendarFeed>> {
+        const response = await this.listCalendarFeedsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for publicCalendarFeed without sending the request
+     */
+    async publicCalendarFeedRequestOpts(requestParameters: PublicCalendarFeedRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['scope'] == null) {
+            throw new runtime.RequiredError(
+                'scope',
+                'Required parameter "scope" was null or undefined when calling publicCalendarFeed().'
+            );
+        }
+
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling publicCalendarFeed().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/calendar/feeds/{scope}/{token}.ics`;
+        urlPath = urlPath.replace(`{${"scope"}}`, encodeURIComponent(String(requestParameters['scope'])));
+        urlPath = urlPath.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Public signed calendar feed
+     */
+    async publicCalendarFeedRaw(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        const requestOptions = await this.publicCalendarFeedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Public signed calendar feed
+     */
+    async publicCalendarFeed(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.publicCalendarFeedRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for rotateCalendarFeed without sending the request
+     */
+    async rotateCalendarFeedRequestOpts(requestParameters: RotateCalendarFeedOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rotateCalendarFeedRequest'] == null) {
+            throw new runtime.RequiredError(
+                'rotateCalendarFeedRequest',
+                'Required parameter "rotateCalendarFeedRequest" was null or undefined when calling rotateCalendarFeed().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/calendar/feeds/rotate`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RotateCalendarFeedRequestToJSON(requestParameters['rotateCalendarFeedRequest']),
+        };
+    }
+
+    /**
+     * Rotate calendar feed token
+     */
+    async rotateCalendarFeedRaw(requestParameters: RotateCalendarFeedOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CalendarFeed>> {
+        const requestOptions = await this.rotateCalendarFeedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CalendarFeedFromJSON(jsonValue));
+    }
+
+    /**
+     * Rotate calendar feed token
+     */
+    async rotateCalendarFeed(requestParameters: RotateCalendarFeedOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CalendarFeed> {
+        const response = await this.rotateCalendarFeedRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

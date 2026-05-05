@@ -20,6 +20,13 @@ import {
     CalendarManageScopeToJSON,
     CalendarManageScopeToJSONTyped,
 } from './CalendarManageScope';
+import type { TrainingSessionDeliveryMode } from './TrainingSessionDeliveryMode';
+import {
+    TrainingSessionDeliveryModeFromJSON,
+    TrainingSessionDeliveryModeFromJSONTyped,
+    TrainingSessionDeliveryModeToJSON,
+    TrainingSessionDeliveryModeToJSONTyped,
+} from './TrainingSessionDeliveryMode';
 import type { CalendarSourceType } from './CalendarSourceType';
 import {
     CalendarSourceTypeFromJSON,
@@ -88,6 +95,24 @@ export interface CalendarItem {
      * @memberof CalendarItem
      */
     manage_scope: CalendarManageScope;
+    /**
+     * 
+     * @type {TrainingSessionDeliveryMode}
+     * @memberof CalendarItem
+     */
+    delivery_mode?: TrainingSessionDeliveryMode;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarItem
+     */
+    location_text?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarItem
+     */
+    external_join_url?: string;
 }
 
 
@@ -126,6 +151,9 @@ export function CalendarItemFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'end_at': (new Date(json['end_at'])),
         'can_manage': json['can_manage'],
         'manage_scope': CalendarManageScopeFromJSON(json['manage_scope']),
+        'delivery_mode': json['delivery_mode'] == null ? undefined : TrainingSessionDeliveryModeFromJSON(json['delivery_mode']),
+        'location_text': json['location_text'] == null ? undefined : json['location_text'],
+        'external_join_url': json['external_join_url'] == null ? undefined : json['external_join_url'],
     };
 }
 
@@ -149,6 +177,9 @@ export function CalendarItemToJSONTyped(value?: CalendarItem | null, ignoreDiscr
         'end_at': value['end_at'].toISOString(),
         'can_manage': value['can_manage'],
         'manage_scope': CalendarManageScopeToJSON(value['manage_scope']),
+        'delivery_mode': TrainingSessionDeliveryModeToJSON(value['delivery_mode']),
+        'location_text': value['location_text'],
+        'external_join_url': value['external_join_url'],
     };
 }
 
