@@ -71,7 +71,7 @@ export interface VideosApiInterface {
     completeVideoUploadRequestOpts(requestParameters: CompleteVideoUploadRequest): Promise<runtime.RequestOpts>;
 
     /**
-     * Marks the raw source upload complete and moves the video into processing state. Encode job execution is configured separately.
+     * Foundation stub. Returns not implemented until S3 upload verification and encode queue configuration are added.
      * @summary Mark a video upload complete
      * @param {string} id 
      * @param {*} [options] Override http request option.
@@ -81,7 +81,7 @@ export interface VideosApiInterface {
     completeVideoUploadRaw(requestParameters: CompleteVideoUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VideoAsset>>;
 
     /**
-     * Marks the raw source upload complete and moves the video into processing state. Encode job execution is configured separately.
+     * Foundation stub. Returns not implemented until S3 upload verification and encode queue configuration are added.
      * Mark a video upload complete
      */
     completeVideoUpload(requestParameters: CompleteVideoUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VideoAsset>;
@@ -200,7 +200,7 @@ export class VideosApi extends runtime.BaseAPI implements VideosApiInterface {
     }
 
     /**
-     * Marks the raw source upload complete and moves the video into processing state. Encode job execution is configured separately.
+     * Foundation stub. Returns not implemented until S3 upload verification and encode queue configuration are added.
      * Mark a video upload complete
      */
     async completeVideoUploadRaw(requestParameters: CompleteVideoUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VideoAsset>> {
@@ -211,7 +211,7 @@ export class VideosApi extends runtime.BaseAPI implements VideosApiInterface {
     }
 
     /**
-     * Marks the raw source upload complete and moves the video into processing state. Encode job execution is configured separately.
+     * Foundation stub. Returns not implemented until S3 upload verification and encode queue configuration are added.
      * Mark a video upload complete
      */
     async completeVideoUpload(requestParameters: CompleteVideoUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VideoAsset> {

@@ -17,7 +17,7 @@ All URIs are relative to *https://api.bridge.med*
 
 Mark a video upload complete
 
-Marks the raw source upload complete and moves the video into processing state. Encode job execution is configured separately.
+Foundation stub. Returns not implemented until S3 upload verification and encode queue configuration are added.
 
 ### Example
 
@@ -81,6 +81,7 @@ example().catch(console.error);
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
 | **404** | Resource not found |  -  |
+| **501** | Feature is not implemented or configured |  -  |
 | **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
