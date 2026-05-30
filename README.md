@@ -13,9 +13,25 @@ Source contract:
 Prerequisites:
 
 - Java 17+ available on `PATH` (required by OpenAPI Generator)
-- npm/npx available
+- npm/npx available for direct local generation, or Docker available for the backend helper script
 
-Generate/re-generate from the backend contract:
+## Generate/re-generate from the backend contract
+
+Preferred workspace flow from a sibling `backend-api` checkout:
+
+```bash
+cd ../backend-api
+./scripts/generate-frontend-openapi-client.sh
+```
+
+The backend helper mounts the BridgeMed workspace into the OpenAPI Generator Docker image and writes output into this repository's `typescript-client/` directory. For non-standard checkout locations, set `OPENAPI_CLIENT_DIR`:
+
+```bash
+cd /path/to/backend-api
+OPENAPI_CLIENT_DIR=/path/to/openapi-client ./scripts/generate-frontend-openapi-client.sh
+```
+
+Direct local generation remains useful when Java/npm are available and Docker is not:
 
 ```bash
 cd ../openapi-client
@@ -25,5 +41,3 @@ npx --yes @openapitools/openapi-generator-cli generate \
   -o typescript-client \
   --additional-properties=supportsES6=true,useSingleRequestParameter=true,withInterfaces=true,modelPropertyNaming=original
 ```
-
-The backend repository also contains `scripts/generate-frontend-openapi-client.sh`, but that script currently assumes older sibling directory names from the original MedBridge workspace. Prefer the command above in this workspace until that script is updated.
