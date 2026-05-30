@@ -10,6 +10,11 @@ Source contract:
 
 - `../backend-api/api/openapi.yaml`
 
+Project-branch guardrail:
+
+- Slice branches should be generated from the backend `copr/bridge-med-project` contract and merged back into the OpenAPI client `copr/bridge-med-project` branch before downstream frontend dependency pins are refreshed.
+- Generated docs, examples, and helper usage must preserve BridgeMed's Phase 1 boundary: no patient data, cases, procedure schedules, PHI-bearing filenames, object-key examples, analytics labels, logs, fixtures, or sample payloads.
+
 Prerequisites:
 
 - Java 17+ available on `PATH` (required by OpenAPI Generator)
@@ -41,3 +46,13 @@ npx --yes @openapitools/openapi-generator-cli generate \
   -o typescript-client \
   --additional-properties=supportsES6=true,useSingleRequestParameter=true,withInterfaces=true,modelPropertyNaming=original
 ```
+
+## Validation checklist
+
+Before pushing a generated-client slice:
+
+1. Confirm the backend source contract is the intended `copr/bridge-med-project` lineage.
+2. Inspect generated API/model diffs for the expected contract change only.
+3. Run `git diff --check`.
+4. Run `yarn install --immutable` when dependency state is touched or package metadata needs verification.
+5. Review generated docs/examples and README changes for zero-PHI compliance before opening the PR.
