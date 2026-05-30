@@ -20,6 +20,13 @@ import {
     CatalogContentTypeToJSON,
     CatalogContentTypeToJSONTyped,
 } from './CatalogContentType';
+import type { CatalogContentPublicationStatus } from './CatalogContentPublicationStatus';
+import {
+    CatalogContentPublicationStatusFromJSON,
+    CatalogContentPublicationStatusFromJSONTyped,
+    CatalogContentPublicationStatusToJSON,
+    CatalogContentPublicationStatusToJSONTyped,
+} from './CatalogContentPublicationStatus';
 import type { CatalogContentStatus } from './CatalogContentStatus';
 import {
     CatalogContentStatusFromJSON,
@@ -102,6 +109,18 @@ export interface CatalogContentItem {
     status: CatalogContentStatus;
     /**
      * 
+     * @type {CatalogContentPublicationStatus}
+     * @memberof CatalogContentItem
+     */
+    publication_status: CatalogContentPublicationStatus;
+    /**
+     * 
+     * @type {number}
+     * @memberof CatalogContentItem
+     */
+    publication_version: number;
+    /**
+     * 
      * @type {Date}
      * @memberof CatalogContentItem
      */
@@ -118,6 +137,18 @@ export interface CatalogContentItem {
      * @memberof CatalogContentItem
      */
     date_archived?: Date | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CatalogContentItem
+     */
+    date_published?: Date | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CatalogContentItem
+     */
+    date_revoked?: Date | null;
 }
 
 
@@ -134,6 +165,8 @@ export function instanceOfCatalogContentItem(value: object): value is CatalogCon
     if (!('external_url' in value) || value['external_url'] === undefined) return false;
     if (!('tags' in value) || value['tags'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('publication_status' in value) || value['publication_status'] === undefined) return false;
+    if (!('publication_version' in value) || value['publication_version'] === undefined) return false;
     if (!('date_added' in value) || value['date_added'] === undefined) return false;
     return true;
 }
@@ -159,9 +192,13 @@ export function CatalogContentItemFromJSONTyped(json: any, ignoreDiscriminator: 
         'external_url': json['external_url'],
         'tags': json['tags'],
         'status': CatalogContentStatusFromJSON(json['status']),
+        'publication_status': CatalogContentPublicationStatusFromJSON(json['publication_status']),
+        'publication_version': json['publication_version'],
         'date_added': (new Date(json['date_added'])),
         'date_updated': json['date_updated'] == null ? undefined : (new Date(json['date_updated'])),
         'date_archived': json['date_archived'] == null ? undefined : (new Date(json['date_archived'])),
+        'date_published': json['date_published'] == null ? undefined : (new Date(json['date_published'])),
+        'date_revoked': json['date_revoked'] == null ? undefined : (new Date(json['date_revoked'])),
     };
 }
 
@@ -187,9 +224,13 @@ export function CatalogContentItemToJSONTyped(value?: CatalogContentItem | null,
         'external_url': value['external_url'],
         'tags': value['tags'],
         'status': CatalogContentStatusToJSON(value['status']),
+        'publication_status': CatalogContentPublicationStatusToJSON(value['publication_status']),
+        'publication_version': value['publication_version'],
         'date_added': value['date_added'].toISOString(),
         'date_updated': value['date_updated'] == null ? value['date_updated'] : value['date_updated'].toISOString(),
         'date_archived': value['date_archived'] == null ? value['date_archived'] : value['date_archived'].toISOString(),
+        'date_published': value['date_published'] == null ? value['date_published'] : value['date_published'].toISOString(),
+        'date_revoked': value['date_revoked'] == null ? value['date_revoked'] : value['date_revoked'].toISOString(),
     };
 }
 

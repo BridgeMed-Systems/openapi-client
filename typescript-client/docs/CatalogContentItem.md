@@ -17,9 +17,13 @@ Name | Type
 `external_url` | string
 `tags` | Array&lt;string&gt;
 `status` | [CatalogContentStatus](CatalogContentStatus.md)
+`publication_status` | [CatalogContentPublicationStatus](CatalogContentPublicationStatus.md)
+`publication_version` | number
 `date_added` | Date
 `date_updated` | Date
 `date_archived` | Date
+`date_published` | Date
+`date_revoked` | Date
 
 ## Example
 
@@ -39,9 +43,13 @@ const example = {
   "external_url": null,
   "tags": null,
   "status": null,
+  "publication_status": null,
+  "publication_version": null,
   "date_added": null,
   "date_updated": null,
   "date_archived": null,
+  "date_published": null,
+  "date_revoked": null,
 } satisfies CatalogContentItem
 
 console.log(example)
