@@ -12,18 +12,17 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  BuildInfo,
-  HealthResponse,
-} from '../models/index';
 import {
+    type BuildInfo,
     BuildInfoFromJSON,
     BuildInfoToJSON,
+} from '../models/BuildInfo';
+import {
+    type HealthResponse,
     HealthResponseFromJSON,
     HealthResponseToJSON,
-} from '../models/index';
+} from '../models/HealthResponse';
 
 /**
  * HealthApi - interface

@@ -12,27 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  CallerContext,
-  CreateSessionRequest,
-  CreateSessionResponse,
-  ErrorResponse,
-  SimpleOKResponse,
-} from '../models/index';
 import {
+    type CallerContext,
     CallerContextFromJSON,
     CallerContextToJSON,
+} from '../models/CallerContext';
+import {
+    type CreateSessionRequest,
     CreateSessionRequestFromJSON,
     CreateSessionRequestToJSON,
+} from '../models/CreateSessionRequest';
+import {
+    type CreateSessionResponse,
     CreateSessionResponseFromJSON,
     CreateSessionResponseToJSON,
+} from '../models/CreateSessionResponse';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type SimpleOKResponse,
     SimpleOKResponseFromJSON,
     SimpleOKResponseToJSON,
-} from '../models/index';
+} from '../models/SimpleOKResponse';
 
 export interface CreateSessionOperationRequest {
     createSessionRequest: CreateSessionRequest;

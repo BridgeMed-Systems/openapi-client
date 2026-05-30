@@ -12,33 +12,42 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  CreateProductOrganizationRequest,
-  CreateProductRequest,
-  CreateProductUserRequest,
-  ErrorResponse,
-  Product,
-  ProductOrganization,
-  UserProduct,
-} from '../models/index';
 import {
+    type CreateProductOrganizationRequest,
     CreateProductOrganizationRequestFromJSON,
     CreateProductOrganizationRequestToJSON,
+} from '../models/CreateProductOrganizationRequest';
+import {
+    type CreateProductRequest,
     CreateProductRequestFromJSON,
     CreateProductRequestToJSON,
+} from '../models/CreateProductRequest';
+import {
+    type CreateProductUserRequest,
     CreateProductUserRequestFromJSON,
     CreateProductUserRequestToJSON,
+} from '../models/CreateProductUserRequest';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type Product,
     ProductFromJSON,
     ProductToJSON,
+} from '../models/Product';
+import {
+    type ProductOrganization,
     ProductOrganizationFromJSON,
     ProductOrganizationToJSON,
+} from '../models/ProductOrganization';
+import {
+    type UserProduct,
     UserProductFromJSON,
     UserProductToJSON,
-} from '../models/index';
+} from '../models/UserProduct';
 
 export interface CreateProductOperationRequest {
     createProductRequest: CreateProductRequest;
@@ -400,7 +409,7 @@ export class ProductsApi extends runtime.BaseAPI implements ProductsApiInterface
         }
 
         let urlPath = `/v1/products/{id}/organizations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -465,7 +474,7 @@ export class ProductsApi extends runtime.BaseAPI implements ProductsApiInterface
         }
 
         let urlPath = `/v1/products/{id}/users`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -526,8 +535,8 @@ export class ProductsApi extends runtime.BaseAPI implements ProductsApiInterface
         }
 
         let urlPath = `/v1/products/{id}/organizations/{organizationID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"organizationID"}}`, encodeURIComponent(String(requestParameters['organizationID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{organizationID}', encodeURIComponent(String(requestParameters['organizationID'])));
 
         return {
             path: urlPath,
@@ -588,8 +597,8 @@ export class ProductsApi extends runtime.BaseAPI implements ProductsApiInterface
         }
 
         let urlPath = `/v1/products/{id}/users/{userID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"userID"}}`, encodeURIComponent(String(requestParameters['userID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{userID}', encodeURIComponent(String(requestParameters['userID'])));
 
         return {
             path: urlPath,
@@ -641,7 +650,7 @@ export class ProductsApi extends runtime.BaseAPI implements ProductsApiInterface
         }
 
         let urlPath = `/v1/products/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -694,7 +703,7 @@ export class ProductsApi extends runtime.BaseAPI implements ProductsApiInterface
         }
 
         let urlPath = `/v1/products/{id}/organizations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -747,7 +756,7 @@ export class ProductsApi extends runtime.BaseAPI implements ProductsApiInterface
         }
 
         let urlPath = `/v1/products/{id}/users`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

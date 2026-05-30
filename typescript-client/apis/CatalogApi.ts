@@ -12,30 +12,52 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  CatalogContentItem,
-  CreateCatalogContentRequest,
-  ErrorResponse,
-  UpdateCatalogContentRequest,
-} from '../models/index';
 import {
+    type CatalogContentItem,
     CatalogContentItemFromJSON,
     CatalogContentItemToJSON,
+} from '../models/CatalogContentItem';
+import {
+    type CatalogContentRecipient,
+    CatalogContentRecipientFromJSON,
+    CatalogContentRecipientToJSON,
+} from '../models/CatalogContentRecipient';
+import {
+    type CatalogContentVisibilityPolicy,
+    CatalogContentVisibilityPolicyFromJSON,
+    CatalogContentVisibilityPolicyToJSON,
+} from '../models/CatalogContentVisibilityPolicy';
+import {
+    type CreateCatalogContentRequest,
     CreateCatalogContentRequestFromJSON,
     CreateCatalogContentRequestToJSON,
+} from '../models/CreateCatalogContentRequest';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type UpdateCatalogContentRequest,
     UpdateCatalogContentRequestFromJSON,
     UpdateCatalogContentRequestToJSON,
-} from '../models/index';
+} from '../models/UpdateCatalogContentRequest';
+import {
+    type UpsertCatalogContentVisibilityPolicyRequest,
+    UpsertCatalogContentVisibilityPolicyRequestFromJSON,
+    UpsertCatalogContentVisibilityPolicyRequestToJSON,
+} from '../models/UpsertCatalogContentVisibilityPolicyRequest';
 
 export interface CreateCatalogContentOperationRequest {
     createCatalogContentRequest: CreateCatalogContentRequest;
 }
 
 export interface DeleteCatalogContentRequest {
+    id: string;
+}
+
+export interface DeleteCatalogContentVisibilityPolicyRequest {
     id: string;
 }
 
@@ -52,9 +74,29 @@ export interface ListCatalogContentRequest {
     tags?: string;
 }
 
+export interface ListCatalogContentRecipientsRequest {
+    id: string;
+}
+
+export interface PublishCatalogContentRequest {
+    id: string;
+}
+
+export interface RevokeCatalogContentRequest {
+    id: string;
+}
+
 export interface UpdateCatalogContentOperationRequest {
     id: string;
     updateCatalogContentRequest: UpdateCatalogContentRequest;
+}
+
+export interface UpsertCatalogContentVisibilityPolicyOperationRequest {
+    upsertCatalogContentVisibilityPolicyRequest: UpsertCatalogContentVisibilityPolicyRequest;
+}
+
+export interface VersionCatalogContentRequest {
+    id: string;
 }
 
 /**
@@ -109,6 +151,29 @@ export interface CatalogApiInterface {
      * Archive catalog content
      */
     deleteCatalogContent(requestParameters: DeleteCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Creates request options for deleteCatalogContentVisibilityPolicy without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    deleteCatalogContentVisibilityPolicyRequestOpts(requestParameters: DeleteCatalogContentVisibilityPolicyRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Delete a catalog content visibility policy owned by the authenticated tenant
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    deleteCatalogContentVisibilityPolicyRaw(requestParameters: DeleteCatalogContentVisibilityPolicyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Delete a catalog content visibility policy owned by the authenticated tenant
+     */
+    deleteCatalogContentVisibilityPolicy(requestParameters: DeleteCatalogContentVisibilityPolicyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Creates request options for getCatalogContent without sending the request
@@ -167,6 +232,30 @@ export interface CatalogApiInterface {
     listCatalogContent(requestParameters: ListCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CatalogContentItem>>;
 
     /**
+     * Creates request options for listCatalogContentRecipients without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    listCatalogContentRecipientsRequestOpts(requestParameters: ListCatalogContentRecipientsRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can see hospital/health-system recipient organizations derived from product assignments or explicit visibility policies. The response is organization-level only and does not include staff assignments or user activity.
+     * @summary List eligible catalog content recipient organizations with visibility explanations
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    listCatalogContentRecipientsRaw(requestParameters: ListCatalogContentRecipientsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CatalogContentRecipient>>>;
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can see hospital/health-system recipient organizations derived from product assignments or explicit visibility policies. The response is organization-level only and does not include staff assignments or user activity.
+     * List eligible catalog content recipient organizations with visibility explanations
+     */
+    listCatalogContentRecipients(requestParameters: ListCatalogContentRecipientsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CatalogContentRecipient>>;
+
+    /**
      * Creates request options for listCatalogContentTags without sending the request
      * @throws {RequiredError}
      * @memberof CatalogApiInterface
@@ -186,6 +275,75 @@ export interface CatalogApiInterface {
      * List catalog content tags
      */
     listCatalogContentTags(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>>;
+
+    /**
+     * Creates request options for listCatalogContentVisibilityPolicies without sending the request
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    listCatalogContentVisibilityPoliciesRequestOpts(): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary List catalog content visibility policies for the authenticated hospital or health-system tenant
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    listCatalogContentVisibilityPoliciesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CatalogContentVisibilityPolicy>>>;
+
+    /**
+     * List catalog content visibility policies for the authenticated hospital or health-system tenant
+     */
+    listCatalogContentVisibilityPolicies(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CatalogContentVisibilityPolicy>>;
+
+    /**
+     * Creates request options for publishCatalogContent without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    publishCatalogContentRequestOpts(requestParameters: PublishCatalogContentRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can publish catalog content. Publishing sets publication_status to published, sets date_published, and clears date_revoked.
+     * @summary Publish catalog content
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    publishCatalogContentRaw(requestParameters: PublishCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatalogContentItem>>;
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can publish catalog content. Publishing sets publication_status to published, sets date_published, and clears date_revoked.
+     * Publish catalog content
+     */
+    publishCatalogContent(requestParameters: PublishCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentItem>;
+
+    /**
+     * Creates request options for revokeCatalogContent without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    revokeCatalogContentRequestOpts(requestParameters: RevokeCatalogContentRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can revoke catalog content. Revocation sets publication_status to revoked and date_revoked.
+     * @summary Revoke catalog content publication
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    revokeCatalogContentRaw(requestParameters: RevokeCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatalogContentItem>>;
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can revoke catalog content. Revocation sets publication_status to revoked and date_revoked.
+     * Revoke catalog content publication
+     */
+    revokeCatalogContent(requestParameters: RevokeCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentItem>;
 
     /**
      * Creates request options for updateCatalogContent without sending the request
@@ -211,6 +369,53 @@ export interface CatalogApiInterface {
      * Update catalog content
      */
     updateCatalogContent(requestParameters: UpdateCatalogContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentItem>;
+
+    /**
+     * Creates request options for upsertCatalogContentVisibilityPolicy without sending the request
+     * @param {UpsertCatalogContentVisibilityPolicyRequest} upsertCatalogContentVisibilityPolicyRequest 
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    upsertCatalogContentVisibilityPolicyRequestOpts(requestParameters: UpsertCatalogContentVisibilityPolicyOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Upsert an allow/block catalog content visibility policy for the authenticated tenant
+     * @param {UpsertCatalogContentVisibilityPolicyRequest} upsertCatalogContentVisibilityPolicyRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    upsertCatalogContentVisibilityPolicyRaw(requestParameters: UpsertCatalogContentVisibilityPolicyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatalogContentVisibilityPolicy>>;
+
+    /**
+     * Upsert an allow/block catalog content visibility policy for the authenticated tenant
+     */
+    upsertCatalogContentVisibilityPolicy(requestParameters: UpsertCatalogContentVisibilityPolicyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentVisibilityPolicy>;
+
+    /**
+     * Creates request options for versionCatalogContent without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    versionCatalogContentRequestOpts(requestParameters: VersionCatalogContentRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can increment publication_version. This action does not publish or revoke content; it preserves the current publication_status and updates date_updated.
+     * @summary Bump catalog content publication version
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CatalogApiInterface
+     */
+    versionCatalogContentRaw(requestParameters: VersionCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatalogContentItem>>;
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can increment publication_version. This action does not publish or revoke content; it preserves the current publication_status and updates date_updated.
+     * Bump catalog content publication version
+     */
+    versionCatalogContent(requestParameters: VersionCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentItem>;
 
 }
 
@@ -299,7 +504,7 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
         }
 
         let urlPath = `/v1/catalog/content/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -327,6 +532,58 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
     }
 
     /**
+     * Creates request options for deleteCatalogContentVisibilityPolicy without sending the request
+     */
+    async deleteCatalogContentVisibilityPolicyRequestOpts(requestParameters: DeleteCatalogContentVisibilityPolicyRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteCatalogContentVisibilityPolicy().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/catalog/content/policies/{id}`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Delete a catalog content visibility policy owned by the authenticated tenant
+     */
+    async deleteCatalogContentVisibilityPolicyRaw(requestParameters: DeleteCatalogContentVisibilityPolicyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCatalogContentVisibilityPolicyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete a catalog content visibility policy owned by the authenticated tenant
+     */
+    async deleteCatalogContentVisibilityPolicy(requestParameters: DeleteCatalogContentVisibilityPolicyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteCatalogContentVisibilityPolicyRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Creates request options for getCatalogContent without sending the request
      */
     async getCatalogContentRequestOpts(requestParameters: GetCatalogContentRequest): Promise<runtime.RequestOpts> {
@@ -351,7 +608,7 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
         }
 
         let urlPath = `/v1/catalog/content/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -449,6 +706,61 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
     }
 
     /**
+     * Creates request options for listCatalogContentRecipients without sending the request
+     */
+    async listCatalogContentRecipientsRequestOpts(requestParameters: ListCatalogContentRecipientsRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling listCatalogContentRecipients().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/catalog/content/{id}/recipients`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can see hospital/health-system recipient organizations derived from product assignments or explicit visibility policies. The response is organization-level only and does not include staff assignments or user activity.
+     * List eligible catalog content recipient organizations with visibility explanations
+     */
+    async listCatalogContentRecipientsRaw(requestParameters: ListCatalogContentRecipientsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CatalogContentRecipient>>> {
+        const requestOptions = await this.listCatalogContentRecipientsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CatalogContentRecipientFromJSON));
+    }
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can see hospital/health-system recipient organizations derived from product assignments or explicit visibility policies. The response is organization-level only and does not include staff assignments or user activity.
+     * List eligible catalog content recipient organizations with visibility explanations
+     */
+    async listCatalogContentRecipients(requestParameters: ListCatalogContentRecipientsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CatalogContentRecipient>> {
+        const response = await this.listCatalogContentRecipientsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for listCatalogContentTags without sending the request
      */
     async listCatalogContentTagsRequestOpts(): Promise<runtime.RequestOpts> {
@@ -494,6 +806,161 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
     }
 
     /**
+     * Creates request options for listCatalogContentVisibilityPolicies without sending the request
+     */
+    async listCatalogContentVisibilityPoliciesRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/catalog/content/policies`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List catalog content visibility policies for the authenticated hospital or health-system tenant
+     */
+    async listCatalogContentVisibilityPoliciesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CatalogContentVisibilityPolicy>>> {
+        const requestOptions = await this.listCatalogContentVisibilityPoliciesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CatalogContentVisibilityPolicyFromJSON));
+    }
+
+    /**
+     * List catalog content visibility policies for the authenticated hospital or health-system tenant
+     */
+    async listCatalogContentVisibilityPolicies(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CatalogContentVisibilityPolicy>> {
+        const response = await this.listCatalogContentVisibilityPoliciesRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for publishCatalogContent without sending the request
+     */
+    async publishCatalogContentRequestOpts(requestParameters: PublishCatalogContentRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling publishCatalogContent().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/catalog/content/{id}/publish`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can publish catalog content. Publishing sets publication_status to published, sets date_published, and clears date_revoked.
+     * Publish catalog content
+     */
+    async publishCatalogContentRaw(requestParameters: PublishCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatalogContentItem>> {
+        const requestOptions = await this.publishCatalogContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CatalogContentItemFromJSON(jsonValue));
+    }
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can publish catalog content. Publishing sets publication_status to published, sets date_published, and clears date_revoked.
+     * Publish catalog content
+     */
+    async publishCatalogContent(requestParameters: PublishCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentItem> {
+        const response = await this.publishCatalogContentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for revokeCatalogContent without sending the request
+     */
+    async revokeCatalogContentRequestOpts(requestParameters: RevokeCatalogContentRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling revokeCatalogContent().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/catalog/content/{id}/revoke`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can revoke catalog content. Revocation sets publication_status to revoked and date_revoked.
+     * Revoke catalog content publication
+     */
+    async revokeCatalogContentRaw(requestParameters: RevokeCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatalogContentItem>> {
+        const requestOptions = await this.revokeCatalogContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CatalogContentItemFromJSON(jsonValue));
+    }
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can revoke catalog content. Revocation sets publication_status to revoked and date_revoked.
+     * Revoke catalog content publication
+     */
+    async revokeCatalogContent(requestParameters: RevokeCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentItem> {
+        const response = await this.revokeCatalogContentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for updateCatalogContent without sending the request
      */
     async updateCatalogContentRequestOpts(requestParameters: UpdateCatalogContentOperationRequest): Promise<runtime.RequestOpts> {
@@ -527,7 +994,7 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
         }
 
         let urlPath = `/v1/catalog/content/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -553,6 +1020,116 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
      */
     async updateCatalogContent(requestParameters: UpdateCatalogContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentItem> {
         const response = await this.updateCatalogContentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for upsertCatalogContentVisibilityPolicy without sending the request
+     */
+    async upsertCatalogContentVisibilityPolicyRequestOpts(requestParameters: UpsertCatalogContentVisibilityPolicyOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['upsertCatalogContentVisibilityPolicyRequest'] == null) {
+            throw new runtime.RequiredError(
+                'upsertCatalogContentVisibilityPolicyRequest',
+                'Required parameter "upsertCatalogContentVisibilityPolicyRequest" was null or undefined when calling upsertCatalogContentVisibilityPolicy().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/catalog/content/policies`;
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpsertCatalogContentVisibilityPolicyRequestToJSON(requestParameters['upsertCatalogContentVisibilityPolicyRequest']),
+        };
+    }
+
+    /**
+     * Upsert an allow/block catalog content visibility policy for the authenticated tenant
+     */
+    async upsertCatalogContentVisibilityPolicyRaw(requestParameters: UpsertCatalogContentVisibilityPolicyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatalogContentVisibilityPolicy>> {
+        const requestOptions = await this.upsertCatalogContentVisibilityPolicyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CatalogContentVisibilityPolicyFromJSON(jsonValue));
+    }
+
+    /**
+     * Upsert an allow/block catalog content visibility policy for the authenticated tenant
+     */
+    async upsertCatalogContentVisibilityPolicy(requestParameters: UpsertCatalogContentVisibilityPolicyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentVisibilityPolicy> {
+        const response = await this.upsertCatalogContentVisibilityPolicyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for versionCatalogContent without sending the request
+     */
+    async versionCatalogContentRequestOpts(requestParameters: VersionCatalogContentRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling versionCatalogContent().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/catalog/content/{id}/version`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can increment publication_version. This action does not publish or revoke content; it preserves the current publication_status and updates date_updated.
+     * Bump catalog content publication version
+     */
+    async versionCatalogContentRaw(requestParameters: VersionCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatalogContentItem>> {
+        const requestOptions = await this.versionCatalogContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CatalogContentItemFromJSON(jsonValue));
+    }
+
+    /**
+     * Vendor admins for the owning vendor organization, and platform admins, can increment publication_version. This action does not publish or revoke content; it preserves the current publication_status and updates date_updated.
+     * Bump catalog content publication version
+     */
+    async versionCatalogContent(requestParameters: VersionCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatalogContentItem> {
+        const response = await this.versionCatalogContentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

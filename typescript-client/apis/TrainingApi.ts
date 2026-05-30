@@ -12,54 +12,77 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  CreateTrainingRequest,
-  CreateTrainingSessionMaterialRequest,
-  CreateTrainingSessionRegistrationRequest,
-  CreateTrainingSessionRequest,
-  ErrorResponse,
-  TrainingRequest,
-  TrainingSession,
-  TrainingSessionJoinResult,
-  TrainingSessionMaterial,
-  TrainingSessionRegistration,
-  UpdateTrainingRequestStatusRequest,
-  UpdateTrainingSessionMaterialRequest,
-  UpdateTrainingSessionRegistrationRequest,
-  UpdateTrainingSessionRequest,
-} from '../models/index';
 import {
+    type CreateTrainingRequest,
     CreateTrainingRequestFromJSON,
     CreateTrainingRequestToJSON,
+} from '../models/CreateTrainingRequest';
+import {
+    type CreateTrainingSessionMaterialRequest,
     CreateTrainingSessionMaterialRequestFromJSON,
     CreateTrainingSessionMaterialRequestToJSON,
+} from '../models/CreateTrainingSessionMaterialRequest';
+import {
+    type CreateTrainingSessionRegistrationRequest,
     CreateTrainingSessionRegistrationRequestFromJSON,
     CreateTrainingSessionRegistrationRequestToJSON,
+} from '../models/CreateTrainingSessionRegistrationRequest';
+import {
+    type CreateTrainingSessionRequest,
     CreateTrainingSessionRequestFromJSON,
     CreateTrainingSessionRequestToJSON,
+} from '../models/CreateTrainingSessionRequest';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type TrainingRequest,
     TrainingRequestFromJSON,
     TrainingRequestToJSON,
+} from '../models/TrainingRequest';
+import {
+    type TrainingSession,
     TrainingSessionFromJSON,
     TrainingSessionToJSON,
+} from '../models/TrainingSession';
+import {
+    type TrainingSessionJoinResult,
     TrainingSessionJoinResultFromJSON,
     TrainingSessionJoinResultToJSON,
+} from '../models/TrainingSessionJoinResult';
+import {
+    type TrainingSessionMaterial,
     TrainingSessionMaterialFromJSON,
     TrainingSessionMaterialToJSON,
+} from '../models/TrainingSessionMaterial';
+import {
+    type TrainingSessionRegistration,
     TrainingSessionRegistrationFromJSON,
     TrainingSessionRegistrationToJSON,
+} from '../models/TrainingSessionRegistration';
+import {
+    type UpdateTrainingRequestStatusRequest,
     UpdateTrainingRequestStatusRequestFromJSON,
     UpdateTrainingRequestStatusRequestToJSON,
+} from '../models/UpdateTrainingRequestStatusRequest';
+import {
+    type UpdateTrainingSessionMaterialRequest,
     UpdateTrainingSessionMaterialRequestFromJSON,
     UpdateTrainingSessionMaterialRequestToJSON,
+} from '../models/UpdateTrainingSessionMaterialRequest';
+import {
+    type UpdateTrainingSessionRegistrationRequest,
     UpdateTrainingSessionRegistrationRequestFromJSON,
     UpdateTrainingSessionRegistrationRequestToJSON,
+} from '../models/UpdateTrainingSessionRegistrationRequest';
+import {
+    type UpdateTrainingSessionRequest,
     UpdateTrainingSessionRequestFromJSON,
     UpdateTrainingSessionRequestToJSON,
-} from '../models/index';
+} from '../models/UpdateTrainingSessionRequest';
 
 export interface CancelTrainingSessionRequest {
     id: string;
@@ -724,7 +747,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/cancel`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -777,7 +800,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/complete`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -837,8 +860,8 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/materials/{materialID}/upload-complete`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{materialID}', encodeURIComponent(String(requestParameters['materialID'])));
 
         return {
             path: urlPath,
@@ -1010,7 +1033,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/materials`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1066,7 +1089,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/registrations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1127,8 +1150,8 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/materials/{materialID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{materialID}', encodeURIComponent(String(requestParameters['materialID'])));
 
         return {
             path: urlPath,
@@ -1187,8 +1210,8 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/materials/{materialID}/download`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{materialID}', encodeURIComponent(String(requestParameters['materialID'])));
 
         return {
             path: urlPath,
@@ -1241,7 +1264,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1294,7 +1317,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/join`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1412,7 +1435,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/materials`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1465,7 +1488,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/registrations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1571,7 +1594,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/start`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1633,7 +1656,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/requests/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1696,7 +1719,7 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1766,8 +1789,8 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/materials/{materialID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{materialID}', encodeURIComponent(String(requestParameters['materialID'])));
 
         return {
             path: urlPath,
@@ -1837,8 +1860,8 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/registrations/{userID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"userID"}}`, encodeURIComponent(String(requestParameters['userID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{userID}', encodeURIComponent(String(requestParameters['userID'])));
 
         return {
             path: urlPath,
@@ -1919,8 +1942,8 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         }
 
         let urlPath = `/v1/training/sessions/{id}/materials/{materialID}/content`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"materialID"}}`, encodeURIComponent(String(requestParameters['materialID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{materialID}', encodeURIComponent(String(requestParameters['materialID'])));
 
         return {
             path: urlPath,

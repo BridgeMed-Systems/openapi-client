@@ -12,33 +12,42 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  ErrorResponse,
-  RepAssignedAccount,
-  RepAvailabilityProfile,
-  RepAvailabilityWindow,
-  RepDirectoryEntry,
-  UpsertRepAvailabilityProfileRequest,
-  UpsertRepAvailabilityWindowRequest,
-} from '../models/index';
 import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type RepAssignedAccount,
     RepAssignedAccountFromJSON,
     RepAssignedAccountToJSON,
+} from '../models/RepAssignedAccount';
+import {
+    type RepAvailabilityProfile,
     RepAvailabilityProfileFromJSON,
     RepAvailabilityProfileToJSON,
+} from '../models/RepAvailabilityProfile';
+import {
+    type RepAvailabilityWindow,
     RepAvailabilityWindowFromJSON,
     RepAvailabilityWindowToJSON,
+} from '../models/RepAvailabilityWindow';
+import {
+    type RepDirectoryEntry,
     RepDirectoryEntryFromJSON,
     RepDirectoryEntryToJSON,
+} from '../models/RepDirectoryEntry';
+import {
+    type UpsertRepAvailabilityProfileRequest,
     UpsertRepAvailabilityProfileRequestFromJSON,
     UpsertRepAvailabilityProfileRequestToJSON,
+} from '../models/UpsertRepAvailabilityProfileRequest';
+import {
+    type UpsertRepAvailabilityWindowRequest,
     UpsertRepAvailabilityWindowRequestFromJSON,
     UpsertRepAvailabilityWindowRequestToJSON,
-} from '../models/index';
+} from '../models/UpsertRepAvailabilityWindowRequest';
 
 export interface CreateRepAvailabilityWindowRequest {
     repUserID: string;
@@ -313,7 +322,7 @@ export class RepsApi extends runtime.BaseAPI implements RepsApiInterface {
         }
 
         let urlPath = `/v1/reps/{repUserID}/availability/windows`;
-        urlPath = urlPath.replace(`{${"repUserID"}}`, encodeURIComponent(String(requestParameters['repUserID'])));
+        urlPath = urlPath.replace('{repUserID}', encodeURIComponent(String(requestParameters['repUserID'])));
 
         return {
             path: urlPath,
@@ -374,8 +383,8 @@ export class RepsApi extends runtime.BaseAPI implements RepsApiInterface {
         }
 
         let urlPath = `/v1/reps/{repUserID}/availability/windows/{windowID}`;
-        urlPath = urlPath.replace(`{${"repUserID"}}`, encodeURIComponent(String(requestParameters['repUserID'])));
-        urlPath = urlPath.replace(`{${"windowID"}}`, encodeURIComponent(String(requestParameters['windowID'])));
+        urlPath = urlPath.replace('{repUserID}', encodeURIComponent(String(requestParameters['repUserID'])));
+        urlPath = urlPath.replace('{windowID}', encodeURIComponent(String(requestParameters['windowID'])));
 
         return {
             path: urlPath,
@@ -427,7 +436,7 @@ export class RepsApi extends runtime.BaseAPI implements RepsApiInterface {
         }
 
         let urlPath = `/v1/reps/{repUserID}/availability`;
-        urlPath = urlPath.replace(`{${"repUserID"}}`, encodeURIComponent(String(requestParameters['repUserID'])));
+        urlPath = urlPath.replace('{repUserID}', encodeURIComponent(String(requestParameters['repUserID'])));
 
         return {
             path: urlPath,
@@ -536,7 +545,7 @@ export class RepsApi extends runtime.BaseAPI implements RepsApiInterface {
         }
 
         let urlPath = `/v1/reps/{repUserID}/availability/windows`;
-        urlPath = urlPath.replace(`{${"repUserID"}}`, encodeURIComponent(String(requestParameters['repUserID'])));
+        urlPath = urlPath.replace('{repUserID}', encodeURIComponent(String(requestParameters['repUserID'])));
 
         return {
             path: urlPath,
@@ -643,7 +652,7 @@ export class RepsApi extends runtime.BaseAPI implements RepsApiInterface {
         }
 
         let urlPath = `/v1/reps/{repUserID}/availability`;
-        urlPath = urlPath.replace(`{${"repUserID"}}`, encodeURIComponent(String(requestParameters['repUserID'])));
+        urlPath = urlPath.replace('{repUserID}', encodeURIComponent(String(requestParameters['repUserID'])));
 
         return {
             path: urlPath,
@@ -713,8 +722,8 @@ export class RepsApi extends runtime.BaseAPI implements RepsApiInterface {
         }
 
         let urlPath = `/v1/reps/{repUserID}/availability/windows/{windowID}`;
-        urlPath = urlPath.replace(`{${"repUserID"}}`, encodeURIComponent(String(requestParameters['repUserID'])));
-        urlPath = urlPath.replace(`{${"windowID"}}`, encodeURIComponent(String(requestParameters['windowID'])));
+        urlPath = urlPath.replace('{repUserID}', encodeURIComponent(String(requestParameters['repUserID'])));
+        urlPath = urlPath.replace('{windowID}', encodeURIComponent(String(requestParameters['windowID'])));
 
         return {
             path: urlPath,

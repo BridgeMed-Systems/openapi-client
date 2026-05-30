@@ -12,57 +12,82 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  AdminUserAuthorization,
-  CreateAdminUserRequest,
-  CursorPageAuditEvent,
-  CursorPageOrganization,
-  CursorPageProduct,
-  CursorPageTrainingRequest,
-  CursorPageUser,
-  CursorPageWebinar,
-  ErrorResponse,
-  OnboardingState,
-  OrganizationType,
-  UpdateAdminUserAuthorizationRequest,
-  User,
-  UserPersona,
-  UserStatus,
-} from '../models/index';
 import {
+    type AdminUserAuthorization,
     AdminUserAuthorizationFromJSON,
     AdminUserAuthorizationToJSON,
+} from '../models/AdminUserAuthorization';
+import {
+    type CreateAdminUserRequest,
     CreateAdminUserRequestFromJSON,
     CreateAdminUserRequestToJSON,
+} from '../models/CreateAdminUserRequest';
+import {
+    type CursorPageAuditEvent,
     CursorPageAuditEventFromJSON,
     CursorPageAuditEventToJSON,
+} from '../models/CursorPageAuditEvent';
+import {
+    type CursorPageOrganization,
     CursorPageOrganizationFromJSON,
     CursorPageOrganizationToJSON,
+} from '../models/CursorPageOrganization';
+import {
+    type CursorPageProduct,
     CursorPageProductFromJSON,
     CursorPageProductToJSON,
+} from '../models/CursorPageProduct';
+import {
+    type CursorPageTrainingRequest,
     CursorPageTrainingRequestFromJSON,
     CursorPageTrainingRequestToJSON,
+} from '../models/CursorPageTrainingRequest';
+import {
+    type CursorPageUser,
     CursorPageUserFromJSON,
     CursorPageUserToJSON,
+} from '../models/CursorPageUser';
+import {
+    type CursorPageWebinar,
     CursorPageWebinarFromJSON,
     CursorPageWebinarToJSON,
+} from '../models/CursorPageWebinar';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type OnboardingState,
     OnboardingStateFromJSON,
     OnboardingStateToJSON,
+} from '../models/OnboardingState';
+import {
+    type OrganizationType,
     OrganizationTypeFromJSON,
     OrganizationTypeToJSON,
+} from '../models/OrganizationType';
+import {
+    type UpdateAdminUserAuthorizationRequest,
     UpdateAdminUserAuthorizationRequestFromJSON,
     UpdateAdminUserAuthorizationRequestToJSON,
+} from '../models/UpdateAdminUserAuthorizationRequest';
+import {
+    type User,
     UserFromJSON,
     UserToJSON,
+} from '../models/User';
+import {
+    type UserPersona,
     UserPersonaFromJSON,
     UserPersonaToJSON,
+} from '../models/UserPersona';
+import {
+    type UserStatus,
     UserStatusFromJSON,
     UserStatusToJSON,
-} from '../models/index';
+} from '../models/UserStatus';
 
 export interface CreateAdminUserOperationRequest {
     createAdminUserRequest: CreateAdminUserRequest;
@@ -497,7 +522,7 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
         }
 
         let urlPath = `/v1/admin/users/{id}/authorization`;
-        urlPath = urlPath.replace(`{${"userID"}}`, encodeURIComponent(String(requestParameters['userID'])));
+        urlPath = urlPath.replace('{userID}', encodeURIComponent(String(requestParameters['userID'])));
 
         return {
             path: urlPath,
@@ -977,7 +1002,7 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
         }
 
         let urlPath = `/v1/admin/users/{id}/authorization`;
-        urlPath = urlPath.replace(`{${"userID"}}`, encodeURIComponent(String(requestParameters['userID'])));
+        urlPath = urlPath.replace('{userID}', encodeURIComponent(String(requestParameters['userID'])));
 
         return {
             path: urlPath,

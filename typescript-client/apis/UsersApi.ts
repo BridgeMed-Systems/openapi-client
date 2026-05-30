@@ -12,27 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  AcceptInviteRequest,
-  CreateInviteRequest,
-  CreateInviteResponse,
-  ErrorResponse,
-  User,
-} from '../models/index';
 import {
+    type AcceptInviteRequest,
     AcceptInviteRequestFromJSON,
     AcceptInviteRequestToJSON,
+} from '../models/AcceptInviteRequest';
+import {
+    type CreateInviteRequest,
     CreateInviteRequestFromJSON,
     CreateInviteRequestToJSON,
+} from '../models/CreateInviteRequest';
+import {
+    type CreateInviteResponse,
     CreateInviteResponseFromJSON,
     CreateInviteResponseToJSON,
+} from '../models/CreateInviteResponse';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type User,
     UserFromJSON,
     UserToJSON,
-} from '../models/index';
+} from '../models/User';
 
 export interface AcceptUserInviteRequest {
     acceptInviteRequest: AcceptInviteRequest;
@@ -256,7 +261,7 @@ export class UsersApi extends runtime.BaseAPI implements UsersApiInterface {
         }
 
         let urlPath = `/v1/users/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

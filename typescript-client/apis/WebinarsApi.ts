@@ -12,39 +12,52 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  CreateWebinarQnARequest,
-  CreateWebinarRequest,
-  ErrorResponse,
-  JoinWebinarRequest,
-  UpdateWebinarQnARequest,
-  UpdateWebinarRequest,
-  Webinar,
-  WebinarJoinResult,
-  WebinarQnAItem,
-} from '../models/index';
 import {
+    type CreateWebinarQnARequest,
     CreateWebinarQnARequestFromJSON,
     CreateWebinarQnARequestToJSON,
+} from '../models/CreateWebinarQnARequest';
+import {
+    type CreateWebinarRequest,
     CreateWebinarRequestFromJSON,
     CreateWebinarRequestToJSON,
+} from '../models/CreateWebinarRequest';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type JoinWebinarRequest,
     JoinWebinarRequestFromJSON,
     JoinWebinarRequestToJSON,
+} from '../models/JoinWebinarRequest';
+import {
+    type UpdateWebinarQnARequest,
     UpdateWebinarQnARequestFromJSON,
     UpdateWebinarQnARequestToJSON,
+} from '../models/UpdateWebinarQnARequest';
+import {
+    type UpdateWebinarRequest,
     UpdateWebinarRequestFromJSON,
     UpdateWebinarRequestToJSON,
+} from '../models/UpdateWebinarRequest';
+import {
+    type Webinar,
     WebinarFromJSON,
     WebinarToJSON,
+} from '../models/Webinar';
+import {
+    type WebinarJoinResult,
     WebinarJoinResultFromJSON,
     WebinarJoinResultToJSON,
+} from '../models/WebinarJoinResult';
+import {
+    type WebinarQnAItem,
     WebinarQnAItemFromJSON,
     WebinarQnAItemToJSON,
-} from '../models/index';
+} from '../models/WebinarQnAItem';
 
 export interface CreateWebinarOperationRequest {
     createWebinarRequest: CreateWebinarRequest;
@@ -476,7 +489,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
         }
 
         let urlPath = `/v1/webinars/{id}/qna`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -530,7 +543,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
         }
 
         let urlPath = `/v1/webinars/{id}/end`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -583,7 +596,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
         }
 
         let urlPath = `/v1/webinars/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -638,7 +651,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
         }
 
         let urlPath = `/v1/webinars/{id}/join`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -692,7 +705,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
         }
 
         let urlPath = `/v1/webinars/{id}/qna`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -813,7 +826,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
 
 
         let urlPath = `/v1/webinars/{id}/signal`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -865,7 +878,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
         }
 
         let urlPath = `/v1/webinars/{id}/start`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -927,7 +940,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
         }
 
         let urlPath = `/v1/webinars/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -997,8 +1010,8 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
         }
 
         let urlPath = `/v1/webinars/{id}/qna/{itemID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"itemID"}}`, encodeURIComponent(String(requestParameters['itemID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{itemID}', encodeURIComponent(String(requestParameters['itemID'])));
 
         return {
             path: urlPath,

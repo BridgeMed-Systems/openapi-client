@@ -1,6 +1,6 @@
-# Bridge Med OpenAPI Client
+# BridgeMed OpenAPI Client
 
-This directory is the standalone home for generated API clients.
+This repository is the standalone home for generated API clients.
 
 Current client:
 
@@ -8,11 +8,22 @@ Current client:
 
 Source contract:
 
-- `../medbridge-backend/api/openapi.yaml`
+- `../backend-api/api/openapi.yaml`
 
-Generate/re-generate from backend:
+Prerequisites:
+
+- Java 17+ available on `PATH` (required by OpenAPI Generator)
+- npm/npx available
+
+Generate/re-generate from the backend contract:
 
 ```bash
-cd ../medbridge-backend
-./scripts/generate-frontend-openapi-client.sh
+cd ../openapi-client
+npx --yes @openapitools/openapi-generator-cli generate \
+  -i ../backend-api/api/openapi.yaml \
+  -g typescript-fetch \
+  -o typescript-client \
+  --additional-properties=supportsES6=true,useSingleRequestParameter=true,withInterfaces=true,modelPropertyNaming=original
 ```
+
+The backend repository also contains `scripts/generate-frontend-openapi-client.sh`, but that script currently assumes older sibling directory names from the original MedBridge workspace. Prefer the command above in this workspace until that script is updated.

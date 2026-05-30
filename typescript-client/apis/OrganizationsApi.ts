@@ -12,39 +12,52 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  CreateOrganizationRelationRequest,
-  CreateOrganizationRepRequest,
-  CreateOrganizationRequest,
-  CreateOrganizationUserRequest,
-  ErrorResponse,
-  Organization,
-  OrganizationRelation,
-  OrganizationRep,
-  OrganizationUser,
-} from '../models/index';
 import {
+    type CreateOrganizationRelationRequest,
     CreateOrganizationRelationRequestFromJSON,
     CreateOrganizationRelationRequestToJSON,
+} from '../models/CreateOrganizationRelationRequest';
+import {
+    type CreateOrganizationRepRequest,
     CreateOrganizationRepRequestFromJSON,
     CreateOrganizationRepRequestToJSON,
+} from '../models/CreateOrganizationRepRequest';
+import {
+    type CreateOrganizationRequest,
     CreateOrganizationRequestFromJSON,
     CreateOrganizationRequestToJSON,
+} from '../models/CreateOrganizationRequest';
+import {
+    type CreateOrganizationUserRequest,
     CreateOrganizationUserRequestFromJSON,
     CreateOrganizationUserRequestToJSON,
+} from '../models/CreateOrganizationUserRequest';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type Organization,
     OrganizationFromJSON,
     OrganizationToJSON,
+} from '../models/Organization';
+import {
+    type OrganizationRelation,
     OrganizationRelationFromJSON,
     OrganizationRelationToJSON,
+} from '../models/OrganizationRelation';
+import {
+    type OrganizationRep,
     OrganizationRepFromJSON,
     OrganizationRepToJSON,
+} from '../models/OrganizationRep';
+import {
+    type OrganizationUser,
     OrganizationUserFromJSON,
     OrganizationUserToJSON,
-} from '../models/index';
+} from '../models/OrganizationUser';
 
 export interface CreateOrganizationOperationRequest {
     createOrganizationRequest: CreateOrganizationRequest;
@@ -485,7 +498,7 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/relations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -548,7 +561,7 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/reps`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -611,7 +624,7 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/users`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -672,8 +685,8 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/relations/{childOrganizationID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"childOrganizationID"}}`, encodeURIComponent(String(requestParameters['childOrganizationID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{childOrganizationID}', encodeURIComponent(String(requestParameters['childOrganizationID'])));
 
         return {
             path: urlPath,
@@ -732,8 +745,8 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/reps/{userID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"userID"}}`, encodeURIComponent(String(requestParameters['userID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{userID}', encodeURIComponent(String(requestParameters['userID'])));
 
         return {
             path: urlPath,
@@ -792,8 +805,8 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/users/{userID}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"userID"}}`, encodeURIComponent(String(requestParameters['userID'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{userID}', encodeURIComponent(String(requestParameters['userID'])));
 
         return {
             path: urlPath,
@@ -845,7 +858,7 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -898,7 +911,7 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/relations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -951,7 +964,7 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/reps`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1004,7 +1017,7 @@ export class OrganizationsApi extends runtime.BaseAPI implements OrganizationsAp
         }
 
         let urlPath = `/v1/organizations/{id}/users`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

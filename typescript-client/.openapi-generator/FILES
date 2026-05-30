@@ -25,8 +25,13 @@ docs/CalendarSourceType.md
 docs/CallerContext.md
 docs/CatalogApi.md
 docs/CatalogContentItem.md
+docs/CatalogContentPublicationStatus.md
+docs/CatalogContentRecipient.md
+docs/CatalogContentRecipientOrganization.md
 docs/CatalogContentStatus.md
 docs/CatalogContentType.md
+docs/CatalogContentVisibilityPolicy.md
+docs/CatalogContentVisibilityPolicyEffect.md
 docs/CreateAdminUserRequest.md
 docs/CreateCatalogContentRequest.md
 docs/CreateInviteRequest.md
@@ -97,6 +102,7 @@ docs/UpdateTrainingSessionRegistrationRequest.md
 docs/UpdateTrainingSessionRequest.md
 docs/UpdateWebinarQnARequest.md
 docs/UpdateWebinarRequest.md
+docs/UpsertCatalogContentVisibilityPolicyRequest.md
 docs/UpsertRepAvailabilityProfileRequest.md
 docs/UpsertRepAvailabilityWindowRequest.md
 docs/User.md
@@ -125,8 +131,13 @@ models/CalendarScope.ts
 models/CalendarSourceType.ts
 models/CallerContext.ts
 models/CatalogContentItem.ts
+models/CatalogContentPublicationStatus.ts
+models/CatalogContentRecipient.ts
+models/CatalogContentRecipientOrganization.ts
 models/CatalogContentStatus.ts
 models/CatalogContentType.ts
+models/CatalogContentVisibilityPolicy.ts
+models/CatalogContentVisibilityPolicyEffect.ts
 models/CreateAdminUserRequest.ts
 models/CreateCatalogContentRequest.ts
 models/CreateInviteRequest.ts
@@ -191,6 +202,7 @@ models/UpdateTrainingSessionRegistrationRequest.ts
 models/UpdateTrainingSessionRequest.ts
 models/UpdateWebinarQnARequest.ts
 models/UpdateWebinarRequest.ts
+models/UpsertCatalogContentVisibilityPolicyRequest.ts
 models/UpsertRepAvailabilityProfileRequest.ts
 models/UpsertRepAvailabilityWindowRequest.ts
 models/User.ts

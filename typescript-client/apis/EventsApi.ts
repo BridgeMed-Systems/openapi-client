@@ -12,30 +12,37 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  CalendarFeed,
-  CalendarFeedScope,
-  CalendarItem,
-  CalendarScope,
-  ErrorResponse,
-  RotateCalendarFeedRequest,
-} from '../models/index';
 import {
+    type CalendarFeed,
     CalendarFeedFromJSON,
     CalendarFeedToJSON,
+} from '../models/CalendarFeed';
+import {
+    type CalendarFeedScope,
     CalendarFeedScopeFromJSON,
     CalendarFeedScopeToJSON,
+} from '../models/CalendarFeedScope';
+import {
+    type CalendarItem,
     CalendarItemFromJSON,
     CalendarItemToJSON,
+} from '../models/CalendarItem';
+import {
+    type CalendarScope,
     CalendarScopeFromJSON,
     CalendarScopeToJSON,
+} from '../models/CalendarScope';
+import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type RotateCalendarFeedRequest,
     RotateCalendarFeedRequestFromJSON,
     RotateCalendarFeedRequestToJSON,
-} from '../models/index';
+} from '../models/RotateCalendarFeedRequest';
 
 export interface ListCalendarEventsRequest {
     start?: Date;
@@ -295,8 +302,8 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
 
 
         let urlPath = `/calendar/feeds/{scope}/{token}.ics`;
-        urlPath = urlPath.replace(`{${"scope"}}`, encodeURIComponent(String(requestParameters['scope'])));
-        urlPath = urlPath.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters['token'])));
+        urlPath = urlPath.replace('{scope}', encodeURIComponent(String(requestParameters['scope'])));
+        urlPath = urlPath.replace('{token}', encodeURIComponent(String(requestParameters['token'])));
 
         return {
             path: urlPath,
