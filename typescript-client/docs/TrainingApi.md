@@ -298,6 +298,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
+| **idempotencyKey** | **string** | Optional opaque retry key for training request creation. Values are scoped to caller, organization, and product; do not include PHI. | [optional] |
 | **createTrainingRequest** | [CreateTrainingRequest](CreateTrainingRequest.md) |  | |
 
 ### Return type

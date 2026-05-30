@@ -98,6 +98,7 @@ export interface CompleteTrainingSessionMaterialUploadRequest {
 }
 
 export interface CreateTrainingRequestRequest {
+    idempotencyKey?: string;
     createTrainingRequest: CreateTrainingRequest;
 }
 
@@ -903,6 +904,10 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['idempotencyKey'] != null) {
+            headerParameters['Idempotency-Key'] = String(requestParameters['idempotencyKey']);
+        }
 
         headerParameters['Content-Type'] = 'application/json';
 
