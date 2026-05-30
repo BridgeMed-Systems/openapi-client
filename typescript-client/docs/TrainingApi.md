@@ -255,7 +255,7 @@ example().catch(console.error);
 
 ## createTrainingRequest
 
-> TrainingRequest createTrainingRequest(createTrainingRequest)
+> TrainingRequest createTrainingRequest(createTrainingRequest, idempotencyKey)
 
 Create training request
 
@@ -279,6 +279,8 @@ async function example() {
   const body = {
     // CreateTrainingRequest
     createTrainingRequest: ...,
+    // string | Optional opaque retry key for training request creation. Values are scoped to caller, organization, and product; do not include PHI. (optional)
+    idempotencyKey: idempotencyKey_example,
   } satisfies CreateTrainingRequestRequest;
 
   try {
@@ -298,8 +300,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **idempotencyKey** | **string** | Optional opaque retry key for training request creation. Values are scoped to caller, organization, and product; do not include PHI. | [optional] |
 | **createTrainingRequest** | [CreateTrainingRequest](CreateTrainingRequest.md) |  | |
+| **idempotencyKey** | `string` | Optional opaque retry key for training request creation. Values are scoped to caller, organization, and product; do not include PHI. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

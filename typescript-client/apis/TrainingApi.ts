@@ -98,8 +98,8 @@ export interface CompleteTrainingSessionMaterialUploadRequest {
 }
 
 export interface CreateTrainingRequestRequest {
-    idempotencyKey?: string;
     createTrainingRequest: CreateTrainingRequest;
+    idempotencyKey?: string;
 }
 
 export interface CreateTrainingSessionOperationRequest {
@@ -269,6 +269,7 @@ export interface TrainingApiInterface {
     /**
      * Creates request options for createTrainingRequest without sending the request
      * @param {CreateTrainingRequest} createTrainingRequest 
+     * @param {string} [idempotencyKey] Optional opaque retry key for training request creation. Values are scoped to caller, organization, and product; do not include PHI.
      * @throws {RequiredError}
      * @memberof TrainingApiInterface
      */
@@ -278,6 +279,7 @@ export interface TrainingApiInterface {
      * 
      * @summary Create training request
      * @param {CreateTrainingRequest} createTrainingRequest 
+     * @param {string} [idempotencyKey] Optional opaque retry key for training request creation. Values are scoped to caller, organization, and product; do not include PHI.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrainingApiInterface
@@ -905,11 +907,11 @@ export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         if (requestParameters['idempotencyKey'] != null) {
             headerParameters['Idempotency-Key'] = String(requestParameters['idempotencyKey']);
         }
-
-        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
