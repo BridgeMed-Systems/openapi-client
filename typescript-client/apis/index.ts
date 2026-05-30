@@ -12,3 +12,4 @@ export * from './TrainingApi';
 export * from './UsersApi';
 export * from './VideosApi';
 export * from './WebinarsApi';
+export * from './WorkspaceApi';

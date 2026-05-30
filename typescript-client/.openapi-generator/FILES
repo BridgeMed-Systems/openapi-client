@@ -10,8 +10,10 @@ apis/TrainingApi.ts
 apis/UsersApi.ts
 apis/VideosApi.ts
 apis/WebinarsApi.ts
+apis/WorkspaceApi.ts
 apis/index.ts
 docs/AcceptInviteRequest.md
+docs/ActivityItem.md
 docs/AdminApi.md
 docs/AdminUserAuthorization.md
 docs/AuditEvent.md
@@ -64,8 +66,12 @@ docs/ErrorResponse.md
 docs/EventsApi.md
 docs/HealthApi.md
 docs/HealthResponse.md
+docs/InsightsHighlight.md
+docs/InsightsMetric.md
+docs/InsightsResponse.md
 docs/Invite.md
 docs/JoinWebinarRequest.md
+docs/NotificationItem.md
 docs/OnboardingState.md
 docs/Organization.md
 docs/OrganizationRelation.md
@@ -128,8 +134,10 @@ docs/WebinarQnAItem.md
 docs/WebinarQnAStatus.md
 docs/WebinarStatus.md
 docs/WebinarsApi.md
+docs/WorkspaceApi.md
 index.ts
 models/AcceptInviteRequest.ts
+models/ActivityItem.ts
 models/AdminUserAuthorization.ts
 models/AuditEvent.ts
 models/BuildInfo.ts
@@ -177,8 +185,12 @@ models/CursorPageUser.ts
 models/CursorPageWebinar.ts
 models/ErrorResponse.ts
 models/HealthResponse.ts
+models/InsightsHighlight.ts
+models/InsightsMetric.ts
+models/InsightsResponse.ts
 models/Invite.ts
 models/JoinWebinarRequest.ts
+models/NotificationItem.ts
 models/OnboardingState.ts
 models/Organization.ts
 models/OrganizationRelation.ts
