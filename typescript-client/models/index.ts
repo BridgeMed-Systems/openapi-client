@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './AcceptInviteRequest';
+export * from './ActivityItem';
 export * from './AdminUserAuthorization';
 export * from './AuditEvent';
 export * from './BuildInfo';
@@ -48,8 +49,12 @@ export * from './CursorPageUser';
 export * from './CursorPageWebinar';
 export * from './ErrorResponse';
 export * from './HealthResponse';
+export * from './InsightsHighlight';
+export * from './InsightsMetric';
+export * from './InsightsResponse';
 export * from './Invite';
 export * from './JoinWebinarRequest';
+export * from './NotificationItem';
 export * from './OnboardingState';
 export * from './Organization';
 export * from './OrganizationRelation';
