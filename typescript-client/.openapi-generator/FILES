@@ -8,6 +8,7 @@ apis/ProductsApi.ts
 apis/RepsApi.ts
 apis/TrainingApi.ts
 apis/UsersApi.ts
+apis/VideosApi.ts
 apis/WebinarsApi.ts
 apis/index.ts
 docs/AcceptInviteRequest.md
@@ -49,6 +50,8 @@ docs/CreateTrainingRequest.md
 docs/CreateTrainingSessionMaterialRequest.md
 docs/CreateTrainingSessionRegistrationRequest.md
 docs/CreateTrainingSessionRequest.md
+docs/CreateVideoRequest.md
+docs/CreateVideoResponse.md
 docs/CreateWebinarQnARequest.md
 docs/CreateWebinarRequest.md
 docs/CursorPageAuditEvent.md
@@ -110,6 +113,13 @@ docs/UserPersona.md
 docs/UserProduct.md
 docs/UserStatus.md
 docs/UsersApi.md
+docs/VideoAsset.md
+docs/VideoAssetStatus.md
+docs/VideoPlayback.md
+docs/VideoPlaybackStatus.md
+docs/VideoUploadInstructions.md
+docs/VideoUploadStatus.md
+docs/VideosApi.md
 docs/Webinar.md
 docs/WebinarIceServer.md
 docs/WebinarJoinResult.md
@@ -155,6 +165,8 @@ models/CreateTrainingRequest.ts
 models/CreateTrainingSessionMaterialRequest.ts
 models/CreateTrainingSessionRegistrationRequest.ts
 models/CreateTrainingSessionRequest.ts
+models/CreateVideoRequest.ts
+models/CreateVideoResponse.ts
 models/CreateWebinarQnARequest.ts
 models/CreateWebinarRequest.ts
 models/CursorPageAuditEvent.ts
@@ -209,6 +221,12 @@ models/User.ts
 models/UserPersona.ts
 models/UserProduct.ts
 models/UserStatus.ts
+models/VideoAsset.ts
+models/VideoAssetStatus.ts
+models/VideoPlayback.ts
+models/VideoPlaybackStatus.ts
+models/VideoUploadInstructions.ts
+models/VideoUploadStatus.ts
 models/Webinar.ts
 models/WebinarIceServer.ts
 models/WebinarJoinResult.ts
