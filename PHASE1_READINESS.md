@@ -32,7 +32,16 @@ Generated video models should remain product/content metadata surfaces only. Sto
 - Generator: `@openapitools/openapi-generator-cli` with `typescript-fetch`.
 - Output: `typescript-client/`.
 
-Recommended generation command:
+Recommended workspace generation flow:
+
+```bash
+cd ../backend-api
+./scripts/generate-frontend-openapi-client.sh
+```
+
+The backend helper keeps source and output paths tied to sibling BridgeMed checkouts and writes generated output into this repository's `typescript-client/` directory. For non-standard checkout locations, set `OPENAPI_CLIENT_DIR` before running the helper.
+
+Direct local generation remains useful when Java/npm are available and Docker/helper execution is not:
 
 ```bash
 cd ../openapi-client
@@ -43,14 +52,14 @@ npx --yes @openapitools/openapi-generator-cli generate \
   --additional-properties=supportsES6=true,useSingleRequestParameter=true,withInterfaces=true,modelPropertyNaming=original
 ```
 
-Java is required by OpenAPI Generator. If `java` is unavailable in the runner, do not hand-edit generated output to simulate a generator run; document the blocker and rely on a runner with Java.
+Java is required by OpenAPI Generator. If `java` is unavailable in the runner, do not hand-edit generated output to simulate a generator run; document the blocker and rely on a runner with Java, the backend helper, or the workspace-local Java runtime when available.
 
 ## Acceptance gates for generated-client slices
 
 For each OpenAPI/client sync slice:
 
 1. Start from the current `copr/bridge-med-project` project branch state.
-2. Regenerate from the backend project-branch OpenAPI contract.
+2. Regenerate from the backend project-branch OpenAPI contract using the backend helper or the direct generator command.
 3. Inspect generated API methods and models for the intended backend contract changes only.
 4. Run `git diff --check`.
 5. Run `yarn install --immutable` when available.
