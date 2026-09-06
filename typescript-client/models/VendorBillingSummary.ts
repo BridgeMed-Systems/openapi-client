@@ -38,6 +38,12 @@ export interface VendorBillingSummary {
      */
     access_mode: VendorBillingSummaryAccessModeEnum;
     /**
+     * Current server-enforced access to paid vendor operations. Billing recovery, safety withdrawals, and hospital access to published documents remain available when false.
+     * @type {boolean}
+     * @memberof VendorBillingSummary
+     */
+    paid_operations_allowed: boolean;
+    /**
      * Saved subscription status, or none before a subscription is attached.
      * @type {string}
      * @memberof VendorBillingSummary
@@ -117,6 +123,7 @@ export function instanceOfVendorBillingSummary(value: object): value is VendorBi
     if (!('organization_id' in value) || value['organization_id'] === undefined) return false;
     if (!('organization_name' in value) || value['organization_name'] === undefined) return false;
     if (!('access_mode' in value) || value['access_mode'] === undefined) return false;
+    if (!('paid_operations_allowed' in value) || value['paid_operations_allowed'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     if (!('plan_key' in value) || value['plan_key'] === undefined) return false;
     if (!('interval' in value) || value['interval'] === undefined) return false;
@@ -140,6 +147,7 @@ export function VendorBillingSummaryFromJSONTyped(json: any, ignoreDiscriminator
         'organization_id': json['organization_id'],
         'organization_name': json['organization_name'],
         'access_mode': json['access_mode'],
+        'paid_operations_allowed': json['paid_operations_allowed'],
         'status': json['status'],
         'plan_key': json['plan_key'],
         'interval': json['interval'],
@@ -167,6 +175,7 @@ export function VendorBillingSummaryToJSONTyped(value?: VendorBillingSummary | n
         'organization_id': value['organization_id'],
         'organization_name': value['organization_name'],
         'access_mode': value['access_mode'],
+        'paid_operations_allowed': value['paid_operations_allowed'],
         'status': value['status'],
         'plan_key': value['plan_key'],
         'interval': value['interval'],

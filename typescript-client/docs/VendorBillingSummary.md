@@ -9,6 +9,7 @@ Name | Type
 `organization_id` | string
 `organization_name` | string
 `access_mode` | string
+`paid_operations_allowed` | boolean
 `status` | string
 `plan_key` | string
 `interval` | string
@@ -30,6 +31,7 @@ const example = {
   "organization_id": null,
   "organization_name": null,
   "access_mode": null,
+  "paid_operations_allowed": null,
   "status": null,
   "plan_key": null,
   "interval": null,
