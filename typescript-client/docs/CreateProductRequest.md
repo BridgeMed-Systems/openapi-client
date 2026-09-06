@@ -6,6 +6,10 @@
 
 Name | Type
 ------------ | -------------
+`device_identifier` | string
+`model_number` | string
+`specialties` | Array&lt;string&gt;
+`procedure_types` | Array&lt;string&gt;
 `name` | string
 `description` | string
 `vendor_org_id` | string
@@ -17,6 +21,10 @@ import type { CreateProductRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "device_identifier": null,
+  "model_number": null,
+  "specialties": null,
+  "procedure_types": null,
   "name": null,
   "description": null,
   "vendor_org_id": null,

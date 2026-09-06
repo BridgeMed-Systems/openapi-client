@@ -6,6 +6,8 @@
 
 Name | Type
 ------------ | -------------
+`role_key` | string
+`department_id` | string
 `email` | string
 `first_name` | string
 `last_name` | string
@@ -21,6 +23,8 @@ import type { CreateInviteRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "role_key": null,
+  "department_id": null,
   "email": null,
   "first_name": null,
   "last_name": null,

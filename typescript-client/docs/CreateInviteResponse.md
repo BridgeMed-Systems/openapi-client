@@ -6,7 +6,6 @@
 
 Name | Type
 ------------ | -------------
-`invite_token` | string
 `invite` | [Invite](Invite.md)
 
 ## Example
@@ -16,7 +15,6 @@ import type { CreateInviteResponse } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "invite_token": null,
   "invite": null,
 } satisfies CreateInviteResponse
 

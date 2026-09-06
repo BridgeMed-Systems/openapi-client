@@ -29,6 +29,42 @@ import {
 export interface TrainingRequest {
     /**
      * 
+     * @type {TrainingRequestRequestTypeEnum}
+     * @memberof TrainingRequest
+     */
+    request_type?: TrainingRequestRequestTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainingRequest
+     */
+    product_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainingRequest
+     */
+    organization_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainingRequest
+     */
+    requester_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainingRequest
+     */
+    requester_email?: string;
+    /**
+     * Requester contact for authorized phone or email follow-up.
+     * @type {string}
+     * @memberof TrainingRequest
+     */
+    requester_phone?: string;
+    /**
+     * 
      * @type {string}
      * @memberof TrainingRequest
      */
@@ -108,6 +144,16 @@ export interface TrainingRequest {
 }
 
 
+/**
+ * @export
+ */
+export const TrainingRequestRequestTypeEnum = {
+    InPerson: 'in_person',
+    Virtual: 'virtual',
+    InService: 'in_service'
+} as const;
+export type TrainingRequestRequestTypeEnum = typeof TrainingRequestRequestTypeEnum[keyof typeof TrainingRequestRequestTypeEnum];
+
 
 /**
  * Check if a given object implements the TrainingRequest interface.
@@ -133,6 +179,12 @@ export function TrainingRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
+        'request_type': json['request_type'] == null ? undefined : json['request_type'],
+        'product_name': json['product_name'] == null ? undefined : json['product_name'],
+        'organization_name': json['organization_name'] == null ? undefined : json['organization_name'],
+        'requester_name': json['requester_name'] == null ? undefined : json['requester_name'],
+        'requester_email': json['requester_email'] == null ? undefined : json['requester_email'],
+        'requester_phone': json['requester_phone'] == null ? undefined : json['requester_phone'],
         'id': json['id'],
         'organization_id': json['organization_id'],
         'submitted_by_user_id': json['submitted_by_user_id'],
@@ -160,6 +212,12 @@ export function TrainingRequestToJSONTyped(value?: TrainingRequest | null, ignor
 
     return {
         
+        'request_type': value['request_type'],
+        'product_name': value['product_name'],
+        'organization_name': value['organization_name'],
+        'requester_name': value['requester_name'],
+        'requester_email': value['requester_email'],
+        'requester_phone': value['requester_phone'],
         'id': value['id'],
         'organization_id': value['organization_id'],
         'submitted_by_user_id': value['submitted_by_user_id'],

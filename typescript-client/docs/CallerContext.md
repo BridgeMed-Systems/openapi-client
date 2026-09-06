@@ -6,6 +6,11 @@
 
 Name | Type
 ------------ | -------------
+`persona` | string
+`tenant_name` | string
+`tenant_org_type` | string
+`experience_tier` | string
+`available_workspaces` | Array&lt;string&gt;
 `subject` | string
 `tenant_id` | string
 `roles` | Array&lt;string&gt;
@@ -19,6 +24,11 @@ import type { CallerContext } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "persona": null,
+  "tenant_name": null,
+  "tenant_org_type": null,
+  "experience_tier": null,
+  "available_workspaces": null,
   "subject": null,
   "tenant_id": null,
   "roles": null,

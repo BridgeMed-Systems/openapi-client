@@ -4,11 +4,92 @@ All URIs are relative to *https://api.bridge.med*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**exportCalendarEvent**](EventsApi.md#exportcalendarevent) | **GET** /v1/events/{type}/{id}/calendar.ics | Export one authorized education event |
 | [**listCalendarEvents**](EventsApi.md#listcalendarevents) | **GET** /v1/events/calendar | Unified calendar events |
 | [**listCalendarFeeds**](EventsApi.md#listcalendarfeeds) | **GET** /v1/calendar/feeds | List calendar feeds |
-| [**publicCalendarFeed**](EventsApi.md#publiccalendarfeed) | **GET** /calendar/feeds/{scope}/{token}.ics | Public signed calendar feed |
+| [**publicCalendarFeed**](EventsApi.md#publiccalendarfeed) | **GET** /calendar/feeds/{scope}/{token}.ics | Private bearer calendar subscription |
+| [**revokeCalendarFeed**](EventsApi.md#revokecalendarfeed) | **POST** /v1/calendar/feeds/revoke | Stop a private calendar subscription |
 | [**rotateCalendarFeed**](EventsApi.md#rotatecalendarfeedoperation) | **POST** /v1/calendar/feeds/rotate | Rotate calendar feed token |
 
+
+
+## exportCalendarEvent
+
+> Blob exportCalendarEvent(type, id)
+
+Export one authorized education event
+
+Private iCalendar download with the same stable UID, update sequence and cancellation status as subscriptions. Exporting is not registration or attendance.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EventsApi,
+} from '';
+import type { ExportCalendarEventRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new EventsApi(config);
+
+  const body = {
+    // 'webinar' | 'training'
+    type: type_example,
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies ExportCalendarEventRequest;
+
+  try {
+    const data = await api.exportCalendarEvent(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **type** | `webinar`, `training` |  | [Defaults to `undefined`] [Enum: webinar, training] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**Blob**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `text/calendar`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Individual event |  -  |
+| **400** | Invalid calendar request |  -  |
+| **401** | Sign in required |  -  |
+| **403** | Current calendar access required |  -  |
+| **404** | Event unavailable in this organization |  -  |
+| **500** | Server failure |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## listCalendarEvents
@@ -162,7 +243,7 @@ This endpoint does not need any parameter.
 
 > string publicCalendarFeed(scope, token)
 
-Public signed calendar feed
+Private bearer calendar subscription
 
 ### Example
 
@@ -221,10 +302,86 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | ICS calendar feed |  -  |
+| **200** | Private iCalendar subscription. Stable UIDs, revision sequences, UTC times and cancellation records. Provider refresh timing varies. |  -  |
 | **400** | Validation or request shape error |  -  |
 | **404** | Resource not found |  -  |
 | **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## revokeCalendarFeed
+
+> revokeCalendarFeed(rotateCalendarFeedRequest)
+
+Stop a private calendar subscription
+
+Immediately rejects the old URL. Listing subscriptions preserves the stopped state. Rotate explicitly to create a replacement URL.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EventsApi,
+} from '';
+import type { RevokeCalendarFeedRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new EventsApi(config);
+
+  const body = {
+    // RotateCalendarFeedRequest
+    rotateCalendarFeedRequest: ...,
+  } satisfies RevokeCalendarFeedRequest;
+
+  try {
+    const data = await api.revokeCalendarFeed(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rotateCalendarFeedRequest** | [RotateCalendarFeedRequest](RotateCalendarFeedRequest.md) |  | |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Subscription stopped |  -  |
+| **400** | Invalid calendar request |  -  |
+| **401** | Sign in required |  -  |
+| **403** | Current calendar access required |  -  |
+| **404** | Event unavailable in this organization |  -  |
+| **500** | Server failure |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

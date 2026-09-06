@@ -47,7 +47,7 @@ export interface WebinarJoinResult {
      */
     expires_at: Date;
     /**
-     * 
+     * Gateway base path for the LiveKit SDK when transport is livekit.
      * @type {string}
      * @memberof WebinarJoinResult
      */
@@ -70,8 +70,29 @@ export interface WebinarJoinResult {
      * @memberof WebinarJoinResult
      */
     ice_servers: Array<WebinarIceServer>;
+    /**
+     * 
+     * @type {WebinarJoinResultTransportEnum}
+     * @memberof WebinarJoinResult
+     */
+    transport: WebinarJoinResultTransportEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebinarJoinResult
+     */
+    admission_id?: string;
 }
 
+
+/**
+ * @export
+ */
+export const WebinarJoinResultTransportEnum = {
+    Livekit: 'livekit',
+    Legacy: 'legacy'
+} as const;
+export type WebinarJoinResultTransportEnum = typeof WebinarJoinResultTransportEnum[keyof typeof WebinarJoinResultTransportEnum];
 
 
 /**
@@ -84,6 +105,7 @@ export function instanceOfWebinarJoinResult(value: object): value is WebinarJoin
     if (!('room_owner_node' in value) || value['room_owner_node'] === undefined) return false;
     if (!('participant_role' in value) || value['participant_role'] === undefined) return false;
     if (!('ice_servers' in value) || value['ice_servers'] === undefined) return false;
+    if (!('transport' in value) || value['transport'] === undefined) return false;
     return true;
 }
 
@@ -103,6 +125,8 @@ export function WebinarJoinResultFromJSONTyped(json: any, ignoreDiscriminator: b
         'room_owner_node': json['room_owner_node'],
         'participant_role': WebinarParticipantRoleFromJSON(json['participant_role']),
         'ice_servers': ((json['ice_servers'] as Array<any>).map(WebinarIceServerFromJSON)),
+        'transport': json['transport'],
+        'admission_id': json['admission_id'] == null ? undefined : json['admission_id'],
     };
 }
 
@@ -123,6 +147,8 @@ export function WebinarJoinResultToJSONTyped(value?: WebinarJoinResult | null, i
         'room_owner_node': value['room_owner_node'],
         'participant_role': WebinarParticipantRoleToJSON(value['participant_role']),
         'ice_servers': ((value['ice_servers'] as Array<any>).map(WebinarIceServerToJSON)),
+        'transport': value['transport'],
+        'admission_id': value['admission_id'],
     };
 }
 

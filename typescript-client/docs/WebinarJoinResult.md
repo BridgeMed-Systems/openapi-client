@@ -12,6 +12,8 @@ Name | Type
 `room_owner_node` | string
 `participant_role` | [WebinarParticipantRole](WebinarParticipantRole.md)
 `ice_servers` | [Array&lt;WebinarIceServer&gt;](WebinarIceServer.md)
+`transport` | string
+`admission_id` | string
 
 ## Example
 
@@ -26,6 +28,8 @@ const example = {
   "room_owner_node": null,
   "participant_role": null,
   "ice_servers": null,
+  "transport": null,
+  "admission_id": null,
 } satisfies WebinarJoinResult
 
 console.log(example)

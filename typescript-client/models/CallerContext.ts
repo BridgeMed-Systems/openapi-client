@@ -20,6 +20,36 @@ import { mapValues } from '../runtime';
  */
 export interface CallerContext {
     /**
+     * Effective organization-scoped persona, evaluated from current grants.
+     * @type {CallerContextPersonaEnum}
+     * @memberof CallerContext
+     */
+    persona?: CallerContextPersonaEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallerContext
+     */
+    tenant_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallerContext
+     */
+    tenant_org_type?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallerContext
+     */
+    experience_tier?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CallerContext
+     */
+    available_workspaces?: Array<string>;
+    /**
      * 
      * @type {string}
      * @memberof CallerContext
@@ -51,6 +81,22 @@ export interface CallerContext {
     claims?: { [key: string]: any; };
 }
 
+
+/**
+ * @export
+ */
+export const CallerContextPersonaEnum = {
+    ClinicalStaff: 'clinical_staff',
+    AdvancedClinicalStaff: 'advanced_clinical_staff',
+    HospitalAdmin: 'hospital_admin',
+    VendorFieldRep: 'vendor_field_rep',
+    VendorManager: 'vendor_manager',
+    VendorOrgAdmin: 'vendor_org_admin',
+    PlatformAdmin: 'platform_admin'
+} as const;
+export type CallerContextPersonaEnum = typeof CallerContextPersonaEnum[keyof typeof CallerContextPersonaEnum];
+
+
 /**
  * Check if a given object implements the CallerContext interface.
  */
@@ -72,6 +118,11 @@ export function CallerContextFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
+        'persona': json['persona'] == null ? undefined : json['persona'],
+        'tenant_name': json['tenant_name'] == null ? undefined : json['tenant_name'],
+        'tenant_org_type': json['tenant_org_type'] == null ? undefined : json['tenant_org_type'],
+        'experience_tier': json['experience_tier'] == null ? undefined : json['experience_tier'],
+        'available_workspaces': json['available_workspaces'] == null ? undefined : json['available_workspaces'],
         'subject': json['subject'],
         'tenant_id': json['tenant_id'],
         'roles': json['roles'],
@@ -91,6 +142,11 @@ export function CallerContextToJSONTyped(value?: CallerContext | null, ignoreDis
 
     return {
         
+        'persona': value['persona'],
+        'tenant_name': value['tenant_name'],
+        'tenant_org_type': value['tenant_org_type'],
+        'experience_tier': value['experience_tier'],
+        'available_workspaces': value['available_workspaces'],
         'subject': value['subject'],
         'tenant_id': value['tenant_id'],
         'roles': value['roles'],

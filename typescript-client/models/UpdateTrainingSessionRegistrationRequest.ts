@@ -28,6 +28,12 @@ import {
  */
 export interface UpdateTrainingSessionRegistrationRequest {
     /**
+     * Required when a hospital administrator records attended or no_show. Describe the provider roster or other evidence, never infer attendance from a meeting-link click.
+     * @type {string}
+     * @memberof UpdateTrainingSessionRegistrationRequest
+     */
+    attendance_evidence?: string;
+    /**
      * 
      * @type {TrainingSessionAttendanceStatus}
      * @memberof UpdateTrainingSessionRegistrationRequest
@@ -55,6 +61,7 @@ export function UpdateTrainingSessionRegistrationRequestFromJSONTyped(json: any,
     }
     return {
         
+        'attendance_evidence': json['attendance_evidence'] == null ? undefined : json['attendance_evidence'],
         'attendance_status': TrainingSessionAttendanceStatusFromJSON(json['attendance_status']),
     };
 }
@@ -70,6 +77,7 @@ export function UpdateTrainingSessionRegistrationRequestToJSONTyped(value?: Upda
 
     return {
         
+        'attendance_evidence': value['attendance_evidence'],
         'attendance_status': TrainingSessionAttendanceStatusToJSON(value['attendance_status']),
     };
 }

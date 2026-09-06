@@ -4,6 +4,7 @@ All URIs are relative to *https://api.bridge.med*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**cancelMyTrainingSessionRegistration**](TrainingApi.md#cancelmytrainingsessionregistration) | **DELETE** /v1/training/sessions/{id}/registrations/me | Cancel my session registration |
 | [**cancelTrainingSession**](TrainingApi.md#canceltrainingsession) | **POST** /v1/training/sessions/{id}/cancel | Cancel training session |
 | [**completeTrainingSession**](TrainingApi.md#completetrainingsession) | **POST** /v1/training/sessions/{id}/complete | Complete training session |
 | [**completeTrainingSessionMaterialUpload**](TrainingApi.md#completetrainingsessionmaterialupload) | **POST** /v1/training/sessions/{id}/materials/{materialID}/upload-complete | Finalize training session material upload |
@@ -26,6 +27,83 @@ All URIs are relative to *https://api.bridge.med*
 | [**updateTrainingSessionRegistration**](TrainingApi.md#updatetrainingsessionregistrationoperation) | **PATCH** /v1/training/sessions/{id}/registrations/{userID} | Update training session registration |
 | [**uploadTrainingSessionMaterialContent**](TrainingApi.md#uploadtrainingsessionmaterialcontent) | **PUT** /v1/training/sessions/{id}/materials/{materialID}/content | Upload training session material content |
 
+
+
+## cancelMyTrainingSessionRegistration
+
+> cancelMyTrainingSessionRegistration(id)
+
+Cancel my session registration
+
+Idempotently cancels a pending personal registration. Attendance already recorded must be corrected by a hospital administrator.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  TrainingApi,
+} from '';
+import type { CancelMyTrainingSessionRegistrationRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new TrainingApi(config);
+
+  const body = {
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies CancelMyTrainingSessionRegistrationRequest;
+
+  try {
+    const data = await api.cancelMyTrainingSessionRegistration(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Personal registration is cancelled or absent |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
+| **409** | Conflict with existing state |  -  |
+| **400** | Validation or request shape error |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## cancelTrainingSession
@@ -550,6 +628,7 @@ example().catch(console.error);
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
 | **404** | Resource not found |  -  |
+| **409** | Conflict with existing state |  -  |
 | **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -852,7 +931,9 @@ example().catch(console.error);
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
 | **404** | Resource not found |  -  |
+| **409** | Room capacity reached or admission revoked |  -  |
 | **500** | Internal server error |  -  |
+| **503** | Media service temporarily unavailable |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -1549,6 +1630,7 @@ example().catch(console.error);
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
 | **404** | Resource not found |  -  |
+| **409** | Conflict with existing state |  -  |
 | **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

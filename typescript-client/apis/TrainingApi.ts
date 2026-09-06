@@ -61,6 +61,10 @@ import {
     UpdateTrainingSessionRequestToJSON,
 } from '../models/index';
 
+export interface CancelMyTrainingSessionRegistrationRequest {
+    id: string;
+}
+
 export interface CancelTrainingSessionRequest {
     id: string;
 }
@@ -171,6 +175,30 @@ export interface UploadTrainingSessionMaterialContentRequest {
  * @interface TrainingApiInterface
  */
 export interface TrainingApiInterface {
+    /**
+     * Creates request options for cancelMyTrainingSessionRegistration without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    cancelMyTrainingSessionRegistrationRequestOpts(requestParameters: CancelMyTrainingSessionRegistrationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Idempotently cancels a pending personal registration. Attendance already recorded must be corrected by a hospital administrator.
+     * @summary Cancel my session registration
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainingApiInterface
+     */
+    cancelMyTrainingSessionRegistrationRaw(requestParameters: CancelMyTrainingSessionRegistrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Idempotently cancels a pending personal registration. Attendance already recorded must be corrected by a hospital administrator.
+     * Cancel my session registration
+     */
+    cancelMyTrainingSessionRegistration(requestParameters: CancelMyTrainingSessionRegistrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
     /**
      * Creates request options for cancelTrainingSession without sending the request
      * @param {string} id 
@@ -698,6 +726,60 @@ export interface TrainingApiInterface {
  * 
  */
 export class TrainingApi extends runtime.BaseAPI implements TrainingApiInterface {
+
+    /**
+     * Creates request options for cancelMyTrainingSessionRegistration without sending the request
+     */
+    async cancelMyTrainingSessionRegistrationRequestOpts(requestParameters: CancelMyTrainingSessionRegistrationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling cancelMyTrainingSessionRegistration().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/training/sessions/{id}/registrations/me`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Idempotently cancels a pending personal registration. Attendance already recorded must be corrected by a hospital administrator.
+     * Cancel my session registration
+     */
+    async cancelMyTrainingSessionRegistrationRaw(requestParameters: CancelMyTrainingSessionRegistrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.cancelMyTrainingSessionRegistrationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Idempotently cancels a pending personal registration. Attendance already recorded must be corrected by a hospital administrator.
+     * Cancel my session registration
+     */
+    async cancelMyTrainingSessionRegistration(requestParameters: CancelMyTrainingSessionRegistrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.cancelMyTrainingSessionRegistrationRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Creates request options for cancelTrainingSession without sending the request

@@ -389,7 +389,9 @@ example().catch(console.error);
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
 | **404** | Resource not found |  -  |
+| **409** | Room capacity reached or admission revoked |  -  |
 | **500** | Internal server error |  -  |
+| **503** | Media service temporarily unavailable |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -559,6 +561,8 @@ example().catch(console.error);
 
 WebRTC signaling websocket endpoint
 
+Requires a current authenticated browser session and a participant token for that same user and room.
+
 ### Example
 
 ```ts
@@ -570,7 +574,11 @@ import type { SignalWebinarRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new WebinarsApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new WebinarsApi(config);
 
   const body = {
     // string
@@ -605,7 +613,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -619,6 +627,8 @@ No authorization required
 | **101** | Switching protocols to websocket |  -  |
 | **400** | Validation or request shape error |  -  |
 | **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **410** | Legacy transport retired. Rejoin through the current LiveKit flow. |  -  |
 | **503** | Signaling unavailable |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

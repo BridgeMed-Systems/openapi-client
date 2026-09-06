@@ -24,6 +24,12 @@ export interface RepDirectoryEntry {
      * @type {string}
      * @memberof RepDirectoryEntry
      */
+    title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RepDirectoryEntry
+     */
     user_id: string;
     /**
      * 
@@ -112,6 +118,7 @@ export function RepDirectoryEntryFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
+        'title': json['title'] == null ? undefined : json['title'],
         'user_id': json['user_id'],
         'first_name': json['first_name'],
         'last_name': json['last_name'],
@@ -137,6 +144,7 @@ export function RepDirectoryEntryToJSONTyped(value?: RepDirectoryEntry | null, i
 
     return {
         
+        'title': value['title'],
         'user_id': value['user_id'],
         'first_name': value['first_name'],
         'last_name': value['last_name'],

@@ -16,20 +16,41 @@
 import * as runtime from '../runtime';
 import type {
   AcceptInviteRequest,
+  CreateHospitalDepartmentRequest,
   CreateInviteRequest,
   CreateInviteResponse,
   ErrorResponse,
+  HospitalDepartment,
+  HospitalStaffMember,
+  HospitalStaffUpdate,
+  PasswordRecoveryRequest,
+  PasswordResetRequest,
+  RequestPasswordRecovery202Response,
   User,
 } from '../models/index';
 import {
     AcceptInviteRequestFromJSON,
     AcceptInviteRequestToJSON,
+    CreateHospitalDepartmentRequestFromJSON,
+    CreateHospitalDepartmentRequestToJSON,
     CreateInviteRequestFromJSON,
     CreateInviteRequestToJSON,
     CreateInviteResponseFromJSON,
     CreateInviteResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    HospitalDepartmentFromJSON,
+    HospitalDepartmentToJSON,
+    HospitalStaffMemberFromJSON,
+    HospitalStaffMemberToJSON,
+    HospitalStaffUpdateFromJSON,
+    HospitalStaffUpdateToJSON,
+    PasswordRecoveryRequestFromJSON,
+    PasswordRecoveryRequestToJSON,
+    PasswordResetRequestFromJSON,
+    PasswordResetRequestToJSON,
+    RequestPasswordRecovery202ResponseFromJSON,
+    RequestPasswordRecovery202ResponseToJSON,
     UserFromJSON,
     UserToJSON,
 } from '../models/index';
@@ -38,12 +59,42 @@ export interface AcceptUserInviteRequest {
     acceptInviteRequest: AcceptInviteRequest;
 }
 
+export interface CreateHospitalDepartmentOperationRequest {
+    createHospitalDepartmentRequest: CreateHospitalDepartmentRequest;
+}
+
 export interface CreateUserInviteRequest {
     createInviteRequest: CreateInviteRequest;
 }
 
 export interface GetUserByIdRequest {
     id: string;
+}
+
+export interface RemoveHospitalDepartmentRequest {
+    id: string;
+}
+
+export interface RemoveHospitalStaffRequest {
+    id: string;
+}
+
+export interface RequestPasswordRecoveryRequest {
+    passwordRecoveryRequest: PasswordRecoveryRequest;
+}
+
+export interface ResetPasswordRequest {
+    passwordResetRequest: PasswordResetRequest;
+}
+
+export interface UpdateHospitalDepartmentRequest {
+    id: string;
+    createHospitalDepartmentRequest: CreateHospitalDepartmentRequest;
+}
+
+export interface UpdateHospitalStaffRequest {
+    id: string;
+    hospitalStaffUpdate: HospitalStaffUpdate;
 }
 
 /**
@@ -77,6 +128,29 @@ export interface UsersApiInterface {
     acceptUserInvite(requestParameters: AcceptUserInviteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User>;
 
     /**
+     * Creates request options for createHospitalDepartment without sending the request
+     * @param {CreateHospitalDepartmentRequest} createHospitalDepartmentRequest 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    createHospitalDepartmentRequestOpts(requestParameters: CreateHospitalDepartmentOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Add a hospital department
+     * @param {CreateHospitalDepartmentRequest} createHospitalDepartmentRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    createHospitalDepartmentRaw(requestParameters: CreateHospitalDepartmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<HospitalDepartment>>;
+
+    /**
+     * Add a hospital department
+     */
+    createHospitalDepartment(requestParameters: CreateHospitalDepartmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HospitalDepartment>;
+
+    /**
      * Creates request options for createUserInvite without sending the request
      * @param {CreateInviteRequest} createInviteRequest 
      * @throws {RequiredError}
@@ -86,7 +160,7 @@ export interface UsersApiInterface {
 
     /**
      * 
-     * @summary Create user invite
+     * @summary Create and email an organization invitation
      * @param {CreateInviteRequest} createInviteRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -95,7 +169,7 @@ export interface UsersApiInterface {
     createUserInviteRaw(requestParameters: CreateUserInviteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInviteResponse>>;
 
     /**
-     * Create user invite
+     * Create and email an organization invitation
      */
     createUserInvite(requestParameters: CreateUserInviteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateInviteResponse>;
 
@@ -121,6 +195,190 @@ export interface UsersApiInterface {
      * Get user by id
      */
     getUserById(requestParameters: GetUserByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User>;
+
+    /**
+     * Creates request options for listHospitalDepartments without sending the request
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    listHospitalDepartmentsRequestOpts(): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary List departments in the current hospital
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    listHospitalDepartmentsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<HospitalDepartment>>>;
+
+    /**
+     * List departments in the current hospital
+     */
+    listHospitalDepartments(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<HospitalDepartment>>;
+
+    /**
+     * Creates request options for listHospitalStaff without sending the request
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    listHospitalStaffRequestOpts(): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary List staff in the current hospital
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    listHospitalStaffRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<HospitalStaffMember>>>;
+
+    /**
+     * List staff in the current hospital
+     */
+    listHospitalStaff(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<HospitalStaffMember>>;
+
+    /**
+     * Creates request options for removeHospitalDepartment without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    removeHospitalDepartmentRequestOpts(requestParameters: RemoveHospitalDepartmentRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Remove an empty hospital department
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    removeHospitalDepartmentRaw(requestParameters: RemoveHospitalDepartmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Remove an empty hospital department
+     */
+    removeHospitalDepartment(requestParameters: RemoveHospitalDepartmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Creates request options for removeHospitalStaff without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    removeHospitalStaffRequestOpts(requestParameters: RemoveHospitalStaffRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Remove hospital membership while retaining the global account and history
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    removeHospitalStaffRaw(requestParameters: RemoveHospitalStaffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Remove hospital membership while retaining the global account and history
+     */
+    removeHospitalStaff(requestParameters: RemoveHospitalStaffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Creates request options for requestPasswordRecovery without sending the request
+     * @param {PasswordRecoveryRequest} passwordRecoveryRequest 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    requestPasswordRecoveryRequestOpts(requestParameters: RequestPasswordRecoveryRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Email a one-use password recovery link
+     * @param {PasswordRecoveryRequest} passwordRecoveryRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    requestPasswordRecoveryRaw(requestParameters: RequestPasswordRecoveryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestPasswordRecovery202Response>>;
+
+    /**
+     * Email a one-use password recovery link
+     */
+    requestPasswordRecovery(requestParameters: RequestPasswordRecoveryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestPasswordRecovery202Response>;
+
+    /**
+     * Creates request options for resetPassword without sending the request
+     * @param {PasswordResetRequest} passwordResetRequest 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    resetPasswordRequestOpts(requestParameters: ResetPasswordRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Reset a password and invalidate previous sessions
+     * @param {PasswordResetRequest} passwordResetRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    resetPasswordRaw(requestParameters: ResetPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Reset a password and invalidate previous sessions
+     */
+    resetPassword(requestParameters: ResetPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Creates request options for updateHospitalDepartment without sending the request
+     * @param {string} id 
+     * @param {CreateHospitalDepartmentRequest} createHospitalDepartmentRequest 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    updateHospitalDepartmentRequestOpts(requestParameters: UpdateHospitalDepartmentRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Rename a hospital department
+     * @param {string} id 
+     * @param {CreateHospitalDepartmentRequest} createHospitalDepartmentRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    updateHospitalDepartmentRaw(requestParameters: UpdateHospitalDepartmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<HospitalDepartment>>;
+
+    /**
+     * Rename a hospital department
+     */
+    updateHospitalDepartment(requestParameters: UpdateHospitalDepartmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HospitalDepartment>;
+
+    /**
+     * Creates request options for updateHospitalStaff without sending the request
+     * @param {string} id 
+     * @param {HospitalStaffUpdate} hospitalStaffUpdate 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    updateHospitalStaffRequestOpts(requestParameters: UpdateHospitalStaffRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Change a hospital staff member\'s role and department
+     * @param {string} id 
+     * @param {HospitalStaffUpdate} hospitalStaffUpdate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    updateHospitalStaffRaw(requestParameters: UpdateHospitalStaffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Change a hospital staff member\'s role and department
+     */
+    updateHospitalStaff(requestParameters: UpdateHospitalStaffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
 }
 
@@ -177,6 +435,61 @@ export class UsersApi extends runtime.BaseAPI implements UsersApiInterface {
     }
 
     /**
+     * Creates request options for createHospitalDepartment without sending the request
+     */
+    async createHospitalDepartmentRequestOpts(requestParameters: CreateHospitalDepartmentOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['createHospitalDepartmentRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createHospitalDepartmentRequest',
+                'Required parameter "createHospitalDepartmentRequest" was null or undefined when calling createHospitalDepartment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/staff/departments`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateHospitalDepartmentRequestToJSON(requestParameters['createHospitalDepartmentRequest']),
+        };
+    }
+
+    /**
+     * Add a hospital department
+     */
+    async createHospitalDepartmentRaw(requestParameters: CreateHospitalDepartmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<HospitalDepartment>> {
+        const requestOptions = await this.createHospitalDepartmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => HospitalDepartmentFromJSON(jsonValue));
+    }
+
+    /**
+     * Add a hospital department
+     */
+    async createHospitalDepartment(requestParameters: CreateHospitalDepartmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HospitalDepartment> {
+        const response = await this.createHospitalDepartmentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for createUserInvite without sending the request
      */
     async createUserInviteRequestOpts(requestParameters: CreateUserInviteRequest): Promise<runtime.RequestOpts> {
@@ -214,7 +527,7 @@ export class UsersApi extends runtime.BaseAPI implements UsersApiInterface {
     }
 
     /**
-     * Create user invite
+     * Create and email an organization invitation
      */
     async createUserInviteRaw(requestParameters: CreateUserInviteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInviteResponse>> {
         const requestOptions = await this.createUserInviteRequestOpts(requestParameters);
@@ -224,7 +537,7 @@ export class UsersApi extends runtime.BaseAPI implements UsersApiInterface {
     }
 
     /**
-     * Create user invite
+     * Create and email an organization invitation
      */
     async createUserInvite(requestParameters: CreateUserInviteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateInviteResponse> {
         const response = await this.createUserInviteRaw(requestParameters, initOverrides);
@@ -282,6 +595,418 @@ export class UsersApi extends runtime.BaseAPI implements UsersApiInterface {
     async getUserById(requestParameters: GetUserByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
         const response = await this.getUserByIdRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for listHospitalDepartments without sending the request
+     */
+    async listHospitalDepartmentsRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/staff/departments`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List departments in the current hospital
+     */
+    async listHospitalDepartmentsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<HospitalDepartment>>> {
+        const requestOptions = await this.listHospitalDepartmentsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(HospitalDepartmentFromJSON));
+    }
+
+    /**
+     * List departments in the current hospital
+     */
+    async listHospitalDepartments(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<HospitalDepartment>> {
+        const response = await this.listHospitalDepartmentsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listHospitalStaff without sending the request
+     */
+    async listHospitalStaffRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/staff/`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List staff in the current hospital
+     */
+    async listHospitalStaffRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<HospitalStaffMember>>> {
+        const requestOptions = await this.listHospitalStaffRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(HospitalStaffMemberFromJSON));
+    }
+
+    /**
+     * List staff in the current hospital
+     */
+    async listHospitalStaff(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<HospitalStaffMember>> {
+        const response = await this.listHospitalStaffRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for removeHospitalDepartment without sending the request
+     */
+    async removeHospitalDepartmentRequestOpts(requestParameters: RemoveHospitalDepartmentRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling removeHospitalDepartment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/staff/departments/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Remove an empty hospital department
+     */
+    async removeHospitalDepartmentRaw(requestParameters: RemoveHospitalDepartmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeHospitalDepartmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Remove an empty hospital department
+     */
+    async removeHospitalDepartment(requestParameters: RemoveHospitalDepartmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.removeHospitalDepartmentRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for removeHospitalStaff without sending the request
+     */
+    async removeHospitalStaffRequestOpts(requestParameters: RemoveHospitalStaffRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling removeHospitalStaff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/staff/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Remove hospital membership while retaining the global account and history
+     */
+    async removeHospitalStaffRaw(requestParameters: RemoveHospitalStaffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeHospitalStaffRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Remove hospital membership while retaining the global account and history
+     */
+    async removeHospitalStaff(requestParameters: RemoveHospitalStaffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.removeHospitalStaffRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for requestPasswordRecovery without sending the request
+     */
+    async requestPasswordRecoveryRequestOpts(requestParameters: RequestPasswordRecoveryRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['passwordRecoveryRequest'] == null) {
+            throw new runtime.RequiredError(
+                'passwordRecoveryRequest',
+                'Required parameter "passwordRecoveryRequest" was null or undefined when calling requestPasswordRecovery().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/users/password/recovery`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PasswordRecoveryRequestToJSON(requestParameters['passwordRecoveryRequest']),
+        };
+    }
+
+    /**
+     * Email a one-use password recovery link
+     */
+    async requestPasswordRecoveryRaw(requestParameters: RequestPasswordRecoveryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestPasswordRecovery202Response>> {
+        const requestOptions = await this.requestPasswordRecoveryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestPasswordRecovery202ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Email a one-use password recovery link
+     */
+    async requestPasswordRecovery(requestParameters: RequestPasswordRecoveryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestPasswordRecovery202Response> {
+        const response = await this.requestPasswordRecoveryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for resetPassword without sending the request
+     */
+    async resetPasswordRequestOpts(requestParameters: ResetPasswordRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['passwordResetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'passwordResetRequest',
+                'Required parameter "passwordResetRequest" was null or undefined when calling resetPassword().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/users/password/reset`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PasswordResetRequestToJSON(requestParameters['passwordResetRequest']),
+        };
+    }
+
+    /**
+     * Reset a password and invalidate previous sessions
+     */
+    async resetPasswordRaw(requestParameters: ResetPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.resetPasswordRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Reset a password and invalidate previous sessions
+     */
+    async resetPassword(requestParameters: ResetPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.resetPasswordRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for updateHospitalDepartment without sending the request
+     */
+    async updateHospitalDepartmentRequestOpts(requestParameters: UpdateHospitalDepartmentRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateHospitalDepartment().'
+            );
+        }
+
+        if (requestParameters['createHospitalDepartmentRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createHospitalDepartmentRequest',
+                'Required parameter "createHospitalDepartmentRequest" was null or undefined when calling updateHospitalDepartment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/staff/departments/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateHospitalDepartmentRequestToJSON(requestParameters['createHospitalDepartmentRequest']),
+        };
+    }
+
+    /**
+     * Rename a hospital department
+     */
+    async updateHospitalDepartmentRaw(requestParameters: UpdateHospitalDepartmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<HospitalDepartment>> {
+        const requestOptions = await this.updateHospitalDepartmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => HospitalDepartmentFromJSON(jsonValue));
+    }
+
+    /**
+     * Rename a hospital department
+     */
+    async updateHospitalDepartment(requestParameters: UpdateHospitalDepartmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HospitalDepartment> {
+        const response = await this.updateHospitalDepartmentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for updateHospitalStaff without sending the request
+     */
+    async updateHospitalStaffRequestOpts(requestParameters: UpdateHospitalStaffRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateHospitalStaff().'
+            );
+        }
+
+        if (requestParameters['hospitalStaffUpdate'] == null) {
+            throw new runtime.RequiredError(
+                'hospitalStaffUpdate',
+                'Required parameter "hospitalStaffUpdate" was null or undefined when calling updateHospitalStaff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/staff/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: HospitalStaffUpdateToJSON(requestParameters['hospitalStaffUpdate']),
+        };
+    }
+
+    /**
+     * Change a hospital staff member\'s role and department
+     */
+    async updateHospitalStaffRaw(requestParameters: UpdateHospitalStaffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateHospitalStaffRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Change a hospital staff member\'s role and department
+     */
+    async updateHospitalStaff(requestParameters: UpdateHospitalStaffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.updateHospitalStaffRaw(requestParameters, initOverrides);
     }
 
 }

@@ -9,9 +9,11 @@ All URIs are relative to *https://api.bridge.med*
 | [**getRepAvailability**](RepsApi.md#getrepavailability) | **GET** /v1/reps/{repUserID}/availability | Get representative availability profile |
 | [**listRepAccounts**](RepsApi.md#listrepaccounts) | **GET** /v1/reps/accounts | List accounts supported by assigned rep products |
 | [**listRepAvailabilityWindows**](RepsApi.md#listrepavailabilitywindows) | **GET** /v1/reps/{repUserID}/availability/windows | List representative availability windows |
+| [**listRepTeam**](RepsApi.md#listrepteam) | **GET** /v1/reps/team | View the current vendor team and coverage choices |
 | [**listReps**](RepsApi.md#listreps) | **GET** /v1/reps/ | List representative directory entries |
 | [**putRepAvailability**](RepsApi.md#putrepavailability) | **PUT** /v1/reps/{repUserID}/availability | Upsert representative availability profile |
 | [**updateRepAvailabilityWindow**](RepsApi.md#updaterepavailabilitywindow) | **PATCH** /v1/reps/{repUserID}/availability/windows/{windowID} | Update representative availability window |
+| [**updateRepTeamMember**](RepsApi.md#updaterepteammember) | **PUT** /v1/reps/team/{repUserID} | Update an existing representative\&#39;s company contact and mappings |
 
 
 
@@ -387,6 +389,72 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listRepTeam
+
+> RepTeam listRepTeam()
+
+View the current vendor team and coverage choices
+
+Vendor admins see existing company reps; regional managers see themselves and their assigned team. Contains no learning or compliance records.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RepsApi,
+} from '';
+import type { ListRepTeamRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new RepsApi(config);
+
+  try {
+    const data = await api.listRepTeam();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**RepTeam**](RepTeam.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Team and permitted product/account choices |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listReps
 
 > Array&lt;RepDirectoryEntry&gt; listReps()
@@ -603,6 +671,86 @@ example().catch(console.error);
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
 | **404** | Resource not found |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## updateRepTeamMember
+
+> updateRepTeamMember(repUserID, repTeamUpdate)
+
+Update an existing representative\&#39;s company contact and mappings
+
+Vendor organization admins only. Replaces this company\&#39;s contact, product/account mappings, manager assignment and permitted rep role atomically. Does not change login identity or create/remove accounts. Revision mismatches return 409. Role changes invalidate prior sessions.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RepsApi,
+} from '';
+import type { UpdateRepTeamMemberRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new RepsApi(config);
+
+  const body = {
+    // string
+    repUserID: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // RepTeamUpdate
+    repTeamUpdate: ...,
+  } satisfies UpdateRepTeamMemberRequest;
+
+  try {
+    const data = await api.updateRepTeamMember(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **repUserID** | `string` |  | [Defaults to `undefined`] |
+| **repTeamUpdate** | [RepTeamUpdate](RepTeamUpdate.md) |  | |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Representative updated |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
+| **409** | Conflict with existing state |  -  |
 | **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

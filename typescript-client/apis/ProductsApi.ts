@@ -18,9 +18,11 @@ import type {
   CreateProductOrganizationRequest,
   CreateProductRequest,
   CreateProductUserRequest,
+  DeviceSearchResult,
   ErrorResponse,
   Product,
   ProductOrganization,
+  UpdateProductMetadataRequest,
   UserProduct,
 } from '../models/index';
 import {
@@ -30,12 +32,16 @@ import {
     CreateProductRequestToJSON,
     CreateProductUserRequestFromJSON,
     CreateProductUserRequestToJSON,
+    DeviceSearchResultFromJSON,
+    DeviceSearchResultToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     ProductFromJSON,
     ProductToJSON,
     ProductOrganizationFromJSON,
     ProductOrganizationToJSON,
+    UpdateProductMetadataRequestFromJSON,
+    UpdateProductMetadataRequestToJSON,
     UserProductFromJSON,
     UserProductToJSON,
 } from '../models/index';
@@ -78,6 +84,21 @@ export interface ListProductUsersRequest {
 
 export interface ListProductsRequest {
     scope?: ListProductsScopeEnum;
+}
+
+export interface SearchDevicesRequest {
+    q?: string;
+    vendorId?: string;
+    specialty?: string;
+    procedureType?: string;
+    libraryScope?: SearchDevicesLibraryScopeEnum;
+    limit?: number;
+    offset?: number;
+}
+
+export interface UpdateProductMetadataOperationRequest {
+    id: string;
+    updateProductMetadataRequest: UpdateProductMetadataRequest;
 }
 
 /**
@@ -303,6 +324,66 @@ export interface ProductsApiInterface {
      * List products
      */
     listProducts(requestParameters: ListProductsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Product>>;
+
+    /**
+     * Creates request options for searchDevices without sending the request
+     * @param {string} [q] 
+     * @param {string} [vendorId] 
+     * @param {string} [specialty] 
+     * @param {string} [procedureType] 
+     * @param {'selected' | 'available'} [libraryScope] Available requires hospital library management.
+     * @param {number} [limit] 
+     * @param {number} [offset] 
+     * @throws {RequiredError}
+     * @memberof ProductsApiInterface
+     */
+    searchDevicesRequestOpts(requestParameters: SearchDevicesRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Search visible devices with direct document actions
+     * @param {string} [q] 
+     * @param {string} [vendorId] 
+     * @param {string} [specialty] 
+     * @param {string} [procedureType] 
+     * @param {'selected' | 'available'} [libraryScope] Available requires hospital library management.
+     * @param {number} [limit] 
+     * @param {number} [offset] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApiInterface
+     */
+    searchDevicesRaw(requestParameters: SearchDevicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceSearchResult>>;
+
+    /**
+     * Search visible devices with direct document actions
+     */
+    searchDevices(requestParameters: SearchDevicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceSearchResult>;
+
+    /**
+     * Creates request options for updateProductMetadata without sending the request
+     * @param {string} id 
+     * @param {UpdateProductMetadataRequest} updateProductMetadataRequest 
+     * @throws {RequiredError}
+     * @memberof ProductsApiInterface
+     */
+    updateProductMetadataRequestOpts(requestParameters: UpdateProductMetadataOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Update owned product catalog details using the current revision
+     * @param {string} id 
+     * @param {UpdateProductMetadataRequest} updateProductMetadataRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApiInterface
+     */
+    updateProductMetadataRaw(requestParameters: UpdateProductMetadataOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Product>>;
+
+    /**
+     * Update owned product catalog details using the current revision
+     */
+    updateProductMetadata(requestParameters: UpdateProductMetadataOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Product>;
 
 }
 
@@ -824,6 +905,142 @@ export class ProductsApi extends runtime.BaseAPI implements ProductsApiInterface
         return await response.value();
     }
 
+    /**
+     * Creates request options for searchDevices without sending the request
+     */
+    async searchDevicesRequestOpts(requestParameters: SearchDevicesRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['q'] != null) {
+            queryParameters['q'] = requestParameters['q'];
+        }
+
+        if (requestParameters['vendorId'] != null) {
+            queryParameters['vendor_id'] = requestParameters['vendorId'];
+        }
+
+        if (requestParameters['specialty'] != null) {
+            queryParameters['specialty'] = requestParameters['specialty'];
+        }
+
+        if (requestParameters['procedureType'] != null) {
+            queryParameters['procedure_type'] = requestParameters['procedureType'];
+        }
+
+        if (requestParameters['libraryScope'] != null) {
+            queryParameters['library_scope'] = requestParameters['libraryScope'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/products/search`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Search visible devices with direct document actions
+     */
+    async searchDevicesRaw(requestParameters: SearchDevicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceSearchResult>> {
+        const requestOptions = await this.searchDevicesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceSearchResultFromJSON(jsonValue));
+    }
+
+    /**
+     * Search visible devices with direct document actions
+     */
+    async searchDevices(requestParameters: SearchDevicesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceSearchResult> {
+        const response = await this.searchDevicesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for updateProductMetadata without sending the request
+     */
+    async updateProductMetadataRequestOpts(requestParameters: UpdateProductMetadataOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateProductMetadata().'
+            );
+        }
+
+        if (requestParameters['updateProductMetadataRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateProductMetadataRequest',
+                'Required parameter "updateProductMetadataRequest" was null or undefined when calling updateProductMetadata().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/products/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateProductMetadataRequestToJSON(requestParameters['updateProductMetadataRequest']),
+        };
+    }
+
+    /**
+     * Update owned product catalog details using the current revision
+     */
+    async updateProductMetadataRaw(requestParameters: UpdateProductMetadataOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Product>> {
+        const requestOptions = await this.updateProductMetadataRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProductFromJSON(jsonValue));
+    }
+
+    /**
+     * Update owned product catalog details using the current revision
+     */
+    async updateProductMetadata(requestParameters: UpdateProductMetadataOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Product> {
+        const response = await this.updateProductMetadataRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
 }
 
 /**
@@ -834,3 +1051,11 @@ export const ListProductsScopeEnum = {
     AssignedOrganization: 'assigned_organization'
 } as const;
 export type ListProductsScopeEnum = typeof ListProductsScopeEnum[keyof typeof ListProductsScopeEnum];
+/**
+ * @export
+ */
+export const SearchDevicesLibraryScopeEnum = {
+    Selected: 'selected',
+    Available: 'available'
+} as const;
+export type SearchDevicesLibraryScopeEnum = typeof SearchDevicesLibraryScopeEnum[keyof typeof SearchDevicesLibraryScopeEnum];

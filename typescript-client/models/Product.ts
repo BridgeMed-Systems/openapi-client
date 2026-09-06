@@ -24,6 +24,36 @@ export interface Product {
      * @type {string}
      * @memberof Product
      */
+    device_identifier?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Product
+     */
+    model_number?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Product
+     */
+    specialties?: Array<string>;
+    /**
+     * Catalog categories only; never patient procedures or case information.
+     * @type {Array<string>}
+     * @memberof Product
+     */
+    procedure_types?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Product
+     */
+    metadata_revision?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Product
+     */
     id: string;
     /**
      * 
@@ -77,6 +107,11 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
     }
     return {
         
+        'device_identifier': json['device_identifier'] == null ? undefined : json['device_identifier'],
+        'model_number': json['model_number'] == null ? undefined : json['model_number'],
+        'specialties': json['specialties'] == null ? undefined : json['specialties'],
+        'procedure_types': json['procedure_types'] == null ? undefined : json['procedure_types'],
+        'metadata_revision': json['metadata_revision'] == null ? undefined : json['metadata_revision'],
         'id': json['id'],
         'name': json['name'],
         'description': json['description'] == null ? undefined : json['description'],
@@ -97,6 +132,11 @@ export function ProductToJSONTyped(value?: Product | null, ignoreDiscriminator: 
 
     return {
         
+        'device_identifier': value['device_identifier'],
+        'model_number': value['model_number'],
+        'specialties': value['specialties'],
+        'procedure_types': value['procedure_types'],
+        'metadata_revision': value['metadata_revision'],
         'id': value['id'],
         'name': value['name'],
         'description': value['description'],

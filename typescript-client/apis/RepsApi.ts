@@ -20,6 +20,8 @@ import type {
   RepAvailabilityProfile,
   RepAvailabilityWindow,
   RepDirectoryEntry,
+  RepTeam,
+  RepTeamUpdate,
   UpsertRepAvailabilityProfileRequest,
   UpsertRepAvailabilityWindowRequest,
 } from '../models/index';
@@ -34,6 +36,10 @@ import {
     RepAvailabilityWindowToJSON,
     RepDirectoryEntryFromJSON,
     RepDirectoryEntryToJSON,
+    RepTeamFromJSON,
+    RepTeamToJSON,
+    RepTeamUpdateFromJSON,
+    RepTeamUpdateToJSON,
     UpsertRepAvailabilityProfileRequestFromJSON,
     UpsertRepAvailabilityProfileRequestToJSON,
     UpsertRepAvailabilityWindowRequestFromJSON,
@@ -71,6 +77,11 @@ export interface UpdateRepAvailabilityWindowRequest {
     repUserID: string;
     windowID: string;
     upsertRepAvailabilityWindowRequest: UpsertRepAvailabilityWindowRequest;
+}
+
+export interface UpdateRepTeamMemberRequest {
+    repUserID: string;
+    repTeamUpdate: RepTeamUpdate;
 }
 
 /**
@@ -200,6 +211,28 @@ export interface RepsApiInterface {
     listRepAvailabilityWindows(requestParameters: ListRepAvailabilityWindowsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<RepAvailabilityWindow>>;
 
     /**
+     * Creates request options for listRepTeam without sending the request
+     * @throws {RequiredError}
+     * @memberof RepsApiInterface
+     */
+    listRepTeamRequestOpts(): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor admins see existing company reps; regional managers see themselves and their assigned team. Contains no learning or compliance records.
+     * @summary View the current vendor team and coverage choices
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RepsApiInterface
+     */
+    listRepTeamRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RepTeam>>;
+
+    /**
+     * Vendor admins see existing company reps; regional managers see themselves and their assigned team. Contains no learning or compliance records.
+     * View the current vendor team and coverage choices
+     */
+    listRepTeam(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RepTeam>;
+
+    /**
      * Creates request options for listReps without sending the request
      * @throws {RequiredError}
      * @memberof RepsApiInterface
@@ -271,6 +304,32 @@ export interface RepsApiInterface {
      * Update representative availability window
      */
     updateRepAvailabilityWindow(requestParameters: UpdateRepAvailabilityWindowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RepAvailabilityWindow>;
+
+    /**
+     * Creates request options for updateRepTeamMember without sending the request
+     * @param {string} repUserID 
+     * @param {RepTeamUpdate} repTeamUpdate 
+     * @throws {RequiredError}
+     * @memberof RepsApiInterface
+     */
+    updateRepTeamMemberRequestOpts(requestParameters: UpdateRepTeamMemberRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor organization admins only. Replaces this company\'s contact, product/account mappings, manager assignment and permitted rep role atomically. Does not change login identity or create/remove accounts. Revision mismatches return 409. Role changes invalidate prior sessions.
+     * @summary Update an existing representative\'s company contact and mappings
+     * @param {string} repUserID 
+     * @param {RepTeamUpdate} repTeamUpdate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RepsApiInterface
+     */
+    updateRepTeamMemberRaw(requestParameters: UpdateRepTeamMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Vendor organization admins only. Replaces this company\'s contact, product/account mappings, manager assignment and permitted rep role atomically. Does not change login identity or create/remove accounts. Revision mismatches return 409. Role changes invalidate prior sessions.
+     * Update an existing representative\'s company contact and mappings
+     */
+    updateRepTeamMember(requestParameters: UpdateRepTeamMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
 }
 
@@ -565,6 +624,53 @@ export class RepsApi extends runtime.BaseAPI implements RepsApiInterface {
     }
 
     /**
+     * Creates request options for listRepTeam without sending the request
+     */
+    async listRepTeamRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/reps/team`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Vendor admins see existing company reps; regional managers see themselves and their assigned team. Contains no learning or compliance records.
+     * View the current vendor team and coverage choices
+     */
+    async listRepTeamRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RepTeam>> {
+        const requestOptions = await this.listRepTeamRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RepTeamFromJSON(jsonValue));
+    }
+
+    /**
+     * Vendor admins see existing company reps; regional managers see themselves and their assigned team. Contains no learning or compliance records.
+     * View the current vendor team and coverage choices
+     */
+    async listRepTeam(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RepTeam> {
+        const response = await this.listRepTeamRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for listReps without sending the request
      */
     async listRepsRequestOpts(): Promise<runtime.RequestOpts> {
@@ -741,6 +847,70 @@ export class RepsApi extends runtime.BaseAPI implements RepsApiInterface {
     async updateRepAvailabilityWindow(requestParameters: UpdateRepAvailabilityWindowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RepAvailabilityWindow> {
         const response = await this.updateRepAvailabilityWindowRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for updateRepTeamMember without sending the request
+     */
+    async updateRepTeamMemberRequestOpts(requestParameters: UpdateRepTeamMemberRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['repUserID'] == null) {
+            throw new runtime.RequiredError(
+                'repUserID',
+                'Required parameter "repUserID" was null or undefined when calling updateRepTeamMember().'
+            );
+        }
+
+        if (requestParameters['repTeamUpdate'] == null) {
+            throw new runtime.RequiredError(
+                'repTeamUpdate',
+                'Required parameter "repTeamUpdate" was null or undefined when calling updateRepTeamMember().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/reps/team/{repUserID}`;
+        urlPath = urlPath.replace(`{${"repUserID"}}`, encodeURIComponent(String(requestParameters['repUserID'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RepTeamUpdateToJSON(requestParameters['repTeamUpdate']),
+        };
+    }
+
+    /**
+     * Vendor organization admins only. Replaces this company\'s contact, product/account mappings, manager assignment and permitted rep role atomically. Does not change login identity or create/remove accounts. Revision mismatches return 409. Role changes invalidate prior sessions.
+     * Update an existing representative\'s company contact and mappings
+     */
+    async updateRepTeamMemberRaw(requestParameters: UpdateRepTeamMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateRepTeamMemberRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Vendor organization admins only. Replaces this company\'s contact, product/account mappings, manager assignment and permitted rep role atomically. Does not change login identity or create/remove accounts. Revision mismatches return 409. Role changes invalidate prior sessions.
+     * Update an existing representative\'s company contact and mappings
+     */
+    async updateRepTeamMember(requestParameters: UpdateRepTeamMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.updateRepTeamMemberRaw(requestParameters, initOverrides);
     }
 
 }

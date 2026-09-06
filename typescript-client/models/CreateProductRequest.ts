@@ -24,6 +24,30 @@ export interface CreateProductRequest {
      * @type {string}
      * @memberof CreateProductRequest
      */
+    device_identifier?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateProductRequest
+     */
+    model_number?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreateProductRequest
+     */
+    specialties?: Array<string>;
+    /**
+     * Catalog categories only; never patient procedures or case information.
+     * @type {Array<string>}
+     * @memberof CreateProductRequest
+     */
+    procedure_types?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateProductRequest
+     */
     name: string;
     /**
      * 
@@ -57,6 +81,10 @@ export function CreateProductRequestFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'device_identifier': json['device_identifier'] == null ? undefined : json['device_identifier'],
+        'model_number': json['model_number'] == null ? undefined : json['model_number'],
+        'specialties': json['specialties'] == null ? undefined : json['specialties'],
+        'procedure_types': json['procedure_types'] == null ? undefined : json['procedure_types'],
         'name': json['name'],
         'description': json['description'] == null ? undefined : json['description'],
         'vendor_org_id': json['vendor_org_id'] == null ? undefined : json['vendor_org_id'],
@@ -74,6 +102,10 @@ export function CreateProductRequestToJSONTyped(value?: CreateProductRequest | n
 
     return {
         
+        'device_identifier': value['device_identifier'],
+        'model_number': value['model_number'],
+        'specialties': value['specialties'],
+        'procedure_types': value['procedure_types'],
         'name': value['name'],
         'description': value['description'],
         'vendor_org_id': value['vendor_org_id'],

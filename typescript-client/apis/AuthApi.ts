@@ -19,7 +19,9 @@ import type {
   CreateSessionRequest,
   CreateSessionResponse,
   ErrorResponse,
+  OrganizationAccess,
   SimpleOKResponse,
+  SwitchOrganizationRequest,
 } from '../models/index';
 import {
     CallerContextFromJSON,
@@ -30,12 +32,20 @@ import {
     CreateSessionResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    OrganizationAccessFromJSON,
+    OrganizationAccessToJSON,
     SimpleOKResponseFromJSON,
     SimpleOKResponseToJSON,
+    SwitchOrganizationRequestFromJSON,
+    SwitchOrganizationRequestToJSON,
 } from '../models/index';
 
 export interface CreateSessionOperationRequest {
     createSessionRequest: CreateSessionRequest;
+}
+
+export interface SwitchOrganizationOperationRequest {
+    switchOrganizationRequest: SwitchOrganizationRequest;
 }
 
 /**
@@ -90,6 +100,27 @@ export interface AuthApiInterface {
     getMe(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CallerContext>;
 
     /**
+     * Creates request options for listOrganizationAccess without sending the request
+     * @throws {RequiredError}
+     * @memberof AuthApiInterface
+     */
+    listOrganizationAccessRequestOpts(): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary List the caller\'s active organization access
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApiInterface
+     */
+    listOrganizationAccessRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrganizationAccess>>>;
+
+    /**
+     * List the caller\'s active organization access
+     */
+    listOrganizationAccess(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrganizationAccess>>;
+
+    /**
      * Creates request options for logout without sending the request
      * @throws {RequiredError}
      * @memberof AuthApiInterface
@@ -130,6 +161,29 @@ export interface AuthApiInterface {
      * Refresh session
      */
     refreshSession(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSessionResponse>;
+
+    /**
+     * Creates request options for switchOrganization without sending the request
+     * @param {SwitchOrganizationRequest} switchOrganizationRequest 
+     * @throws {RequiredError}
+     * @memberof AuthApiInterface
+     */
+    switchOrganizationRequestOpts(requestParameters: SwitchOrganizationOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Select an organization and issue a session with its current capabilities
+     * @param {SwitchOrganizationRequest} switchOrganizationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApiInterface
+     */
+    switchOrganizationRaw(requestParameters: SwitchOrganizationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSessionResponse>>;
+
+    /**
+     * Select an organization and issue a session with its current capabilities
+     */
+    switchOrganization(requestParameters: SwitchOrganizationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSessionResponse>;
 
 }
 
@@ -231,6 +285,51 @@ export class AuthApi extends runtime.BaseAPI implements AuthApiInterface {
     }
 
     /**
+     * Creates request options for listOrganizationAccess without sending the request
+     */
+    async listOrganizationAccessRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/auth/organizations`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List the caller\'s active organization access
+     */
+    async listOrganizationAccessRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrganizationAccess>>> {
+        const requestOptions = await this.listOrganizationAccessRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OrganizationAccessFromJSON));
+    }
+
+    /**
+     * List the caller\'s active organization access
+     */
+    async listOrganizationAccess(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrganizationAccess>> {
+        const response = await this.listOrganizationAccessRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for logout without sending the request
      */
     async logoutRequestOpts(): Promise<runtime.RequestOpts> {
@@ -301,6 +400,61 @@ export class AuthApi extends runtime.BaseAPI implements AuthApiInterface {
      */
     async refreshSession(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSessionResponse> {
         const response = await this.refreshSessionRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for switchOrganization without sending the request
+     */
+    async switchOrganizationRequestOpts(requestParameters: SwitchOrganizationOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['switchOrganizationRequest'] == null) {
+            throw new runtime.RequiredError(
+                'switchOrganizationRequest',
+                'Required parameter "switchOrganizationRequest" was null or undefined when calling switchOrganization().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/auth/organization`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SwitchOrganizationRequestToJSON(requestParameters['switchOrganizationRequest']),
+        };
+    }
+
+    /**
+     * Select an organization and issue a session with its current capabilities
+     */
+    async switchOrganizationRaw(requestParameters: SwitchOrganizationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSessionResponse>> {
+        const requestOptions = await this.switchOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSessionResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Select an organization and issue a session with its current capabilities
+     */
+    async switchOrganization(requestParameters: SwitchOrganizationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSessionResponse> {
+        const response = await this.switchOrganizationRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

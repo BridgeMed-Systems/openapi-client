@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`attendance_evidence` | string
 `attendance_status` | [TrainingSessionAttendanceStatus](TrainingSessionAttendanceStatus.md)
 
 ## Example
@@ -15,6 +16,7 @@ import type { UpdateTrainingSessionRegistrationRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "attendance_evidence": null,
   "attendance_status": null,
 } satisfies UpdateTrainingSessionRegistrationRequest
 

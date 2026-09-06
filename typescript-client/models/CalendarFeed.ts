@@ -69,6 +69,12 @@ export interface CalendarFeed {
      * @memberof CalendarFeed
      */
     date_rotated?: Date | null;
+    /**
+     * A stopped subscription has no URL; rotate explicitly to restore access.
+     * @type {Date}
+     * @memberof CalendarFeed
+     */
+    revoked_at?: Date | null;
 }
 
 
@@ -101,6 +107,7 @@ export function CalendarFeedFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'url': json['url'] == null ? undefined : json['url'],
         'date_added': (new Date(json['date_added'])),
         'date_rotated': json['date_rotated'] == null ? undefined : (new Date(json['date_rotated'])),
+        'revoked_at': json['revoked_at'] == null ? undefined : (new Date(json['revoked_at'])),
     };
 }
 
@@ -122,6 +129,7 @@ export function CalendarFeedToJSONTyped(value?: CalendarFeed | null, ignoreDiscr
         'url': value['url'],
         'date_added': value['date_added'].toISOString(),
         'date_rotated': value['date_rotated'] == null ? value['date_rotated'] : value['date_rotated'].toISOString(),
+        'revoked_at': value['revoked_at'] == null ? value['revoked_at'] : value['revoked_at'].toISOString(),
     };
 }
 

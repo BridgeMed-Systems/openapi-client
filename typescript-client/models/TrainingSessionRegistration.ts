@@ -32,6 +32,36 @@ export interface TrainingSessionRegistration {
      * @type {string}
      * @memberof TrainingSessionRegistration
      */
+    organization_id: string;
+    /**
+     * Native means verified media presence, not course completion or awarded credit. Legacy records are not retroactively verified.
+     * @type {TrainingSessionRegistrationAttendanceSourceEnum}
+     * @memberof TrainingSessionRegistration
+     */
+    attendance_source: TrainingSessionRegistrationAttendanceSourceEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainingSessionRegistration
+     */
+    attendance_evidence?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainingSessionRegistration
+     */
+    recorded_by_user_id?: string;
+    /**
+     * Conservative total of verified hospital learner media intervals, maintained by the server.
+     * @type {number}
+     * @memberof TrainingSessionRegistration
+     */
+    verified_attendance_seconds: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainingSessionRegistration
+     */
     id: string;
     /**
      * 
@@ -78,11 +108,25 @@ export interface TrainingSessionRegistration {
 }
 
 
+/**
+ * @export
+ */
+export const TrainingSessionRegistrationAttendanceSourceEnum = {
+    None: 'none',
+    Legacy: 'legacy',
+    Admin: 'admin',
+    Native: 'native'
+} as const;
+export type TrainingSessionRegistrationAttendanceSourceEnum = typeof TrainingSessionRegistrationAttendanceSourceEnum[keyof typeof TrainingSessionRegistrationAttendanceSourceEnum];
+
 
 /**
  * Check if a given object implements the TrainingSessionRegistration interface.
  */
 export function instanceOfTrainingSessionRegistration(value: object): value is TrainingSessionRegistration {
+    if (!('organization_id' in value) || value['organization_id'] === undefined) return false;
+    if (!('attendance_source' in value) || value['attendance_source'] === undefined) return false;
+    if (!('verified_attendance_seconds' in value) || value['verified_attendance_seconds'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('session_id' in value) || value['session_id'] === undefined) return false;
     if (!('user_id' in value) || value['user_id'] === undefined) return false;
@@ -101,6 +145,11 @@ export function TrainingSessionRegistrationFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
+        'organization_id': json['organization_id'],
+        'attendance_source': json['attendance_source'],
+        'attendance_evidence': json['attendance_evidence'] == null ? undefined : json['attendance_evidence'],
+        'recorded_by_user_id': json['recorded_by_user_id'] == null ? undefined : json['recorded_by_user_id'],
+        'verified_attendance_seconds': json['verified_attendance_seconds'],
         'id': json['id'],
         'session_id': json['session_id'],
         'user_id': json['user_id'],
@@ -123,6 +172,11 @@ export function TrainingSessionRegistrationToJSONTyped(value?: TrainingSessionRe
 
     return {
         
+        'organization_id': value['organization_id'],
+        'attendance_source': value['attendance_source'],
+        'attendance_evidence': value['attendance_evidence'],
+        'recorded_by_user_id': value['recorded_by_user_id'],
+        'verified_attendance_seconds': value['verified_attendance_seconds'],
         'id': value['id'],
         'session_id': value['session_id'],
         'user_id': value['user_id'],

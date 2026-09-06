@@ -13,6 +13,8 @@ All URIs are relative to *https://api.bridge.med*
 | [**listProductOrganizations**](ProductsApi.md#listproductorganizations) | **GET** /v1/products/{id}/organizations | List product organizations |
 | [**listProductUsers**](ProductsApi.md#listproductusers) | **GET** /v1/products/{id}/users | List product users |
 | [**listProducts**](ProductsApi.md#listproducts) | **GET** /v1/products | List products |
+| [**searchDevices**](ProductsApi.md#searchdevices) | **GET** /v1/products/search | Search visible devices with direct document actions |
+| [**updateProductMetadata**](ProductsApi.md#updateproductmetadataoperation) | **PUT** /v1/products/{id} | Update owned product catalog details using the current revision |
 
 
 
@@ -691,6 +693,175 @@ example().catch(console.error);
 | **400** | Validation or request shape error |  -  |
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## searchDevices
+
+> DeviceSearchResult searchDevices(q, vendorId, specialty, procedureType, libraryScope, limit, offset)
+
+Search visible devices with direct document actions
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProductsApi,
+} from '';
+import type { SearchDevicesRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ProductsApi(config);
+
+  const body = {
+    // string (optional)
+    q: q_example,
+    // string (optional)
+    vendorId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // string (optional)
+    specialty: specialty_example,
+    // string (optional)
+    procedureType: procedureType_example,
+    // 'selected' | 'available' | Available requires hospital library management. (optional)
+    libraryScope: libraryScope_example,
+    // number (optional)
+    limit: 56,
+    // number (optional)
+    offset: 56,
+  } satisfies SearchDevicesRequest;
+
+  try {
+    const data = await api.searchDevices(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **q** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **vendorId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **specialty** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **procedureType** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **libraryScope** | `selected`, `available` | Available requires hospital library management. | [Optional] [Defaults to `&#39;selected&#39;`] [Enum: selected, available] |
+| **limit** | `number` |  | [Optional] [Defaults to `30`] |
+| **offset** | `number` |  | [Optional] [Defaults to `0`] |
+
+### Return type
+
+[**DeviceSearchResult**](DeviceSearchResult.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Tenant-scoped device results and filter choices |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## updateProductMetadata
+
+> Product updateProductMetadata(id, updateProductMetadataRequest)
+
+Update owned product catalog details using the current revision
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProductsApi,
+} from '';
+import type { UpdateProductMetadataOperationRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ProductsApi(config);
+
+  const body = {
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // UpdateProductMetadataRequest
+    updateProductMetadataRequest: ...,
+  } satisfies UpdateProductMetadataOperationRequest;
+
+  try {
+    const data = await api.updateProductMetadata(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **updateProductMetadataRequest** | [UpdateProductMetadataRequest](UpdateProductMetadataRequest.md) |  | |
+
+### Return type
+
+[**Product**](Product.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Updated product details |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
+| **409** | Conflict with existing state |  -  |
 | **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

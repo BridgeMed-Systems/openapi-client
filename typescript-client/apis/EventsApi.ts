@@ -37,6 +37,11 @@ import {
     RotateCalendarFeedRequestToJSON,
 } from '../models/index';
 
+export interface ExportCalendarEventRequest {
+    type: ExportCalendarEventTypeEnum;
+    id: string;
+}
+
 export interface ListCalendarEventsRequest {
     start?: Date;
     end?: Date;
@@ -47,6 +52,10 @@ export interface ListCalendarEventsRequest {
 export interface PublicCalendarFeedRequest {
     scope: CalendarFeedScope;
     token: string;
+}
+
+export interface RevokeCalendarFeedRequest {
+    rotateCalendarFeedRequest: RotateCalendarFeedRequest;
 }
 
 export interface RotateCalendarFeedOperationRequest {
@@ -60,6 +69,32 @@ export interface RotateCalendarFeedOperationRequest {
  * @interface EventsApiInterface
  */
 export interface EventsApiInterface {
+    /**
+     * Creates request options for exportCalendarEvent without sending the request
+     * @param {'webinar' | 'training'} type 
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    exportCalendarEventRequestOpts(requestParameters: ExportCalendarEventRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Private iCalendar download with the same stable UID, update sequence and cancellation status as subscriptions. Exporting is not registration or attendance.
+     * @summary Export one authorized education event
+     * @param {'webinar' | 'training'} type 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    exportCalendarEventRaw(requestParameters: ExportCalendarEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
+
+    /**
+     * Private iCalendar download with the same stable UID, update sequence and cancellation status as subscriptions. Exporting is not registration or attendance.
+     * Export one authorized education event
+     */
+    exportCalendarEvent(requestParameters: ExportCalendarEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
+
     /**
      * Creates request options for listCalendarEvents without sending the request
      * @param {Date} [start] 
@@ -121,7 +156,7 @@ export interface EventsApiInterface {
 
     /**
      * 
-     * @summary Public signed calendar feed
+     * @summary Private bearer calendar subscription
      * @param {CalendarFeedScope} scope 
      * @param {string} token 
      * @param {*} [options] Override http request option.
@@ -131,9 +166,33 @@ export interface EventsApiInterface {
     publicCalendarFeedRaw(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>>;
 
     /**
-     * Public signed calendar feed
+     * Private bearer calendar subscription
      */
     publicCalendarFeed(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string>;
+
+    /**
+     * Creates request options for revokeCalendarFeed without sending the request
+     * @param {RotateCalendarFeedRequest} rotateCalendarFeedRequest 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    revokeCalendarFeedRequestOpts(requestParameters: RevokeCalendarFeedRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Immediately rejects the old URL. Listing subscriptions preserves the stopped state. Rotate explicitly to create a replacement URL.
+     * @summary Stop a private calendar subscription
+     * @param {RotateCalendarFeedRequest} rotateCalendarFeedRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    revokeCalendarFeedRaw(requestParameters: RevokeCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Immediately rejects the old URL. Listing subscriptions preserves the stopped state. Rotate explicitly to create a replacement URL.
+     * Stop a private calendar subscription
+     */
+    revokeCalendarFeed(requestParameters: RevokeCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Creates request options for rotateCalendarFeed without sending the request
@@ -164,6 +223,69 @@ export interface EventsApiInterface {
  * 
  */
 export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
+
+    /**
+     * Creates request options for exportCalendarEvent without sending the request
+     */
+    async exportCalendarEventRequestOpts(requestParameters: ExportCalendarEventRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling exportCalendarEvent().'
+            );
+        }
+
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling exportCalendarEvent().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/events/{type}/{id}/calendar.ics`;
+        urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Private iCalendar download with the same stable UID, update sequence and cancellation status as subscriptions. Exporting is not registration or attendance.
+     * Export one authorized education event
+     */
+    async exportCalendarEventRaw(requestParameters: ExportCalendarEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        const requestOptions = await this.exportCalendarEventRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Private iCalendar download with the same stable UID, update sequence and cancellation status as subscriptions. Exporting is not registration or attendance.
+     * Export one authorized education event
+     */
+    async exportCalendarEvent(requestParameters: ExportCalendarEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.exportCalendarEventRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for listCalendarEvents without sending the request
@@ -307,7 +429,7 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
     }
 
     /**
-     * Public signed calendar feed
+     * Private bearer calendar subscription
      */
     async publicCalendarFeedRaw(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
         const requestOptions = await this.publicCalendarFeedRequestOpts(requestParameters);
@@ -321,11 +443,67 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
     }
 
     /**
-     * Public signed calendar feed
+     * Private bearer calendar subscription
      */
     async publicCalendarFeed(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
         const response = await this.publicCalendarFeedRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for revokeCalendarFeed without sending the request
+     */
+    async revokeCalendarFeedRequestOpts(requestParameters: RevokeCalendarFeedRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rotateCalendarFeedRequest'] == null) {
+            throw new runtime.RequiredError(
+                'rotateCalendarFeedRequest',
+                'Required parameter "rotateCalendarFeedRequest" was null or undefined when calling revokeCalendarFeed().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/calendar/feeds/revoke`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RotateCalendarFeedRequestToJSON(requestParameters['rotateCalendarFeedRequest']),
+        };
+    }
+
+    /**
+     * Immediately rejects the old URL. Listing subscriptions preserves the stopped state. Rotate explicitly to create a replacement URL.
+     * Stop a private calendar subscription
+     */
+    async revokeCalendarFeedRaw(requestParameters: RevokeCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokeCalendarFeedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Immediately rejects the old URL. Listing subscriptions preserves the stopped state. Rotate explicitly to create a replacement URL.
+     * Stop a private calendar subscription
+     */
+    async revokeCalendarFeed(requestParameters: RevokeCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.revokeCalendarFeedRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -384,3 +562,12 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
     }
 
 }
+
+/**
+ * @export
+ */
+export const ExportCalendarEventTypeEnum = {
+    Webinar: 'webinar',
+    Training: 'training'
+} as const;
+export type ExportCalendarEventTypeEnum = typeof ExportCalendarEventTypeEnum[keyof typeof ExportCalendarEventTypeEnum];

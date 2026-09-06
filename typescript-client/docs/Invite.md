@@ -6,6 +6,9 @@
 
 Name | Type
 ------------ | -------------
+`role_key` | string
+`department_id` | string
+`invited_by_user_id` | string
 `id` | string
 `email` | string
 `first_name` | string
@@ -26,6 +29,9 @@ import type { Invite } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "role_key": null,
+  "department_id": null,
+  "invited_by_user_id": null,
   "id": null,
   "email": null,
   "first_name": null,

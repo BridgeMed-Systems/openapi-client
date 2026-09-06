@@ -6,6 +6,12 @@
 
 Name | Type
 ------------ | -------------
+`request_type` | string
+`product_name` | string
+`organization_name` | string
+`requester_name` | string
+`requester_email` | string
+`requester_phone` | string
 `id` | string
 `organization_id` | string
 `submitted_by_user_id` | string
@@ -27,6 +33,12 @@ import type { TrainingRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "request_type": null,
+  "product_name": null,
+  "organization_name": null,
+  "requester_name": null,
+  "requester_email": null,
+  "requester_phone": null,
   "id": null,
   "organization_id": null,
   "submitted_by_user_id": null,

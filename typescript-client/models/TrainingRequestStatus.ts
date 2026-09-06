@@ -20,6 +20,8 @@
 export const TrainingRequestStatus = {
     Requested: 'requested',
     Acknowledged: 'acknowledged',
+    Approved: 'approved',
+    Declined: 'declined',
     Scheduled: 'scheduled',
     Completed: 'completed',
     Cancelled: 'cancelled'

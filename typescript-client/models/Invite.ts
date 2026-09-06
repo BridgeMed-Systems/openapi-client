@@ -32,6 +32,24 @@ export interface Invite {
      * @type {string}
      * @memberof Invite
      */
+    role_key?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Invite
+     */
+    department_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Invite
+     */
+    invited_by_user_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Invite
+     */
     id: string;
     /**
      * 
@@ -127,6 +145,9 @@ export function InviteFromJSONTyped(json: any, ignoreDiscriminator: boolean): In
     }
     return {
         
+        'role_key': json['role_key'] == null ? undefined : json['role_key'],
+        'department_id': json['department_id'] == null ? undefined : json['department_id'],
+        'invited_by_user_id': json['invited_by_user_id'] == null ? undefined : json['invited_by_user_id'],
         'id': json['id'],
         'email': json['email'],
         'first_name': json['first_name'],
@@ -153,6 +174,9 @@ export function InviteToJSONTyped(value?: Invite | null, ignoreDiscriminator: bo
 
     return {
         
+        'role_key': value['role_key'],
+        'department_id': value['department_id'],
+        'invited_by_user_id': value['invited_by_user_id'],
         'id': value['id'],
         'email': value['email'],
         'first_name': value['first_name'],

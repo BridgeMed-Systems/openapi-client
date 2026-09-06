@@ -13,6 +13,7 @@ Name | Type
 `url` | string
 `date_added` | Date
 `date_rotated` | Date
+`revoked_at` | Date
 
 ## Example
 
@@ -28,6 +29,7 @@ const example = {
   "url": null,
   "date_added": null,
   "date_rotated": null,
+  "revoked_at": null,
 } satisfies CalendarFeed
 
 console.log(example)

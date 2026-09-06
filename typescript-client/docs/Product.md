@@ -6,6 +6,11 @@
 
 Name | Type
 ------------ | -------------
+`device_identifier` | string
+`model_number` | string
+`specialties` | Array&lt;string&gt;
+`procedure_types` | Array&lt;string&gt;
+`metadata_revision` | number
 `id` | string
 `name` | string
 `description` | string
@@ -20,6 +25,11 @@ import type { Product } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "device_identifier": null,
+  "model_number": null,
+  "specialties": null,
+  "procedure_types": null,
+  "metadata_revision": null,
   "id": null,
   "name": null,
   "description": null,

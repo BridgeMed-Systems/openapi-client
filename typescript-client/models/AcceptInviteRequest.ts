@@ -26,7 +26,7 @@ export interface AcceptInviteRequest {
      */
     invite_token: string;
     /**
-     * 
+     * New accounts require at least 12 characters. Existing accounts must provide their current password.
      * @type {string}
      * @memberof AcceptInviteRequest
      */

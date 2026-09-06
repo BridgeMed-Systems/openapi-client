@@ -284,24 +284,28 @@ export interface WebinarsApiInterface {
      * Creates request options for signalWebinar without sending the request
      * @param {string} id 
      * @param {string} participantToken 
+     * @deprecated
      * @throws {RequiredError}
      * @memberof WebinarsApiInterface
      */
     signalWebinarRequestOpts(requestParameters: SignalWebinarRequest): Promise<runtime.RequestOpts>;
 
     /**
-     * 
+     * Requires a current authenticated browser session and a participant token for that same user and room.
      * @summary WebRTC signaling websocket endpoint
      * @param {string} id 
      * @param {string} participantToken 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof WebinarsApiInterface
      */
     signalWebinarRaw(requestParameters: SignalWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
 
     /**
+     * Requires a current authenticated browser session and a participant token for that same user and room.
      * WebRTC signaling websocket endpoint
+     * @deprecated
      */
     signalWebinar(requestParameters: SignalWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
@@ -787,6 +791,7 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
 
     /**
      * Creates request options for signalWebinar without sending the request
+     * @deprecated
      */
     async signalWebinarRequestOpts(requestParameters: SignalWebinarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
@@ -811,6 +816,14 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/webinars/{id}/signal`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -824,7 +837,9 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
     }
 
     /**
+     * Requires a current authenticated browser session and a participant token for that same user and room.
      * WebRTC signaling websocket endpoint
+     * @deprecated
      */
     async signalWebinarRaw(requestParameters: SignalWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const requestOptions = await this.signalWebinarRequestOpts(requestParameters);
@@ -834,7 +849,9 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
     }
 
     /**
+     * Requires a current authenticated browser session and a participant token for that same user and room.
      * WebRTC signaling websocket endpoint
+     * @deprecated
      */
     async signalWebinar(requestParameters: SignalWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.signalWebinarRaw(requestParameters, initOverrides);

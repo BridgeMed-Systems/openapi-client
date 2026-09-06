@@ -6,6 +6,8 @@
 
 Name | Type
 ------------ | -------------
+`request_type` | string
+`preferred_rep_id` | string
 `organization_id` | string
 `product_id` | string
 `title` | string
@@ -18,6 +20,8 @@ import type { CreateTrainingRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "request_type": null,
+  "preferred_rep_id": null,
   "organization_id": null,
   "product_id": null,
   "title": null,

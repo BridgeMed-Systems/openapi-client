@@ -18,6 +18,9 @@ Name | Type
 `delivery_mode` | [TrainingSessionDeliveryMode](TrainingSessionDeliveryMode.md)
 `location_text` | string
 `external_join_url` | string
+`status` | string
+`sequence` | number
+`updated_at` | Date
 
 ## Example
 
@@ -38,6 +41,9 @@ const example = {
   "delivery_mode": null,
   "location_text": null,
   "external_join_url": null,
+  "status": null,
+  "sequence": null,
+  "updated_at": null,
 } satisfies CalendarItem
 
 console.log(example)

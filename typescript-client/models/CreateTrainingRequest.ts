@@ -21,6 +21,18 @@ import { mapValues } from '../runtime';
 export interface CreateTrainingRequest {
     /**
      * 
+     * @type {CreateTrainingRequestRequestTypeEnum}
+     * @memberof CreateTrainingRequest
+     */
+    request_type?: CreateTrainingRequestRequestTypeEnum;
+    /**
+     * Optional active rep supporting the selected product.
+     * @type {string}
+     * @memberof CreateTrainingRequest
+     */
+    preferred_rep_id?: string;
+    /**
+     * 
      * @type {string}
      * @memberof CreateTrainingRequest
      */
@@ -45,6 +57,18 @@ export interface CreateTrainingRequest {
     message: string;
 }
 
+
+/**
+ * @export
+ */
+export const CreateTrainingRequestRequestTypeEnum = {
+    InPerson: 'in_person',
+    Virtual: 'virtual',
+    InService: 'in_service'
+} as const;
+export type CreateTrainingRequestRequestTypeEnum = typeof CreateTrainingRequestRequestTypeEnum[keyof typeof CreateTrainingRequestRequestTypeEnum];
+
+
 /**
  * Check if a given object implements the CreateTrainingRequest interface.
  */
@@ -65,6 +89,8 @@ export function CreateTrainingRequestFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
+        'request_type': json['request_type'] == null ? undefined : json['request_type'],
+        'preferred_rep_id': json['preferred_rep_id'] == null ? undefined : json['preferred_rep_id'],
         'organization_id': json['organization_id'] == null ? undefined : json['organization_id'],
         'product_id': json['product_id'],
         'title': json['title'],
@@ -83,6 +109,8 @@ export function CreateTrainingRequestToJSONTyped(value?: CreateTrainingRequest |
 
     return {
         
+        'request_type': value['request_type'],
+        'preferred_rep_id': value['preferred_rep_id'],
         'organization_id': value['organization_id'],
         'product_id': value['product_id'],
         'title': value['title'],

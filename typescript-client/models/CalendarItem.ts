@@ -113,8 +113,38 @@ export interface CalendarItem {
      * @memberof CalendarItem
      */
     external_join_url?: string;
+    /**
+     * 
+     * @type {CalendarItemStatusEnum}
+     * @memberof CalendarItem
+     */
+    status: CalendarItemStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof CalendarItem
+     */
+    sequence: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CalendarItem
+     */
+    updated_at: Date;
 }
 
+
+/**
+ * @export
+ */
+export const CalendarItemStatusEnum = {
+    Scheduled: 'scheduled',
+    Live: 'live',
+    Completed: 'completed',
+    Ended: 'ended',
+    Cancelled: 'cancelled'
+} as const;
+export type CalendarItemStatusEnum = typeof CalendarItemStatusEnum[keyof typeof CalendarItemStatusEnum];
 
 
 /**
@@ -129,6 +159,9 @@ export function instanceOfCalendarItem(value: object): value is CalendarItem {
     if (!('end_at' in value) || value['end_at'] === undefined) return false;
     if (!('can_manage' in value) || value['can_manage'] === undefined) return false;
     if (!('manage_scope' in value) || value['manage_scope'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('sequence' in value) || value['sequence'] === undefined) return false;
+    if (!('updated_at' in value) || value['updated_at'] === undefined) return false;
     return true;
 }
 
@@ -154,6 +187,9 @@ export function CalendarItemFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'delivery_mode': json['delivery_mode'] == null ? undefined : TrainingSessionDeliveryModeFromJSON(json['delivery_mode']),
         'location_text': json['location_text'] == null ? undefined : json['location_text'],
         'external_join_url': json['external_join_url'] == null ? undefined : json['external_join_url'],
+        'status': json['status'],
+        'sequence': json['sequence'],
+        'updated_at': (new Date(json['updated_at'])),
     };
 }
 
@@ -180,6 +216,9 @@ export function CalendarItemToJSONTyped(value?: CalendarItem | null, ignoreDiscr
         'delivery_mode': TrainingSessionDeliveryModeToJSON(value['delivery_mode']),
         'location_text': value['location_text'],
         'external_join_url': value['external_join_url'],
+        'status': value['status'],
+        'sequence': value['sequence'],
+        'updated_at': value['updated_at'].toISOString(),
     };
 }
 

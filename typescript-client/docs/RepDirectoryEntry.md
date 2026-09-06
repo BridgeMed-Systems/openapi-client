@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`title` | string
 `user_id` | string
 `first_name` | string
 `last_name` | string
@@ -25,6 +26,7 @@ import type { RepDirectoryEntry } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "title": null,
   "user_id": null,
   "first_name": null,
   "last_name": null,

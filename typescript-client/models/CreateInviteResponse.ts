@@ -29,12 +29,6 @@ import {
 export interface CreateInviteResponse {
     /**
      * 
-     * @type {string}
-     * @memberof CreateInviteResponse
-     */
-    invite_token: string;
-    /**
-     * 
      * @type {Invite}
      * @memberof CreateInviteResponse
      */
@@ -45,7 +39,6 @@ export interface CreateInviteResponse {
  * Check if a given object implements the CreateInviteResponse interface.
  */
 export function instanceOfCreateInviteResponse(value: object): value is CreateInviteResponse {
-    if (!('invite_token' in value) || value['invite_token'] === undefined) return false;
     if (!('invite' in value) || value['invite'] === undefined) return false;
     return true;
 }
@@ -60,7 +53,6 @@ export function CreateInviteResponseFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'invite_token': json['invite_token'],
         'invite': InviteFromJSON(json['invite']),
     };
 }
@@ -76,7 +68,6 @@ export function CreateInviteResponseToJSONTyped(value?: CreateInviteResponse | n
 
     return {
         
-        'invite_token': value['invite_token'],
         'invite': InviteToJSON(value['invite']),
     };
 }

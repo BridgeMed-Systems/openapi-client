@@ -6,6 +6,11 @@
 
 Name | Type
 ------------ | -------------
+`organization_id` | string
+`attendance_source` | string
+`attendance_evidence` | string
+`recorded_by_user_id` | string
+`verified_attendance_seconds` | number
 `id` | string
 `session_id` | string
 `user_id` | string
@@ -22,6 +27,11 @@ import type { TrainingSessionRegistration } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "organization_id": null,
+  "attendance_source": null,
+  "attendance_evidence": null,
+  "recorded_by_user_id": null,
+  "verified_attendance_seconds": null,
   "id": null,
   "session_id": null,
   "user_id": null,

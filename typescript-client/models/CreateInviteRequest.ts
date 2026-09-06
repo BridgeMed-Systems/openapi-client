@@ -28,6 +28,18 @@ import {
  */
 export interface CreateInviteRequest {
     /**
+     * Organization-scoped role. Vendor and platform invitations require platform administration.
+     * @type {CreateInviteRequestRoleKeyEnum}
+     * @memberof CreateInviteRequest
+     */
+    role_key?: CreateInviteRequestRoleKeyEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateInviteRequest
+     */
+    department_id?: string;
+    /**
      * 
      * @type {string}
      * @memberof CreateInviteRequest
@@ -56,7 +68,7 @@ export interface CreateInviteRequest {
      * @type {UserPersona}
      * @memberof CreateInviteRequest
      */
-    persona: UserPersona;
+    persona?: UserPersona;
     /**
      * 
      * @type {string}
@@ -64,13 +76,27 @@ export interface CreateInviteRequest {
      */
     organization_id?: string;
     /**
-     * 
+     * Zero or omitted uses the configured default, capped at 30 days.
      * @type {number}
      * @memberof CreateInviteRequest
      */
     expires_in_seconds?: number;
 }
 
+
+/**
+ * @export
+ */
+export const CreateInviteRequestRoleKeyEnum = {
+    ClinicalStaff: 'clinical_staff',
+    AdvancedClinicalStaff: 'advanced_clinical_staff',
+    HospitalAdmin: 'hospital_admin',
+    VendorFieldRep: 'vendor_field_rep',
+    VendorManager: 'vendor_manager',
+    VendorOrgAdmin: 'vendor_org_admin',
+    PlatformAdmin: 'platform_admin'
+} as const;
+export type CreateInviteRequestRoleKeyEnum = typeof CreateInviteRequestRoleKeyEnum[keyof typeof CreateInviteRequestRoleKeyEnum];
 
 
 /**
@@ -80,7 +106,6 @@ export function instanceOfCreateInviteRequest(value: object): value is CreateInv
     if (!('email' in value) || value['email'] === undefined) return false;
     if (!('first_name' in value) || value['first_name'] === undefined) return false;
     if (!('last_name' in value) || value['last_name'] === undefined) return false;
-    if (!('persona' in value) || value['persona'] === undefined) return false;
     return true;
 }
 
@@ -94,11 +119,13 @@ export function CreateInviteRequestFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
+        'role_key': json['role_key'] == null ? undefined : json['role_key'],
+        'department_id': json['department_id'] == null ? undefined : json['department_id'],
         'email': json['email'],
         'first_name': json['first_name'],
         'last_name': json['last_name'],
         'phone_number': json['phone_number'] == null ? undefined : json['phone_number'],
-        'persona': UserPersonaFromJSON(json['persona']),
+        'persona': json['persona'] == null ? undefined : UserPersonaFromJSON(json['persona']),
         'organization_id': json['organization_id'] == null ? undefined : json['organization_id'],
         'expires_in_seconds': json['expires_in_seconds'] == null ? undefined : json['expires_in_seconds'],
     };
@@ -115,6 +142,8 @@ export function CreateInviteRequestToJSONTyped(value?: CreateInviteRequest | nul
 
     return {
         
+        'role_key': value['role_key'],
+        'department_id': value['department_id'],
         'email': value['email'],
         'first_name': value['first_name'],
         'last_name': value['last_name'],
