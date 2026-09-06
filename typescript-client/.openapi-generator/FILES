@@ -195,6 +195,12 @@ docs/UsersApi.md
 docs/VendorBillingSummary.md
 docs/VendorCheckoutInput.md
 docs/VendorPrice.md
+docs/VendorSignupAccepted.md
+docs/VendorSignupComplete.md
+docs/VendorSignupInput.md
+docs/VendorSignupPreview.md
+docs/VendorSignupResult.md
+docs/VendorSignupToken.md
 docs/VideoPlayback.md
 docs/VideoUploadConfirmation.md
 docs/Webinar.md
@@ -375,6 +381,12 @@ models/UserStatus.ts
 models/VendorBillingSummary.ts
 models/VendorCheckoutInput.ts
 models/VendorPrice.ts
+models/VendorSignupAccepted.ts
+models/VendorSignupComplete.ts
+models/VendorSignupInput.ts
+models/VendorSignupPreview.ts
+models/VendorSignupResult.ts
+models/VendorSignupToken.ts
 models/VideoPlayback.ts
 models/VideoUploadConfirmation.ts
 models/Webinar.ts

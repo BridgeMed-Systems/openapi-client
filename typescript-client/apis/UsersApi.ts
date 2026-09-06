@@ -27,6 +27,12 @@ import type {
   PasswordResetRequest,
   RequestPasswordRecovery202Response,
   User,
+  VendorSignupAccepted,
+  VendorSignupComplete,
+  VendorSignupInput,
+  VendorSignupPreview,
+  VendorSignupResult,
+  VendorSignupToken,
 } from '../models/index';
 import {
     AcceptInviteRequestFromJSON,
@@ -53,10 +59,26 @@ import {
     RequestPasswordRecovery202ResponseToJSON,
     UserFromJSON,
     UserToJSON,
+    VendorSignupAcceptedFromJSON,
+    VendorSignupAcceptedToJSON,
+    VendorSignupCompleteFromJSON,
+    VendorSignupCompleteToJSON,
+    VendorSignupInputFromJSON,
+    VendorSignupInputToJSON,
+    VendorSignupPreviewFromJSON,
+    VendorSignupPreviewToJSON,
+    VendorSignupResultFromJSON,
+    VendorSignupResultToJSON,
+    VendorSignupTokenFromJSON,
+    VendorSignupTokenToJSON,
 } from '../models/index';
 
 export interface AcceptUserInviteRequest {
     acceptInviteRequest: AcceptInviteRequest;
+}
+
+export interface CompleteVendorSignupRequest {
+    vendorSignupComplete: VendorSignupComplete;
 }
 
 export interface CreateHospitalDepartmentOperationRequest {
@@ -71,6 +93,10 @@ export interface GetUserByIdRequest {
     id: string;
 }
 
+export interface PreviewVendorSignupRequest {
+    vendorSignupToken: VendorSignupToken;
+}
+
 export interface RemoveHospitalDepartmentRequest {
     id: string;
 }
@@ -81,6 +107,10 @@ export interface RemoveHospitalStaffRequest {
 
 export interface RequestPasswordRecoveryRequest {
     passwordRecoveryRequest: PasswordRecoveryRequest;
+}
+
+export interface RequestVendorSignupRequest {
+    vendorSignupInput: VendorSignupInput;
 }
 
 export interface ResetPasswordRequest {
@@ -126,6 +156,30 @@ export interface UsersApiInterface {
      * Accept invite and create credentials
      */
     acceptUserInvite(requestParameters: AcceptUserInviteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User>;
+
+    /**
+     * Creates request options for completeVendorSignup without sending the request
+     * @param {VendorSignupComplete} vendorSignupComplete 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    completeVendorSignupRequestOpts(requestParameters: CompleteVendorSignupRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * @summary Create a new vendor organization after email verification
+     * @param {VendorSignupComplete} vendorSignupComplete 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    completeVendorSignupRaw(requestParameters: CompleteVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VendorSignupResult>>;
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Create a new vendor organization after email verification
+     */
+    completeVendorSignup(requestParameters: CompleteVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VendorSignupResult>;
 
     /**
      * Creates request options for createHospitalDepartment without sending the request
@@ -239,6 +293,30 @@ export interface UsersApiInterface {
     listHospitalStaff(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<HospitalStaffMember>>;
 
     /**
+     * Creates request options for previewVendorSignup without sending the request
+     * @param {VendorSignupToken} vendorSignupToken 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    previewVendorSignupRequestOpts(requestParameters: PreviewVendorSignupRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * @summary Review an email-verified signup link
+     * @param {VendorSignupToken} vendorSignupToken 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    previewVendorSignupRaw(requestParameters: PreviewVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VendorSignupPreview>>;
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Review an email-verified signup link
+     */
+    previewVendorSignup(requestParameters: PreviewVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VendorSignupPreview>;
+
+    /**
      * Creates request options for removeHospitalDepartment without sending the request
      * @param {string} id 
      * @throws {RequiredError}
@@ -306,6 +384,30 @@ export interface UsersApiInterface {
      * Email a one-use password recovery link
      */
     requestPasswordRecovery(requestParameters: RequestPasswordRecoveryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestPasswordRecovery202Response>;
+
+    /**
+     * Creates request options for requestVendorSignup without sending the request
+     * @param {VendorSignupInput} vendorSignupInput 
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    requestVendorSignupRequestOpts(requestParameters: RequestVendorSignupRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * @summary Request email verification for a new vendor organization
+     * @param {VendorSignupInput} vendorSignupInput 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApiInterface
+     */
+    requestVendorSignupRaw(requestParameters: RequestVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VendorSignupAccepted>>;
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Request email verification for a new vendor organization
+     */
+    requestVendorSignup(requestParameters: RequestVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VendorSignupAccepted>;
 
     /**
      * Creates request options for resetPassword without sending the request
@@ -431,6 +533,55 @@ export class UsersApi extends runtime.BaseAPI implements UsersApiInterface {
      */
     async acceptUserInvite(requestParameters: AcceptUserInviteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
         const response = await this.acceptUserInviteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for completeVendorSignup without sending the request
+     */
+    async completeVendorSignupRequestOpts(requestParameters: CompleteVendorSignupRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['vendorSignupComplete'] == null) {
+            throw new runtime.RequiredError(
+                'vendorSignupComplete',
+                'Required parameter "vendorSignupComplete" was null or undefined when calling completeVendorSignup().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/vendor-signups/complete`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: VendorSignupCompleteToJSON(requestParameters['vendorSignupComplete']),
+        };
+    }
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Create a new vendor organization after email verification
+     */
+    async completeVendorSignupRaw(requestParameters: CompleteVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VendorSignupResult>> {
+        const requestOptions = await this.completeVendorSignupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VendorSignupResultFromJSON(jsonValue));
+    }
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Create a new vendor organization after email verification
+     */
+    async completeVendorSignup(requestParameters: CompleteVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VendorSignupResult> {
+        const response = await this.completeVendorSignupRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -688,6 +839,55 @@ export class UsersApi extends runtime.BaseAPI implements UsersApiInterface {
     }
 
     /**
+     * Creates request options for previewVendorSignup without sending the request
+     */
+    async previewVendorSignupRequestOpts(requestParameters: PreviewVendorSignupRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['vendorSignupToken'] == null) {
+            throw new runtime.RequiredError(
+                'vendorSignupToken',
+                'Required parameter "vendorSignupToken" was null or undefined when calling previewVendorSignup().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/vendor-signups/preview`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: VendorSignupTokenToJSON(requestParameters['vendorSignupToken']),
+        };
+    }
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Review an email-verified signup link
+     */
+    async previewVendorSignupRaw(requestParameters: PreviewVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VendorSignupPreview>> {
+        const requestOptions = await this.previewVendorSignupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VendorSignupPreviewFromJSON(jsonValue));
+    }
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Review an email-verified signup link
+     */
+    async previewVendorSignup(requestParameters: PreviewVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VendorSignupPreview> {
+        const response = await this.previewVendorSignupRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for removeHospitalDepartment without sending the request
      */
     async removeHospitalDepartmentRequestOpts(requestParameters: RemoveHospitalDepartmentRequest): Promise<runtime.RequestOpts> {
@@ -835,6 +1035,55 @@ export class UsersApi extends runtime.BaseAPI implements UsersApiInterface {
      */
     async requestPasswordRecovery(requestParameters: RequestPasswordRecoveryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestPasswordRecovery202Response> {
         const response = await this.requestPasswordRecoveryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for requestVendorSignup without sending the request
+     */
+    async requestVendorSignupRequestOpts(requestParameters: RequestVendorSignupRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['vendorSignupInput'] == null) {
+            throw new runtime.RequiredError(
+                'vendorSignupInput',
+                'Required parameter "vendorSignupInput" was null or undefined when calling requestVendorSignup().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/vendor-signups`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: VendorSignupInputToJSON(requestParameters['vendorSignupInput']),
+        };
+    }
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Request email verification for a new vendor organization
+     */
+    async requestVendorSignupRaw(requestParameters: RequestVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VendorSignupAccepted>> {
+        const requestOptions = await this.requestVendorSignupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VendorSignupAcceptedFromJSON(jsonValue));
+    }
+
+    /**
+     * Public, rate-limited JSON endpoint. Tokens are carried only in request bodies, never URLs. Verification links expire after 24 hours and grant no access to existing organizations. Responses use private, no-store caching.
+     * Request email verification for a new vendor organization
+     */
+    async requestVendorSignup(requestParameters: RequestVendorSignupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VendorSignupAccepted> {
+        const response = await this.requestVendorSignupRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
