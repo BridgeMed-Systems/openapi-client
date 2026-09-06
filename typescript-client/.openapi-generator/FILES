@@ -1,5 +1,6 @@
 apis/AdminApi.ts
 apis/AuthApi.ts
+apis/BillingApi.ts
 apis/CatalogApi.ts
 apis/DocumentsApi.ts
 apis/EducationApi.ts
@@ -23,6 +24,8 @@ docs/AdminUserAuthorization.md
 docs/AudienceHospital.md
 docs/AuditEvent.md
 docs/AuthApi.md
+docs/BillingApi.md
+docs/BillingHostedAction.md
 docs/BuildInfo.md
 docs/CalendarFeed.md
 docs/CalendarFeedScope.md
@@ -189,6 +192,9 @@ docs/UserPersona.md
 docs/UserProduct.md
 docs/UserStatus.md
 docs/UsersApi.md
+docs/VendorBillingSummary.md
+docs/VendorCheckoutInput.md
+docs/VendorPrice.md
 docs/VideoPlayback.md
 docs/VideoUploadConfirmation.md
 docs/Webinar.md
@@ -213,6 +219,7 @@ models/AcceptInviteRequest.ts
 models/AdminUserAuthorization.ts
 models/AudienceHospital.ts
 models/AuditEvent.ts
+models/BillingHostedAction.ts
 models/BuildInfo.ts
 models/CalendarFeed.ts
 models/CalendarFeedScope.ts
@@ -365,6 +372,9 @@ models/User.ts
 models/UserPersona.ts
 models/UserProduct.ts
 models/UserStatus.ts
+models/VendorBillingSummary.ts
+models/VendorCheckoutInput.ts
+models/VendorPrice.ts
 models/VideoPlayback.ts
 models/VideoUploadConfirmation.ts
 models/Webinar.ts
