@@ -2,6 +2,7 @@
 /* eslint-disable */
 export * from './AcceptInviteRequest';
 export * from './AdminUserAuthorization';
+export * from './AudienceHospital';
 export * from './AuditEvent';
 export * from './BuildInfo';
 export * from './CalendarFeed';
@@ -61,6 +62,8 @@ export * from './EducationVersion';
 export * from './EducationVersionDraft';
 export * from './EducationWithdrawal';
 export * from './ErrorResponse';
+export * from './EventAvailability';
+export * from './EventPublication';
 export * from './HealthResponse';
 export * from './HospitalDepartment';
 export * from './HospitalStaffMember';

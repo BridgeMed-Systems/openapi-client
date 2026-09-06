@@ -7,10 +7,14 @@ All URIs are relative to *https://api.bridge.med*
 | [**createWebinar**](WebinarsApi.md#createwebinaroperation) | **POST** /v1/webinars/ | Create webinar |
 | [**createWebinarQnA**](WebinarsApi.md#createwebinarqnaoperation) | **POST** /v1/webinars/{id}/qna | Create webinar Q&amp;A item |
 | [**endWebinar**](WebinarsApi.md#endwebinar) | **POST** /v1/webinars/{id}/end | End webinar |
+| [**getHospitalWebinarAvailability**](WebinarsApi.md#gethospitalwebinaravailability) | **GET** /v1/webinars/{id}/availability | Read your hospital availability for an event |
 | [**getWebinar**](WebinarsApi.md#getwebinar) | **GET** /v1/webinars/{id} | Get webinar |
+| [**getWebinarAudience**](WebinarsApi.md#getwebinaraudience) | **GET** /v1/webinars/{id}/audience | List eligible hospitals and current event publication |
 | [**joinWebinar**](WebinarsApi.md#joinwebinaroperation) | **POST** /v1/webinars/{id}/join | Join webinar |
 | [**listWebinarQnA**](WebinarsApi.md#listwebinarqna) | **GET** /v1/webinars/{id}/qna | List webinar Q&amp;A items |
 | [**listWebinars**](WebinarsApi.md#listwebinars) | **GET** /v1/webinars/ | List webinars |
+| [**publishWebinarAudience**](WebinarsApi.md#publishwebinaraudience) | **PUT** /v1/webinars/{id}/audience/{organizationID} | Publish or withdraw a vendor event for one hospital |
+| [**setHospitalWebinarAvailability**](WebinarsApi.md#sethospitalwebinaravailability) | **PUT** /v1/webinars/{id}/availability | Enable or disable event access for your hospital |
 | [**signalWebinar**](WebinarsApi.md#signalwebinar) | **GET** /v1/webinars/{id}/signal | WebRTC signaling websocket endpoint |
 | [**startWebinar**](WebinarsApi.md#startwebinar) | **POST** /v1/webinars/{id}/start | Start webinar |
 | [**updateWebinar**](WebinarsApi.md#updatewebinaroperation) | **PATCH** /v1/webinars/{id} | Update webinar |
@@ -243,6 +247,82 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## getHospitalWebinarAvailability
+
+> EventAvailability getHospitalWebinarAvailability(id)
+
+Read your hospital availability for an event
+
+Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  WebinarsApi,
+} from '';
+import type { GetHospitalWebinarAvailabilityRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new WebinarsApi(config);
+
+  const body = {
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies GetHospitalWebinarAvailabilityRequest;
+
+  try {
+    const data = await api.getHospitalWebinarAvailability(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**EventAvailability**](EventAvailability.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Current event availability |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## getWebinar
 
 > Webinar getWebinar(id)
@@ -308,6 +388,82 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Webinar |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getWebinarAudience
+
+> Array&lt;AudienceHospital&gt; getWebinarAudience(id)
+
+List eligible hospitals and current event publication
+
+Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  WebinarsApi,
+} from '';
+import type { GetWebinarAudienceRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new WebinarsApi(config);
+
+  const body = {
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies GetWebinarAudienceRequest;
+
+  try {
+    const data = await api.getWebinarAudience(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**Array&lt;AudienceHospital&gt;**](AudienceHospital.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Current event availability |  -  |
 | **400** | Validation or request shape error |  -  |
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
@@ -550,6 +706,167 @@ example().catch(console.error);
 | **400** | Validation or request shape error |  -  |
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## publishWebinarAudience
+
+> publishWebinarAudience(id, organizationID, eventPublication)
+
+Publish or withdraw a vendor event for one hospital
+
+Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  WebinarsApi,
+} from '';
+import type { PublishWebinarAudienceRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new WebinarsApi(config);
+
+  const body = {
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // string
+    organizationID: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // EventPublication
+    eventPublication: ...,
+  } satisfies PublishWebinarAudienceRequest;
+
+  try {
+    const data = await api.publishWebinarAudience(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **organizationID** | `string` |  | [Defaults to `undefined`] |
+| **eventPublication** | [EventPublication](EventPublication.md) |  | |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Event availability updated or already in the requested state |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## setHospitalWebinarAvailability
+
+> setHospitalWebinarAvailability(id, eventAvailability)
+
+Enable or disable event access for your hospital
+
+Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  WebinarsApi,
+} from '';
+import type { SetHospitalWebinarAvailabilityRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new WebinarsApi(config);
+
+  const body = {
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // EventAvailability
+    eventAvailability: ...,
+  } satisfies SetHospitalWebinarAvailabilityRequest;
+
+  try {
+    const data = await api.setHospitalWebinarAvailability(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **eventAvailability** | [EventAvailability](EventAvailability.md) |  | |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Event availability updated or already in the requested state |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
 | **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

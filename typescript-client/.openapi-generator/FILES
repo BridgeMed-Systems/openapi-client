@@ -20,6 +20,7 @@ apis/index.ts
 docs/AcceptInviteRequest.md
 docs/AdminApi.md
 docs/AdminUserAuthorization.md
+docs/AudienceHospital.md
 docs/AuditEvent.md
 docs/AuthApi.md
 docs/BuildInfo.md
@@ -83,6 +84,8 @@ docs/EducationVersion.md
 docs/EducationVersionDraft.md
 docs/EducationWithdrawal.md
 docs/ErrorResponse.md
+docs/EventAvailability.md
+docs/EventPublication.md
 docs/EventsApi.md
 docs/HealthApi.md
 docs/HealthResponse.md
@@ -205,6 +208,7 @@ docs/WorkspaceSearchResponse.md
 index.ts
 models/AcceptInviteRequest.ts
 models/AdminUserAuthorization.ts
+models/AudienceHospital.ts
 models/AuditEvent.ts
 models/BuildInfo.ts
 models/CalendarFeed.ts
@@ -264,6 +268,8 @@ models/EducationVersion.ts
 models/EducationVersionDraft.ts
 models/EducationWithdrawal.ts
 models/ErrorResponse.ts
+models/EventAvailability.ts
+models/EventPublication.ts
 models/HealthResponse.ts
 models/HospitalDepartment.ts
 models/HospitalStaffMember.ts

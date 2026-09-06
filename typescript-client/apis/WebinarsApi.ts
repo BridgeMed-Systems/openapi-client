@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  AudienceHospital,
   CreateWebinarQnARequest,
   CreateWebinarRequest,
   ErrorResponse,
+  EventAvailability,
+  EventPublication,
   JoinWebinarRequest,
   UpdateWebinarQnARequest,
   UpdateWebinarRequest,
@@ -26,12 +29,18 @@ import type {
   WebinarQnAItem,
 } from '../models/index';
 import {
+    AudienceHospitalFromJSON,
+    AudienceHospitalToJSON,
     CreateWebinarQnARequestFromJSON,
     CreateWebinarQnARequestToJSON,
     CreateWebinarRequestFromJSON,
     CreateWebinarRequestToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    EventAvailabilityFromJSON,
+    EventAvailabilityToJSON,
+    EventPublicationFromJSON,
+    EventPublicationToJSON,
     JoinWebinarRequestFromJSON,
     JoinWebinarRequestToJSON,
     UpdateWebinarQnARequestFromJSON,
@@ -59,7 +68,15 @@ export interface EndWebinarRequest {
     id: string;
 }
 
+export interface GetHospitalWebinarAvailabilityRequest {
+    id: string;
+}
+
 export interface GetWebinarRequest {
+    id: string;
+}
+
+export interface GetWebinarAudienceRequest {
     id: string;
 }
 
@@ -78,6 +95,17 @@ export interface ListWebinarsRequest {
     statuses?: string;
     start?: Date;
     end?: Date;
+}
+
+export interface PublishWebinarAudienceRequest {
+    id: string;
+    organizationID: string;
+    eventPublication: EventPublication;
+}
+
+export interface SetHospitalWebinarAvailabilityRequest {
+    id: string;
+    eventAvailability: EventAvailability;
 }
 
 export interface SignalWebinarRequest {
@@ -179,6 +207,30 @@ export interface WebinarsApiInterface {
     endWebinar(requestParameters: EndWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Webinar>;
 
     /**
+     * Creates request options for getHospitalWebinarAvailability without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    getHospitalWebinarAvailabilityRequestOpts(requestParameters: GetHospitalWebinarAvailabilityRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * @summary Read your hospital availability for an event
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    getHospitalWebinarAvailabilityRaw(requestParameters: GetHospitalWebinarAvailabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EventAvailability>>;
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Read your hospital availability for an event
+     */
+    getHospitalWebinarAvailability(requestParameters: GetHospitalWebinarAvailabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EventAvailability>;
+
+    /**
      * Creates request options for getWebinar without sending the request
      * @param {string} id 
      * @throws {RequiredError}
@@ -200,6 +252,30 @@ export interface WebinarsApiInterface {
      * Get webinar
      */
     getWebinar(requestParameters: GetWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Webinar>;
+
+    /**
+     * Creates request options for getWebinarAudience without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    getWebinarAudienceRequestOpts(requestParameters: GetWebinarAudienceRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * @summary List eligible hospitals and current event publication
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    getWebinarAudienceRaw(requestParameters: GetWebinarAudienceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AudienceHospital>>>;
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * List eligible hospitals and current event publication
+     */
+    getWebinarAudience(requestParameters: GetWebinarAudienceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AudienceHospital>>;
 
     /**
      * Creates request options for joinWebinar without sending the request
@@ -279,6 +355,60 @@ export interface WebinarsApiInterface {
      * List webinars
      */
     listWebinars(requestParameters: ListWebinarsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Webinar>>;
+
+    /**
+     * Creates request options for publishWebinarAudience without sending the request
+     * @param {string} id 
+     * @param {string} organizationID 
+     * @param {EventPublication} eventPublication 
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    publishWebinarAudienceRequestOpts(requestParameters: PublishWebinarAudienceRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * @summary Publish or withdraw a vendor event for one hospital
+     * @param {string} id 
+     * @param {string} organizationID 
+     * @param {EventPublication} eventPublication 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    publishWebinarAudienceRaw(requestParameters: PublishWebinarAudienceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Publish or withdraw a vendor event for one hospital
+     */
+    publishWebinarAudience(requestParameters: PublishWebinarAudienceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Creates request options for setHospitalWebinarAvailability without sending the request
+     * @param {string} id 
+     * @param {EventAvailability} eventAvailability 
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    setHospitalWebinarAvailabilityRequestOpts(requestParameters: SetHospitalWebinarAvailabilityRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * @summary Enable or disable event access for your hospital
+     * @param {string} id 
+     * @param {EventAvailability} eventAvailability 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    setHospitalWebinarAvailabilityRaw(requestParameters: SetHospitalWebinarAvailabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Enable or disable event access for your hospital
+     */
+    setHospitalWebinarAvailability(requestParameters: SetHospitalWebinarAvailabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Creates request options for signalWebinar without sending the request
@@ -563,6 +693,61 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
     }
 
     /**
+     * Creates request options for getHospitalWebinarAvailability without sending the request
+     */
+    async getHospitalWebinarAvailabilityRequestOpts(requestParameters: GetHospitalWebinarAvailabilityRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getHospitalWebinarAvailability().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/webinars/{id}/availability`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Read your hospital availability for an event
+     */
+    async getHospitalWebinarAvailabilityRaw(requestParameters: GetHospitalWebinarAvailabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EventAvailability>> {
+        const requestOptions = await this.getHospitalWebinarAvailabilityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EventAvailabilityFromJSON(jsonValue));
+    }
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Read your hospital availability for an event
+     */
+    async getHospitalWebinarAvailability(requestParameters: GetHospitalWebinarAvailabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EventAvailability> {
+        const response = await this.getHospitalWebinarAvailabilityRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for getWebinar without sending the request
      */
     async getWebinarRequestOpts(requestParameters: GetWebinarRequest): Promise<runtime.RequestOpts> {
@@ -612,6 +797,61 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
      */
     async getWebinar(requestParameters: GetWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Webinar> {
         const response = await this.getWebinarRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getWebinarAudience without sending the request
+     */
+    async getWebinarAudienceRequestOpts(requestParameters: GetWebinarAudienceRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getWebinarAudience().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/webinars/{id}/audience`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * List eligible hospitals and current event publication
+     */
+    async getWebinarAudienceRaw(requestParameters: GetWebinarAudienceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AudienceHospital>>> {
+        const requestOptions = await this.getWebinarAudienceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(AudienceHospitalFromJSON));
+    }
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * List eligible hospitals and current event publication
+     */
+    async getWebinarAudience(requestParameters: GetWebinarAudienceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AudienceHospital>> {
+        const response = await this.getWebinarAudienceRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -787,6 +1027,142 @@ export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface
     async listWebinars(requestParameters: ListWebinarsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Webinar>> {
         const response = await this.listWebinarsRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for publishWebinarAudience without sending the request
+     */
+    async publishWebinarAudienceRequestOpts(requestParameters: PublishWebinarAudienceRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling publishWebinarAudience().'
+            );
+        }
+
+        if (requestParameters['organizationID'] == null) {
+            throw new runtime.RequiredError(
+                'organizationID',
+                'Required parameter "organizationID" was null or undefined when calling publishWebinarAudience().'
+            );
+        }
+
+        if (requestParameters['eventPublication'] == null) {
+            throw new runtime.RequiredError(
+                'eventPublication',
+                'Required parameter "eventPublication" was null or undefined when calling publishWebinarAudience().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/webinars/{id}/audience/{organizationID}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"organizationID"}}`, encodeURIComponent(String(requestParameters['organizationID'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: EventPublicationToJSON(requestParameters['eventPublication']),
+        };
+    }
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Publish or withdraw a vendor event for one hospital
+     */
+    async publishWebinarAudienceRaw(requestParameters: PublishWebinarAudienceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.publishWebinarAudienceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Publish or withdraw a vendor event for one hospital
+     */
+    async publishWebinarAudience(requestParameters: PublishWebinarAudienceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.publishWebinarAudienceRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for setHospitalWebinarAvailability without sending the request
+     */
+    async setHospitalWebinarAvailabilityRequestOpts(requestParameters: SetHospitalWebinarAvailabilityRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling setHospitalWebinarAvailability().'
+            );
+        }
+
+        if (requestParameters['eventAvailability'] == null) {
+            throw new runtime.RequiredError(
+                'eventAvailability',
+                'Required parameter "eventAvailability" was null or undefined when calling setHospitalWebinarAvailability().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/webinars/{id}/availability`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: EventAvailabilityToJSON(requestParameters['eventAvailability']),
+        };
+    }
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Enable or disable event access for your hospital
+     */
+    async setHospitalWebinarAvailabilityRaw(requestParameters: SetHospitalWebinarAvailabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setHospitalWebinarAvailabilityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Vendor hosts and authorized company managers choose partner hospitals explicitly. Hospital administrators control access for their own staff. Withdrawing access preserves private participation history and sends cancellation updates to calendar subscriptions.
+     * Enable or disable event access for your hospital
+     */
+    async setHospitalWebinarAvailability(requestParameters: SetHospitalWebinarAvailabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.setHospitalWebinarAvailabilityRaw(requestParameters, initOverrides);
     }
 
     /**
