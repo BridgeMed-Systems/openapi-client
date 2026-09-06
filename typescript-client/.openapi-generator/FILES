@@ -85,6 +85,9 @@ docs/EducationVersionDraft.md
 docs/EducationWithdrawal.md
 docs/ErrorResponse.md
 docs/EventAvailability.md
+docs/EventHistoryItem.md
+docs/EventHistoryPage.md
+docs/EventParticipationSummary.md
 docs/EventPublication.md
 docs/EventsApi.md
 docs/HealthApi.md
@@ -269,6 +272,9 @@ models/EducationVersionDraft.ts
 models/EducationWithdrawal.ts
 models/ErrorResponse.ts
 models/EventAvailability.ts
+models/EventHistoryItem.ts
+models/EventHistoryPage.ts
+models/EventParticipationSummary.ts
 models/EventPublication.ts
 models/HealthResponse.ts
 models/HospitalDepartment.ts

@@ -20,6 +20,8 @@ import type {
   CalendarItem,
   CalendarScope,
   ErrorResponse,
+  EventHistoryPage,
+  EventParticipationSummary,
   RecordEventAttendanceRequest,
   RotateCalendarFeedRequest,
   TrainingSessionRegistration,
@@ -35,6 +37,10 @@ import {
     CalendarScopeToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    EventHistoryPageFromJSON,
+    EventHistoryPageToJSON,
+    EventParticipationSummaryFromJSON,
+    EventParticipationSummaryToJSON,
     RecordEventAttendanceRequestFromJSON,
     RecordEventAttendanceRequestToJSON,
     RotateCalendarFeedRequestFromJSON,
@@ -53,6 +59,11 @@ export interface ExportCalendarEventRequest {
     id: string;
 }
 
+export interface GetEventParticipationSummaryRequest {
+    type: GetEventParticipationSummaryTypeEnum;
+    id: string;
+}
+
 export interface ListCalendarEventsRequest {
     start?: Date;
     end?: Date;
@@ -63,6 +74,13 @@ export interface ListCalendarEventsRequest {
 export interface ListEventRegistrationsRequest {
     type: ListEventRegistrationsTypeEnum;
     id: string;
+}
+
+export interface ListPersonalEventHistoryRequest {
+    q?: string;
+    status?: ListPersonalEventHistoryStatusEnum;
+    limit?: number;
+    offset?: number;
 }
 
 export interface PublicCalendarFeedRequest {
@@ -150,6 +168,32 @@ export interface EventsApiInterface {
     exportCalendarEvent(requestParameters: ExportCalendarEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
 
     /**
+     * Creates request options for getEventParticipationSummary without sending the request
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    getEventParticipationSummaryRequestOpts(requestParameters: GetEventParticipationSummaryRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Vendor managers and organization admins only, for their own company events. Includes counts across participating hospitals without any learner identifiers, rosters, or evidence.
+     * @summary Read company event registration and attendance counts
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    getEventParticipationSummaryRaw(requestParameters: GetEventParticipationSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EventParticipationSummary>>;
+
+    /**
+     * Vendor managers and organization admins only, for their own company events. Includes counts across participating hospitals without any learner identifiers, rosters, or evidence.
+     * Read company event registration and attendance counts
+     */
+    getEventParticipationSummary(requestParameters: GetEventParticipationSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EventParticipationSummary>;
+
+    /**
      * Creates request options for listCalendarEvents without sending the request
      * @param {Date} [start] 
      * @param {Date} [end] 
@@ -224,6 +268,36 @@ export interface EventsApiInterface {
      * Read private hospital event registrations
      */
     listEventRegistrations(requestParameters: ListEventRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSessionRegistration>>;
+
+    /**
+     * Creates request options for listPersonalEventHistory without sending the request
+     * @param {string} [q] 
+     * @param {'all' | 'registered' | 'attended' | 'no_show' | 'cancelled'} [status] 
+     * @param {number} [limit] 
+     * @param {number} [offset] 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    listPersonalEventHistoryRequestOpts(requestParameters: ListPersonalEventHistoryRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Self-only even for hospital administrators. Preserves recorded event identity after edits or withdrawal. Attendance does not award course credit.
+     * @summary Read my event participation in the current hospital
+     * @param {string} [q] 
+     * @param {'all' | 'registered' | 'attended' | 'no_show' | 'cancelled'} [status] 
+     * @param {number} [limit] 
+     * @param {number} [offset] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    listPersonalEventHistoryRaw(requestParameters: ListPersonalEventHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EventHistoryPage>>;
+
+    /**
+     * Self-only even for hospital administrators. Preserves recorded event identity after edits or withdrawal. Attendance does not award course credit.
+     * Read my event participation in the current hospital
+     */
+    listPersonalEventHistory(requestParameters: ListPersonalEventHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EventHistoryPage>;
 
     /**
      * Creates request options for publicCalendarFeed without sending the request
@@ -486,6 +560,69 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
     }
 
     /**
+     * Creates request options for getEventParticipationSummary without sending the request
+     */
+    async getEventParticipationSummaryRequestOpts(requestParameters: GetEventParticipationSummaryRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getEventParticipationSummary().'
+            );
+        }
+
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getEventParticipationSummary().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/events/{type}/{id}/participation-summary`;
+        urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Vendor managers and organization admins only, for their own company events. Includes counts across participating hospitals without any learner identifiers, rosters, or evidence.
+     * Read company event registration and attendance counts
+     */
+    async getEventParticipationSummaryRaw(requestParameters: GetEventParticipationSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EventParticipationSummary>> {
+        const requestOptions = await this.getEventParticipationSummaryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EventParticipationSummaryFromJSON(jsonValue));
+    }
+
+    /**
+     * Vendor managers and organization admins only, for their own company events. Includes counts across participating hospitals without any learner identifiers, rosters, or evidence.
+     * Read company event registration and attendance counts
+     */
+    async getEventParticipationSummary(requestParameters: GetEventParticipationSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EventParticipationSummary> {
+        const response = await this.getEventParticipationSummaryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for listCalendarEvents without sending the request
      */
     async listCalendarEventsRequestOpts(requestParameters: ListCalendarEventsRequest): Promise<runtime.RequestOpts> {
@@ -651,6 +788,69 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
      */
     async listEventRegistrations(requestParameters: ListEventRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSessionRegistration>> {
         const response = await this.listEventRegistrationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listPersonalEventHistory without sending the request
+     */
+    async listPersonalEventHistoryRequestOpts(requestParameters: ListPersonalEventHistoryRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['q'] != null) {
+            queryParameters['q'] = requestParameters['q'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/events/history`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Self-only even for hospital administrators. Preserves recorded event identity after edits or withdrawal. Attendance does not award course credit.
+     * Read my event participation in the current hospital
+     */
+    async listPersonalEventHistoryRaw(requestParameters: ListPersonalEventHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EventHistoryPage>> {
+        const requestOptions = await this.listPersonalEventHistoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EventHistoryPageFromJSON(jsonValue));
+    }
+
+    /**
+     * Self-only even for hospital administrators. Preserves recorded event identity after edits or withdrawal. Attendance does not award course credit.
+     * Read my event participation in the current hospital
+     */
+    async listPersonalEventHistory(requestParameters: ListPersonalEventHistoryRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EventHistoryPage> {
+        const response = await this.listPersonalEventHistoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -987,11 +1187,30 @@ export type ExportCalendarEventTypeEnum = typeof ExportCalendarEventTypeEnum[key
 /**
  * @export
  */
+export const GetEventParticipationSummaryTypeEnum = {
+    Training: 'training',
+    Webinar: 'webinar'
+} as const;
+export type GetEventParticipationSummaryTypeEnum = typeof GetEventParticipationSummaryTypeEnum[keyof typeof GetEventParticipationSummaryTypeEnum];
+/**
+ * @export
+ */
 export const ListEventRegistrationsTypeEnum = {
     Training: 'training',
     Webinar: 'webinar'
 } as const;
 export type ListEventRegistrationsTypeEnum = typeof ListEventRegistrationsTypeEnum[keyof typeof ListEventRegistrationsTypeEnum];
+/**
+ * @export
+ */
+export const ListPersonalEventHistoryStatusEnum = {
+    All: 'all',
+    Registered: 'registered',
+    Attended: 'attended',
+    NoShow: 'no_show',
+    Cancelled: 'cancelled'
+} as const;
+export type ListPersonalEventHistoryStatusEnum = typeof ListPersonalEventHistoryStatusEnum[keyof typeof ListPersonalEventHistoryStatusEnum];
 /**
  * @export
  */

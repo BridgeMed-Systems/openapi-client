@@ -6,9 +6,11 @@ All URIs are relative to *https://api.bridge.med*
 |------------- | ------------- | -------------|
 | [**cancelEventRegistration**](EventsApi.md#canceleventregistration) | **DELETE** /v1/events/{type}/{id}/registrations/me | Cancel your pending event registration |
 | [**exportCalendarEvent**](EventsApi.md#exportcalendarevent) | **GET** /v1/events/{type}/{id}/calendar.ics | Export one authorized education event |
+| [**getEventParticipationSummary**](EventsApi.md#geteventparticipationsummary) | **GET** /v1/events/{type}/{id}/participation-summary | Read company event registration and attendance counts |
 | [**listCalendarEvents**](EventsApi.md#listcalendarevents) | **GET** /v1/events/calendar | Unified calendar events |
 | [**listCalendarFeeds**](EventsApi.md#listcalendarfeeds) | **GET** /v1/calendar/feeds | List calendar feeds |
 | [**listEventRegistrations**](EventsApi.md#listeventregistrations) | **GET** /v1/events/{type}/{id}/registrations | Read private hospital event registrations |
+| [**listPersonalEventHistory**](EventsApi.md#listpersonaleventhistory) | **GET** /v1/events/history | Read my event participation in the current hospital |
 | [**publicCalendarFeed**](EventsApi.md#publiccalendarfeed) | **GET** /calendar/feeds/{scope}/{token}.ics | Private bearer calendar subscription |
 | [**recordEventAttendance**](EventsApi.md#recordeventattendanceoperation) | **PATCH** /v1/events/{type}/{id}/registrations/{userID} | Record a hospital learner attendance outcome with evidence |
 | [**registerForEvent**](EventsApi.md#registerforevent) | **POST** /v1/events/{type}/{id}/registrations/me | Register yourself for an education event |
@@ -172,6 +174,85 @@ example().catch(console.error);
 | **403** | Current calendar access required |  -  |
 | **404** | Event unavailable in this organization |  -  |
 | **500** | Server failure |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getEventParticipationSummary
+
+> EventParticipationSummary getEventParticipationSummary(type, id)
+
+Read company event registration and attendance counts
+
+Vendor managers and organization admins only, for their own company events. Includes counts across participating hospitals without any learner identifiers, rosters, or evidence.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EventsApi,
+} from '';
+import type { GetEventParticipationSummaryRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new EventsApi(config);
+
+  const body = {
+    // 'training' | 'webinar'
+    type: type_example,
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies GetEventParticipationSummaryRequest;
+
+  try {
+    const data = await api.getEventParticipationSummary(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **type** | `training`, `webinar` |  | [Defaults to `undefined`] [Enum: training, webinar] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**EventParticipationSummary**](EventParticipationSummary.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Aggregate participation status |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -399,6 +480,90 @@ example().catch(console.error);
 | **404** | Event or private record unavailable |  -  |
 | **409** | Event full or attendance already recorded |  -  |
 | **500** | Server failure |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listPersonalEventHistory
+
+> EventHistoryPage listPersonalEventHistory(q, status, limit, offset)
+
+Read my event participation in the current hospital
+
+Self-only even for hospital administrators. Preserves recorded event identity after edits or withdrawal. Attendance does not award course credit.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EventsApi,
+} from '';
+import type { ListPersonalEventHistoryRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new EventsApi(config);
+
+  const body = {
+    // string (optional)
+    q: q_example,
+    // 'all' | 'registered' | 'attended' | 'no_show' | 'cancelled' (optional)
+    status: status_example,
+    // number (optional)
+    limit: 56,
+    // number (optional)
+    offset: 56,
+  } satisfies ListPersonalEventHistoryRequest;
+
+  try {
+    const data = await api.listPersonalEventHistory(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **q** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **status** | `all`, `registered`, `attended`, `no_show`, `cancelled` |  | [Optional] [Defaults to `undefined`] [Enum: all, registered, attended, no_show, cancelled] |
+| **limit** | `number` |  | [Optional] [Defaults to `20`] |
+| **offset** | `number` |  | [Optional] [Defaults to `0`] |
+
+### Return type
+
+[**EventHistoryPage**](EventHistoryPage.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Personal participation history |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
