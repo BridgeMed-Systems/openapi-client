@@ -22,7 +22,7 @@ import {
 } from './TrainingSessionAttendanceStatus';
 
 /**
- * 
+ * Exactly one of session_id or webinar_id identifies the source event.
  * @export
  * @interface TrainingSessionRegistration
  */
@@ -68,7 +68,13 @@ export interface TrainingSessionRegistration {
      * @type {string}
      * @memberof TrainingSessionRegistration
      */
-    session_id: string;
+    webinar_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainingSessionRegistration
+     */
+    session_id?: string;
     /**
      * 
      * @type {string}
@@ -128,7 +134,6 @@ export function instanceOfTrainingSessionRegistration(value: object): value is T
     if (!('attendance_source' in value) || value['attendance_source'] === undefined) return false;
     if (!('verified_attendance_seconds' in value) || value['verified_attendance_seconds'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('session_id' in value) || value['session_id'] === undefined) return false;
     if (!('user_id' in value) || value['user_id'] === undefined) return false;
     if (!('attendance_status' in value) || value['attendance_status'] === undefined) return false;
     if (!('date_added' in value) || value['date_added'] === undefined) return false;
@@ -151,7 +156,8 @@ export function TrainingSessionRegistrationFromJSONTyped(json: any, ignoreDiscri
         'recorded_by_user_id': json['recorded_by_user_id'] == null ? undefined : json['recorded_by_user_id'],
         'verified_attendance_seconds': json['verified_attendance_seconds'],
         'id': json['id'],
-        'session_id': json['session_id'],
+        'webinar_id': json['webinar_id'] == null ? undefined : json['webinar_id'],
+        'session_id': json['session_id'] == null ? undefined : json['session_id'],
         'user_id': json['user_id'],
         'attendance_status': TrainingSessionAttendanceStatusFromJSON(json['attendance_status']),
         'checked_in_at': json['checked_in_at'] == null ? undefined : (new Date(json['checked_in_at'])),
@@ -178,6 +184,7 @@ export function TrainingSessionRegistrationToJSONTyped(value?: TrainingSessionRe
         'recorded_by_user_id': value['recorded_by_user_id'],
         'verified_attendance_seconds': value['verified_attendance_seconds'],
         'id': value['id'],
+        'webinar_id': value['webinar_id'],
         'session_id': value['session_id'],
         'user_id': value['user_id'],
         'attendance_status': TrainingSessionAttendanceStatusToJSON(value['attendance_status']),

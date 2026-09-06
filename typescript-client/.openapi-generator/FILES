@@ -129,6 +129,7 @@ docs/PasswordResetRequest.md
 docs/Product.md
 docs/ProductOrganization.md
 docs/ProductsApi.md
+docs/RecordEventAttendanceRequest.md
 docs/RepAssignedAccount.md
 docs/RepAvailabilityProfile.md
 docs/RepAvailabilityStatus.md
@@ -302,6 +303,7 @@ models/PasswordRecoveryRequest.ts
 models/PasswordResetRequest.ts
 models/Product.ts
 models/ProductOrganization.ts
+models/RecordEventAttendanceRequest.ts
 models/RepAssignedAccount.ts
 models/RepAvailabilityProfile.ts
 models/RepAvailabilityStatus.ts

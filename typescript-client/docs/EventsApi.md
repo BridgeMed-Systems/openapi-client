@@ -4,13 +4,97 @@ All URIs are relative to *https://api.bridge.med*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**cancelEventRegistration**](EventsApi.md#canceleventregistration) | **DELETE** /v1/events/{type}/{id}/registrations/me | Cancel your pending event registration |
 | [**exportCalendarEvent**](EventsApi.md#exportcalendarevent) | **GET** /v1/events/{type}/{id}/calendar.ics | Export one authorized education event |
 | [**listCalendarEvents**](EventsApi.md#listcalendarevents) | **GET** /v1/events/calendar | Unified calendar events |
 | [**listCalendarFeeds**](EventsApi.md#listcalendarfeeds) | **GET** /v1/calendar/feeds | List calendar feeds |
+| [**listEventRegistrations**](EventsApi.md#listeventregistrations) | **GET** /v1/events/{type}/{id}/registrations | Read private hospital event registrations |
 | [**publicCalendarFeed**](EventsApi.md#publiccalendarfeed) | **GET** /calendar/feeds/{scope}/{token}.ics | Private bearer calendar subscription |
+| [**recordEventAttendance**](EventsApi.md#recordeventattendanceoperation) | **PATCH** /v1/events/{type}/{id}/registrations/{userID} | Record a hospital learner attendance outcome with evidence |
+| [**registerForEvent**](EventsApi.md#registerforevent) | **POST** /v1/events/{type}/{id}/registrations/me | Register yourself for an education event |
 | [**revokeCalendarFeed**](EventsApi.md#revokecalendarfeed) | **POST** /v1/calendar/feeds/revoke | Stop a private calendar subscription |
 | [**rotateCalendarFeed**](EventsApi.md#rotatecalendarfeedoperation) | **POST** /v1/calendar/feeds/rotate | Rotate calendar feed token |
 
+
+
+## cancelEventRegistration
+
+> cancelEventRegistration(type, id)
+
+Cancel your pending event registration
+
+Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EventsApi,
+} from '';
+import type { CancelEventRegistrationRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new EventsApi(config);
+
+  const body = {
+    // 'training' | 'webinar'
+    type: type_example,
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies CancelEventRegistrationRequest;
+
+  try {
+    const data = await api.cancelEventRegistration(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **type** | `training`, `webinar` |  | [Defaults to `undefined`] [Enum: training, webinar] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Pending registration cancelled or already absent |  -  |
+| **400** | Invalid event or attendance evidence |  -  |
+| **401** | Sign in required |  -  |
+| **403** | Hospital learning permission required |  -  |
+| **404** | Event or private record unavailable |  -  |
+| **409** | Event full or attendance already recorded |  -  |
+| **500** | Server failure |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## exportCalendarEvent
@@ -239,6 +323,86 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listEventRegistrations
+
+> Array&lt;TrainingSessionRegistration&gt; listEventRegistrations(type, id)
+
+Read private hospital event registrations
+
+Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EventsApi,
+} from '';
+import type { ListEventRegistrationsRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new EventsApi(config);
+
+  const body = {
+    // 'training' | 'webinar'
+    type: type_example,
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies ListEventRegistrationsRequest;
+
+  try {
+    const data = await api.listEventRegistrations(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **type** | `training`, `webinar` |  | [Defaults to `undefined`] [Enum: training, webinar] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**Array&lt;TrainingSessionRegistration&gt;**](TrainingSessionRegistration.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Private event participation |  -  |
+| **400** | Invalid event or attendance evidence |  -  |
+| **401** | Sign in required |  -  |
+| **403** | Hospital learning permission required |  -  |
+| **404** | Event or private record unavailable |  -  |
+| **409** | Event full or attendance already recorded |  -  |
+| **500** | Server failure |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## publicCalendarFeed
 
 > string publicCalendarFeed(scope, token)
@@ -306,6 +470,172 @@ No authorization required
 | **400** | Validation or request shape error |  -  |
 | **404** | Resource not found |  -  |
 | **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## recordEventAttendance
+
+> TrainingSessionRegistration recordEventAttendance(type, id, userID, recordEventAttendanceRequest)
+
+Record a hospital learner attendance outcome with evidence
+
+Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EventsApi,
+} from '';
+import type { RecordEventAttendanceOperationRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new EventsApi(config);
+
+  const body = {
+    // 'training' | 'webinar'
+    type: type_example,
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // string
+    userID: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // RecordEventAttendanceRequest
+    recordEventAttendanceRequest: ...,
+  } satisfies RecordEventAttendanceOperationRequest;
+
+  try {
+    const data = await api.recordEventAttendance(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **type** | `training`, `webinar` |  | [Defaults to `undefined`] [Enum: training, webinar] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **userID** | `string` |  | [Defaults to `undefined`] |
+| **recordEventAttendanceRequest** | [RecordEventAttendanceRequest](RecordEventAttendanceRequest.md) |  | |
+
+### Return type
+
+[**TrainingSessionRegistration**](TrainingSessionRegistration.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Private event participation |  -  |
+| **400** | Invalid event or attendance evidence |  -  |
+| **401** | Sign in required |  -  |
+| **403** | Hospital learning permission required |  -  |
+| **404** | Event or private record unavailable |  -  |
+| **409** | Event full or attendance already recorded |  -  |
+| **500** | Server failure |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## registerForEvent
+
+> TrainingSessionRegistration registerForEvent(type, id)
+
+Register yourself for an education event
+
+Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EventsApi,
+} from '';
+import type { RegisterForEventRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new EventsApi(config);
+
+  const body = {
+    // 'training' | 'webinar'
+    type: type_example,
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies RegisterForEventRequest;
+
+  try {
+    const data = await api.registerForEvent(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **type** | `training`, `webinar` |  | [Defaults to `undefined`] [Enum: training, webinar] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**TrainingSessionRegistration**](TrainingSessionRegistration.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Private event participation |  -  |
+| **400** | Invalid event or attendance evidence |  -  |
+| **401** | Sign in required |  -  |
+| **403** | Hospital learning permission required |  -  |
+| **404** | Event or private record unavailable |  -  |
+| **409** | Event full or attendance already recorded |  -  |
+| **500** | Server failure |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

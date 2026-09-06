@@ -1,6 +1,7 @@
 
 # TrainingSessionRegistration
 
+Exactly one of session_id or webinar_id identifies the source event.
 
 ## Properties
 
@@ -12,6 +13,7 @@ Name | Type
 `recorded_by_user_id` | string
 `verified_attendance_seconds` | number
 `id` | string
+`webinar_id` | string
 `session_id` | string
 `user_id` | string
 `attendance_status` | [TrainingSessionAttendanceStatus](TrainingSessionAttendanceStatus.md)
@@ -33,6 +35,7 @@ const example = {
   "recorded_by_user_id": null,
   "verified_attendance_seconds": null,
   "id": null,
+  "webinar_id": null,
   "session_id": null,
   "user_id": null,
   "attendance_status": null,

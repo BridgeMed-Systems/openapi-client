@@ -100,6 +100,7 @@ export * from './PasswordRecoveryRequest';
 export * from './PasswordResetRequest';
 export * from './Product';
 export * from './ProductOrganization';
+export * from './RecordEventAttendanceRequest';
 export * from './RepAssignedAccount';
 export * from './RepAvailabilityProfile';
 export * from './RepAvailabilityStatus';

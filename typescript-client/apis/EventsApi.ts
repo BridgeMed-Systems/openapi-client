@@ -20,7 +20,9 @@ import type {
   CalendarItem,
   CalendarScope,
   ErrorResponse,
+  RecordEventAttendanceRequest,
   RotateCalendarFeedRequest,
+  TrainingSessionRegistration,
 } from '../models/index';
 import {
     CalendarFeedFromJSON,
@@ -33,9 +35,18 @@ import {
     CalendarScopeToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    RecordEventAttendanceRequestFromJSON,
+    RecordEventAttendanceRequestToJSON,
     RotateCalendarFeedRequestFromJSON,
     RotateCalendarFeedRequestToJSON,
+    TrainingSessionRegistrationFromJSON,
+    TrainingSessionRegistrationToJSON,
 } from '../models/index';
+
+export interface CancelEventRegistrationRequest {
+    type: CancelEventRegistrationTypeEnum;
+    id: string;
+}
 
 export interface ExportCalendarEventRequest {
     type: ExportCalendarEventTypeEnum;
@@ -49,9 +60,26 @@ export interface ListCalendarEventsRequest {
     types?: string;
 }
 
+export interface ListEventRegistrationsRequest {
+    type: ListEventRegistrationsTypeEnum;
+    id: string;
+}
+
 export interface PublicCalendarFeedRequest {
     scope: CalendarFeedScope;
     token: string;
+}
+
+export interface RecordEventAttendanceOperationRequest {
+    type: RecordEventAttendanceOperationTypeEnum;
+    id: string;
+    userID: string;
+    recordEventAttendanceRequest: RecordEventAttendanceRequest;
+}
+
+export interface RegisterForEventRequest {
+    type: RegisterForEventTypeEnum;
+    id: string;
 }
 
 export interface RevokeCalendarFeedRequest {
@@ -69,6 +97,32 @@ export interface RotateCalendarFeedOperationRequest {
  * @interface EventsApiInterface
  */
 export interface EventsApiInterface {
+    /**
+     * Creates request options for cancelEventRegistration without sending the request
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    cancelEventRegistrationRequestOpts(requestParameters: CancelEventRegistrationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * @summary Cancel your pending event registration
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    cancelEventRegistrationRaw(requestParameters: CancelEventRegistrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Cancel your pending event registration
+     */
+    cancelEventRegistration(requestParameters: CancelEventRegistrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
     /**
      * Creates request options for exportCalendarEvent without sending the request
      * @param {'webinar' | 'training'} type 
@@ -146,6 +200,32 @@ export interface EventsApiInterface {
     listCalendarFeeds(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CalendarFeed>>;
 
     /**
+     * Creates request options for listEventRegistrations without sending the request
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    listEventRegistrationsRequestOpts(requestParameters: ListEventRegistrationsRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * @summary Read private hospital event registrations
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    listEventRegistrationsRaw(requestParameters: ListEventRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrainingSessionRegistration>>>;
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Read private hospital event registrations
+     */
+    listEventRegistrations(requestParameters: ListEventRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSessionRegistration>>;
+
+    /**
      * Creates request options for publicCalendarFeed without sending the request
      * @param {CalendarFeedScope} scope 
      * @param {string} token 
@@ -169,6 +249,62 @@ export interface EventsApiInterface {
      * Private bearer calendar subscription
      */
     publicCalendarFeed(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string>;
+
+    /**
+     * Creates request options for recordEventAttendance without sending the request
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @param {string} userID 
+     * @param {RecordEventAttendanceRequest} recordEventAttendanceRequest 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    recordEventAttendanceRequestOpts(requestParameters: RecordEventAttendanceOperationRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * @summary Record a hospital learner attendance outcome with evidence
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @param {string} userID 
+     * @param {RecordEventAttendanceRequest} recordEventAttendanceRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    recordEventAttendanceRaw(requestParameters: RecordEventAttendanceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionRegistration>>;
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Record a hospital learner attendance outcome with evidence
+     */
+    recordEventAttendance(requestParameters: RecordEventAttendanceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionRegistration>;
+
+    /**
+     * Creates request options for registerForEvent without sending the request
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    registerForEventRequestOpts(requestParameters: RegisterForEventRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * @summary Register yourself for an education event
+     * @param {'training' | 'webinar'} type 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApiInterface
+     */
+    registerForEventRaw(requestParameters: RegisterForEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionRegistration>>;
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Register yourself for an education event
+     */
+    registerForEvent(requestParameters: RegisterForEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionRegistration>;
 
     /**
      * Creates request options for revokeCalendarFeed without sending the request
@@ -223,6 +359,68 @@ export interface EventsApiInterface {
  * 
  */
 export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
+
+    /**
+     * Creates request options for cancelEventRegistration without sending the request
+     */
+    async cancelEventRegistrationRequestOpts(requestParameters: CancelEventRegistrationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling cancelEventRegistration().'
+            );
+        }
+
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling cancelEventRegistration().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/events/{type}/{id}/registrations/me`;
+        urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Cancel your pending event registration
+     */
+    async cancelEventRegistrationRaw(requestParameters: CancelEventRegistrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.cancelEventRegistrationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Cancel your pending event registration
+     */
+    async cancelEventRegistration(requestParameters: CancelEventRegistrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.cancelEventRegistrationRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Creates request options for exportCalendarEvent without sending the request
@@ -394,6 +592,69 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
     }
 
     /**
+     * Creates request options for listEventRegistrations without sending the request
+     */
+    async listEventRegistrationsRequestOpts(requestParameters: ListEventRegistrationsRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling listEventRegistrations().'
+            );
+        }
+
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling listEventRegistrations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/events/{type}/{id}/registrations`;
+        urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Read private hospital event registrations
+     */
+    async listEventRegistrationsRaw(requestParameters: ListEventRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrainingSessionRegistration>>> {
+        const requestOptions = await this.listEventRegistrationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TrainingSessionRegistrationFromJSON));
+    }
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Read private hospital event registrations
+     */
+    async listEventRegistrations(requestParameters: ListEventRegistrationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrainingSessionRegistration>> {
+        const response = await this.listEventRegistrationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for publicCalendarFeed without sending the request
      */
     async publicCalendarFeedRequestOpts(requestParameters: PublicCalendarFeedRequest): Promise<runtime.RequestOpts> {
@@ -447,6 +708,150 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
      */
     async publicCalendarFeed(requestParameters: PublicCalendarFeedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
         const response = await this.publicCalendarFeedRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for recordEventAttendance without sending the request
+     */
+    async recordEventAttendanceRequestOpts(requestParameters: RecordEventAttendanceOperationRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling recordEventAttendance().'
+            );
+        }
+
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling recordEventAttendance().'
+            );
+        }
+
+        if (requestParameters['userID'] == null) {
+            throw new runtime.RequiredError(
+                'userID',
+                'Required parameter "userID" was null or undefined when calling recordEventAttendance().'
+            );
+        }
+
+        if (requestParameters['recordEventAttendanceRequest'] == null) {
+            throw new runtime.RequiredError(
+                'recordEventAttendanceRequest',
+                'Required parameter "recordEventAttendanceRequest" was null or undefined when calling recordEventAttendance().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/events/{type}/{id}/registrations/{userID}`;
+        urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"userID"}}`, encodeURIComponent(String(requestParameters['userID'])));
+
+        return {
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RecordEventAttendanceRequestToJSON(requestParameters['recordEventAttendanceRequest']),
+        };
+    }
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Record a hospital learner attendance outcome with evidence
+     */
+    async recordEventAttendanceRaw(requestParameters: RecordEventAttendanceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionRegistration>> {
+        const requestOptions = await this.recordEventAttendanceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionRegistrationFromJSON(jsonValue));
+    }
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Record a hospital learner attendance outcome with evidence
+     */
+    async recordEventAttendance(requestParameters: RecordEventAttendanceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionRegistration> {
+        const response = await this.recordEventAttendanceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for registerForEvent without sending the request
+     */
+    async registerForEventRequestOpts(requestParameters: RegisterForEventRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling registerForEvent().'
+            );
+        }
+
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling registerForEvent().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/events/{type}/{id}/registrations/me`;
+        urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Register yourself for an education event
+     */
+    async registerForEventRaw(requestParameters: RegisterForEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrainingSessionRegistration>> {
+        const requestOptions = await this.registerForEventRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrainingSessionRegistrationFromJSON(jsonValue));
+    }
+
+    /**
+     * Hospital learners read their own records; hospital administrators read only their hospital. Vendor and human platform roles have no access. Registration does not prove attendance or award credit.
+     * Register yourself for an education event
+     */
+    async registerForEvent(requestParameters: RegisterForEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrainingSessionRegistration> {
+        const response = await this.registerForEventRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -566,8 +971,40 @@ export class EventsApi extends runtime.BaseAPI implements EventsApiInterface {
 /**
  * @export
  */
+export const CancelEventRegistrationTypeEnum = {
+    Training: 'training',
+    Webinar: 'webinar'
+} as const;
+export type CancelEventRegistrationTypeEnum = typeof CancelEventRegistrationTypeEnum[keyof typeof CancelEventRegistrationTypeEnum];
+/**
+ * @export
+ */
 export const ExportCalendarEventTypeEnum = {
     Webinar: 'webinar',
     Training: 'training'
 } as const;
 export type ExportCalendarEventTypeEnum = typeof ExportCalendarEventTypeEnum[keyof typeof ExportCalendarEventTypeEnum];
+/**
+ * @export
+ */
+export const ListEventRegistrationsTypeEnum = {
+    Training: 'training',
+    Webinar: 'webinar'
+} as const;
+export type ListEventRegistrationsTypeEnum = typeof ListEventRegistrationsTypeEnum[keyof typeof ListEventRegistrationsTypeEnum];
+/**
+ * @export
+ */
+export const RecordEventAttendanceOperationTypeEnum = {
+    Training: 'training',
+    Webinar: 'webinar'
+} as const;
+export type RecordEventAttendanceOperationTypeEnum = typeof RecordEventAttendanceOperationTypeEnum[keyof typeof RecordEventAttendanceOperationTypeEnum];
+/**
+ * @export
+ */
+export const RegisterForEventTypeEnum = {
+    Training: 'training',
+    Webinar: 'webinar'
+} as const;
+export type RegisterForEventTypeEnum = typeof RegisterForEventTypeEnum[keyof typeof RegisterForEventTypeEnum];
