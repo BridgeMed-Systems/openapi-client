@@ -20,6 +20,18 @@ import { mapValues } from '../runtime';
  */
 export interface UpdateWebinarRequest {
     /**
+     * HTTPS meeting URL required for external delivery and empty for BridgeMed rooms. Omitted updates retain the current URL.
+     * @type {string}
+     * @memberof UpdateWebinarRequest
+     */
+    external_join_url?: string;
+    /**
+     * Registration limit across all selected hospitals. Native rooms default to 100 attendees and cannot exceed 100. External creation without a limit is uncapped by BridgeMed. Omitted updates retain the current limit.
+     * @type {number}
+     * @memberof UpdateWebinarRequest
+     */
+    capacity?: number;
+    /**
      * 
      * @type {string}
      * @memberof UpdateWebinarRequest
@@ -65,6 +77,8 @@ export function UpdateWebinarRequestFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'external_join_url': json['external_join_url'] == null ? undefined : json['external_join_url'],
+        'capacity': json['capacity'] == null ? undefined : json['capacity'],
         'title': json['title'],
         'description': json['description'] == null ? undefined : json['description'],
         'starts_at': (new Date(json['starts_at'])),
@@ -83,6 +97,8 @@ export function UpdateWebinarRequestToJSONTyped(value?: UpdateWebinarRequest | n
 
     return {
         
+        'external_join_url': value['external_join_url'],
+        'capacity': value['capacity'],
         'title': value['title'],
         'description': value['description'],
         'starts_at': value['starts_at'].toISOString(),

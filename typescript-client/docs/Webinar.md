@@ -6,6 +6,9 @@
 
 Name | Type
 ------------ | -------------
+`delivery_mode` | string
+`external_join_url` | string
+`capacity` | number
 `id` | string
 `organization_id` | string
 `host_user_id` | string
@@ -27,6 +30,9 @@ import type { Webinar } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "delivery_mode": null,
+  "external_join_url": null,
+  "capacity": null,
   "id": null,
   "organization_id": null,
   "host_user_id": null,

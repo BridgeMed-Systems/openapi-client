@@ -28,6 +28,24 @@ import {
  */
 export interface Webinar {
     /**
+     * Selected at creation and immutable thereafter.
+     * @type {WebinarDeliveryModeEnum}
+     * @memberof Webinar
+     */
+    delivery_mode: WebinarDeliveryModeEnum;
+    /**
+     * HTTPS meeting URL required for external delivery and empty for BridgeMed rooms. Omitted updates retain the current URL.
+     * @type {string}
+     * @memberof Webinar
+     */
+    external_join_url?: string;
+    /**
+     * Registration limit across all selected hospitals. Native rooms default to 100 attendees and cannot exceed 100. External creation without a limit is uncapped by BridgeMed. Omitted updates retain the current limit.
+     * @type {number}
+     * @memberof Webinar
+     */
+    capacity?: number;
+    /**
      * 
      * @type {string}
      * @memberof Webinar
@@ -108,11 +126,21 @@ export interface Webinar {
 }
 
 
+/**
+ * @export
+ */
+export const WebinarDeliveryModeEnum = {
+    VirtualNative: 'virtual_native',
+    VirtualExternal: 'virtual_external'
+} as const;
+export type WebinarDeliveryModeEnum = typeof WebinarDeliveryModeEnum[keyof typeof WebinarDeliveryModeEnum];
+
 
 /**
  * Check if a given object implements the Webinar interface.
  */
 export function instanceOfWebinar(value: object): value is Webinar {
+    if (!('delivery_mode' in value) || value['delivery_mode'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('organization_id' in value) || value['organization_id'] === undefined) return false;
     if (!('host_user_id' in value) || value['host_user_id'] === undefined) return false;
@@ -135,6 +163,9 @@ export function WebinarFromJSONTyped(json: any, ignoreDiscriminator: boolean): W
     }
     return {
         
+        'delivery_mode': json['delivery_mode'],
+        'external_join_url': json['external_join_url'] == null ? undefined : json['external_join_url'],
+        'capacity': json['capacity'] == null ? undefined : json['capacity'],
         'id': json['id'],
         'organization_id': json['organization_id'],
         'host_user_id': json['host_user_id'],
@@ -162,6 +193,9 @@ export function WebinarToJSONTyped(value?: Webinar | null, ignoreDiscriminator: 
 
     return {
         
+        'delivery_mode': value['delivery_mode'],
+        'external_join_url': value['external_join_url'],
+        'capacity': value['capacity'],
         'id': value['id'],
         'organization_id': value['organization_id'],
         'host_user_id': value['host_user_id'],

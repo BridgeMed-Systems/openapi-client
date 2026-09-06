@@ -6,6 +6,8 @@
 
 Name | Type
 ------------ | -------------
+`external_join_url` | string
+`capacity` | number
 `title` | string
 `description` | string
 `starts_at` | Date
@@ -18,6 +20,8 @@ import type { UpdateWebinarRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "external_join_url": null,
+  "capacity": null,
   "title": null,
   "description": null,
   "starts_at": null,

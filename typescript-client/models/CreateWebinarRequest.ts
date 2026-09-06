@@ -20,6 +20,24 @@ import { mapValues } from '../runtime';
  */
 export interface CreateWebinarRequest {
     /**
+     * Selected at creation and immutable thereafter.
+     * @type {CreateWebinarRequestDeliveryModeEnum}
+     * @memberof CreateWebinarRequest
+     */
+    delivery_mode?: CreateWebinarRequestDeliveryModeEnum;
+    /**
+     * HTTPS meeting URL required for external delivery and empty for BridgeMed rooms. Omitted updates retain the current URL.
+     * @type {string}
+     * @memberof CreateWebinarRequest
+     */
+    external_join_url?: string;
+    /**
+     * Registration limit across all selected hospitals. Native rooms default to 100 attendees and cannot exceed 100. External creation without a limit is uncapped by BridgeMed. Omitted updates retain the current limit.
+     * @type {number}
+     * @memberof CreateWebinarRequest
+     */
+    capacity?: number;
+    /**
      * 
      * @type {string}
      * @memberof CreateWebinarRequest
@@ -51,6 +69,17 @@ export interface CreateWebinarRequest {
     ends_at: Date;
 }
 
+
+/**
+ * @export
+ */
+export const CreateWebinarRequestDeliveryModeEnum = {
+    VirtualNative: 'virtual_native',
+    VirtualExternal: 'virtual_external'
+} as const;
+export type CreateWebinarRequestDeliveryModeEnum = typeof CreateWebinarRequestDeliveryModeEnum[keyof typeof CreateWebinarRequestDeliveryModeEnum];
+
+
 /**
  * Check if a given object implements the CreateWebinarRequest interface.
  */
@@ -72,6 +101,9 @@ export function CreateWebinarRequestFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'delivery_mode': json['delivery_mode'] == null ? undefined : json['delivery_mode'],
+        'external_join_url': json['external_join_url'] == null ? undefined : json['external_join_url'],
+        'capacity': json['capacity'] == null ? undefined : json['capacity'],
         'organization_id': json['organization_id'],
         'title': json['title'],
         'description': json['description'] == null ? undefined : json['description'],
@@ -91,6 +123,9 @@ export function CreateWebinarRequestToJSONTyped(value?: CreateWebinarRequest | n
 
     return {
         
+        'delivery_mode': value['delivery_mode'],
+        'external_join_url': value['external_join_url'],
+        'capacity': value['capacity'],
         'organization_id': value['organization_id'],
         'title': value['title'],
         'description': value['description'],

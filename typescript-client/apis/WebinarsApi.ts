@@ -55,6 +55,10 @@ import {
     WebinarQnAItemToJSON,
 } from '../models/index';
 
+export interface CancelWebinarRequest {
+    id: string;
+}
+
 export interface CreateWebinarOperationRequest {
     createWebinarRequest: CreateWebinarRequest;
 }
@@ -135,6 +139,29 @@ export interface UpdateWebinarQnAOperationRequest {
  * @interface WebinarsApiInterface
  */
 export interface WebinarsApiInterface {
+    /**
+     * Creates request options for cancelWebinar without sending the request
+     * @param {string} id 
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    cancelWebinarRequestOpts(requestParameters: CancelWebinarRequest): Promise<runtime.RequestOpts>;
+
+    /**
+     * 
+     * @summary Cancel webinar
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebinarsApiInterface
+     */
+    cancelWebinarRaw(requestParameters: CancelWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Webinar>>;
+
+    /**
+     * Cancel webinar
+     */
+    cancelWebinar(requestParameters: CancelWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Webinar>;
+
     /**
      * Creates request options for createWebinar without sending the request
      * @param {CreateWebinarRequest} createWebinarRequest 
@@ -520,6 +547,59 @@ export interface WebinarsApiInterface {
  * 
  */
 export class WebinarsApi extends runtime.BaseAPI implements WebinarsApiInterface {
+
+    /**
+     * Creates request options for cancelWebinar without sending the request
+     */
+    async cancelWebinarRequestOpts(requestParameters: CancelWebinarRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling cancelWebinar().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/webinars/{id}/cancel`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Cancel webinar
+     */
+    async cancelWebinarRaw(requestParameters: CancelWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Webinar>> {
+        const requestOptions = await this.cancelWebinarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => WebinarFromJSON(jsonValue));
+    }
+
+    /**
+     * Cancel webinar
+     */
+    async cancelWebinar(requestParameters: CancelWebinarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Webinar> {
+        const response = await this.cancelWebinarRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for createWebinar without sending the request

@@ -4,6 +4,7 @@ All URIs are relative to *https://api.bridge.med*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**cancelWebinar**](WebinarsApi.md#cancelwebinar) | **POST** /v1/webinars/{id}/cancel | Cancel webinar |
 | [**createWebinar**](WebinarsApi.md#createwebinaroperation) | **POST** /v1/webinars/ | Create webinar |
 | [**createWebinarQnA**](WebinarsApi.md#createwebinarqnaoperation) | **POST** /v1/webinars/{id}/qna | Create webinar Q&amp;A item |
 | [**endWebinar**](WebinarsApi.md#endwebinar) | **POST** /v1/webinars/{id}/end | End webinar |
@@ -20,6 +21,81 @@ All URIs are relative to *https://api.bridge.med*
 | [**updateWebinar**](WebinarsApi.md#updatewebinaroperation) | **PATCH** /v1/webinars/{id} | Update webinar |
 | [**updateWebinarQnA**](WebinarsApi.md#updatewebinarqnaoperation) | **PATCH** /v1/webinars/{id}/qna/{itemID} | Moderate webinar Q&amp;A item |
 
+
+
+## cancelWebinar
+
+> Webinar cancelWebinar(id)
+
+Cancel webinar
+
+### Example
+
+```ts
+import {
+  Configuration,
+  WebinarsApi,
+} from '';
+import type { CancelWebinarRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new WebinarsApi(config);
+
+  const body = {
+    // string
+    id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies CancelWebinarRequest;
+
+  try {
+    const data = await api.cancelWebinar(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**Webinar**](Webinar.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Webinar cancelled |  -  |
+| **400** | Validation or request shape error |  -  |
+| **401** | Missing or invalid authentication |  -  |
+| **403** | Authenticated caller is not allowed to perform this action |  -  |
+| **404** | Resource not found |  -  |
+| **409** | Conflict with existing state |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## createWebinar
@@ -242,6 +318,7 @@ example().catch(console.error);
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
 | **404** | Resource not found |  -  |
+| **409** | Conflict with existing state |  -  |
 | **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1020,6 +1097,7 @@ example().catch(console.error);
 | **401** | Missing or invalid authentication |  -  |
 | **403** | Authenticated caller is not allowed to perform this action |  -  |
 | **404** | Resource not found |  -  |
+| **409** | Conflict with existing state |  -  |
 | **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
