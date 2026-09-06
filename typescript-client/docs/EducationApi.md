@@ -485,6 +485,8 @@ example().catch(console.error);
 
 Withdraw a course version permanently
 
+Requires education.withdraw for the current vendor administrator. Independent of publication access; existing explicit education.author denies still block withdrawal. Material and credit metadata cannot change through this action.
+
 ### Example
 
 ```ts

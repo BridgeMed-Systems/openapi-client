@@ -1144,6 +1144,8 @@ example().catch(console.error);
 
 Withdraw a revision and invalidate its delivery
 
+Requires catalog.content.withdraw for the current vendor administrator. Independent of publication access; existing explicit catalog.content.write denies still block withdrawal. It cannot upload, replace or republish material.
+
 ### Example
 
 ```ts

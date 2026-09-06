@@ -516,7 +516,7 @@ export interface DocumentsApiInterface {
     withdrawDocumentRevisionRequestOpts(requestParameters: WithdrawDocumentRevisionRequest): Promise<runtime.RequestOpts>;
 
     /**
-     * 
+     * Requires catalog.content.withdraw for the current vendor administrator. Independent of publication access; existing explicit catalog.content.write denies still block withdrawal. It cannot upload, replace or republish material.
      * @summary Withdraw a revision and invalidate its delivery
      * @param {string} id 
      * @param {string} revision 
@@ -528,6 +528,7 @@ export interface DocumentsApiInterface {
     withdrawDocumentRevisionRaw(requestParameters: WithdrawDocumentRevisionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
 
     /**
+     * Requires catalog.content.withdraw for the current vendor administrator. Independent of publication access; existing explicit catalog.content.write denies still block withdrawal. It cannot upload, replace or republish material.
      * Withdraw a revision and invalidate its delivery
      */
     withdrawDocumentRevision(requestParameters: WithdrawDocumentRevisionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
@@ -1486,6 +1487,7 @@ export class DocumentsApi extends runtime.BaseAPI implements DocumentsApiInterfa
     }
 
     /**
+     * Requires catalog.content.withdraw for the current vendor administrator. Independent of publication access; existing explicit catalog.content.write denies still block withdrawal. It cannot upload, replace or republish material.
      * Withdraw a revision and invalidate its delivery
      */
     async withdrawDocumentRevisionRaw(requestParameters: WithdrawDocumentRevisionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -1496,6 +1498,7 @@ export class DocumentsApi extends runtime.BaseAPI implements DocumentsApiInterfa
     }
 
     /**
+     * Requires catalog.content.withdraw for the current vendor administrator. Independent of publication access; existing explicit catalog.content.write denies still block withdrawal. It cannot upload, replace or republish material.
      * Withdraw a revision and invalidate its delivery
      */
     async withdrawDocumentRevision(requestParameters: WithdrawDocumentRevisionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {

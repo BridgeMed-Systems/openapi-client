@@ -96,7 +96,7 @@ export interface CatalogApiInterface {
     deleteCatalogContentRequestOpts(requestParameters: DeleteCatalogContentRequest): Promise<runtime.RequestOpts>;
 
     /**
-     * 
+     * Archives legacy external material with catalog.content.withdraw. It does not delete the record; managed documents use revision withdrawal. Current vendor ownership and explicit denies are rechecked, and the archive is audited atomically.
      * @summary Archive catalog content
      * @param {string} id 
      * @param {*} [options] Override http request option.
@@ -106,6 +106,7 @@ export interface CatalogApiInterface {
     deleteCatalogContentRaw(requestParameters: DeleteCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
 
     /**
+     * Archives legacy external material with catalog.content.withdraw. It does not delete the record; managed documents use revision withdrawal. Current vendor ownership and explicit denies are rechecked, and the archive is audited atomically.
      * Archive catalog content
      */
     deleteCatalogContent(requestParameters: DeleteCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
@@ -310,6 +311,7 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
     }
 
     /**
+     * Archives legacy external material with catalog.content.withdraw. It does not delete the record; managed documents use revision withdrawal. Current vendor ownership and explicit denies are rechecked, and the archive is audited atomically.
      * Archive catalog content
      */
     async deleteCatalogContentRaw(requestParameters: DeleteCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -320,6 +322,7 @@ export class CatalogApi extends runtime.BaseAPI implements CatalogApiInterface {
     }
 
     /**
+     * Archives legacy external material with catalog.content.withdraw. It does not delete the record; managed documents use revision withdrawal. Current vendor ownership and explicit denies are rechecked, and the archive is audited atomically.
      * Archive catalog content
      */
     async deleteCatalogContent(requestParameters: DeleteCatalogContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {

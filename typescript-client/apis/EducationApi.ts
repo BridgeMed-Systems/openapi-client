@@ -236,7 +236,7 @@ export interface EducationApiInterface {
     withdrawEducationVersionRequestOpts(requestParameters: WithdrawEducationVersionRequest): Promise<runtime.RequestOpts>;
 
     /**
-     * 
+     * Requires education.withdraw for the current vendor administrator. Independent of publication access; existing explicit education.author denies still block withdrawal. Material and credit metadata cannot change through this action.
      * @summary Withdraw a course version permanently
      * @param {string} id 
      * @param {EducationWithdrawal} educationWithdrawal 
@@ -247,6 +247,7 @@ export interface EducationApiInterface {
     withdrawEducationVersionRaw(requestParameters: WithdrawEducationVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EducationVersion>>;
 
     /**
+     * Requires education.withdraw for the current vendor administrator. Independent of publication access; existing explicit education.author denies still block withdrawal. Material and credit metadata cannot change through this action.
      * Withdraw a course version permanently
      */
     withdrawEducationVersion(requestParameters: WithdrawEducationVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EducationVersion>;
@@ -660,6 +661,7 @@ export class EducationApi extends runtime.BaseAPI implements EducationApiInterfa
     }
 
     /**
+     * Requires education.withdraw for the current vendor administrator. Independent of publication access; existing explicit education.author denies still block withdrawal. Material and credit metadata cannot change through this action.
      * Withdraw a course version permanently
      */
     async withdrawEducationVersionRaw(requestParameters: WithdrawEducationVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EducationVersion>> {
@@ -670,6 +672,7 @@ export class EducationApi extends runtime.BaseAPI implements EducationApiInterfa
     }
 
     /**
+     * Requires education.withdraw for the current vendor administrator. Independent of publication access; existing explicit education.author denies still block withdrawal. Material and credit metadata cannot change through this action.
      * Withdraw a course version permanently
      */
     async withdrawEducationVersion(requestParameters: WithdrawEducationVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EducationVersion> {

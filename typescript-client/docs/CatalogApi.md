@@ -93,6 +93,8 @@ example().catch(console.error);
 
 Archive catalog content
 
+Archives legacy external material with catalog.content.withdraw. It does not delete the record; managed documents use revision withdrawal. Current vendor ownership and explicit denies are rechecked, and the archive is audited atomically.
+
 ### Example
 
 ```ts
