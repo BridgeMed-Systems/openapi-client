@@ -7,6 +7,7 @@ export * from './CatalogApi';
 export * from './DocumentsApi';
 export * from './EducationApi';
 export * from './EventsApi';
+export * from './FeaturesApi';
 export * from './HealthApi';
 export * from './LearningApi';
 export * from './NativeMediaApi';

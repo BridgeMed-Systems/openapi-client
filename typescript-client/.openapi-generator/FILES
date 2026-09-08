@@ -5,6 +5,7 @@ apis/CatalogApi.ts
 apis/DocumentsApi.ts
 apis/EducationApi.ts
 apis/EventsApi.ts
+apis/FeaturesApi.ts
 apis/HealthApi.ts
 apis/LearningApi.ts
 apis/NativeMediaApi.ts
@@ -93,6 +94,8 @@ docs/EventHistoryPage.md
 docs/EventParticipationSummary.md
 docs/EventPublication.md
 docs/EventsApi.md
+docs/FeatureSettings.md
+docs/FeaturesApi.md
 docs/HealthApi.md
 docs/HealthResponse.md
 docs/HospitalDepartment.md
@@ -289,6 +292,7 @@ models/EventHistoryItem.ts
 models/EventHistoryPage.ts
 models/EventParticipationSummary.ts
 models/EventPublication.ts
+models/FeatureSettings.ts
 models/HealthResponse.ts
 models/HospitalDepartment.ts
 models/HospitalStaffMember.ts

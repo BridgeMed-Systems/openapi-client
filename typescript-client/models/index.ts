@@ -68,6 +68,7 @@ export * from './EventHistoryItem';
 export * from './EventHistoryPage';
 export * from './EventParticipationSummary';
 export * from './EventPublication';
+export * from './FeatureSettings';
 export * from './HealthResponse';
 export * from './HospitalDepartment';
 export * from './HospitalStaffMember';
